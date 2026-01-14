@@ -45,7 +45,7 @@
   </script>
 
   <!-- Progress Bar -->
-  <div id="scroll-progress" class="fixed top-0 left-0 w-0 h-1 bg-gradient-to-r from-teal-500 to-teal-600 z-[100] transition-all duration-300 shadow-lg"></div>
+  <div id="scroll-progress" class="fixed top-0 left-0 w-0 h-[3px] bg-gradient-to-r from-[#10c0a9] to-[#0da592] z-[100] transition-all duration-100 shadow-[0_2px_10px_rgba(16,192,169,0.3)]"></div>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,30 +66,6 @@
       font-style: normal;
     }
 
-    /* Custom Cursor */
-    * {
-      cursor: none;
-    }
-    
-    #custom-cursor {
-      position: fixed;
-      width: 20px;
-      height: 20px;
-      background: rgba(16, 192, 169, 0.3);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transition: all 0.1s ease;
-      mix-blend-mode: difference;
-    }
-    
-    #custom-cursor.hover {
-      width: 40px;
-      height: 40px;
-      background: rgba(16, 192, 169, 0.6);
-      box-shadow: 0 0 20px rgba(16, 192, 169, 0.4);
-    }
-    
     /* Ultra-Premium Typography */
     .ultra-heading {
       font-family: 'Instrument Sans', sans-serif;
@@ -114,10 +90,7 @@
     }
   </style>
 </head>
-<body class="relative text-neutral-700 text-[15px] bg-fixed bg-white bg-[linear-gradient(to_right_bottom,rgb(253,254,255),rgb(240,248,249),rgb(232,244,245))] box-border caret-transparent flex flex-col leading-[25.71px] max-w-[375px] min-h-[1000px] break-words overflow-x-hidden overflow-y-auto pb-[65px] font-instrument_sans md:max-w-screen-xl md:pb-0">
-
-<!-- Custom Cursor -->
-<div id="custom-cursor"></div>
+<body class="relative text-neutral-700 text-[15px] bg-fixed bg-white bg-[linear-gradient(to_right_bottom,rgb(253,254,255),rgb(240,248,249),rgb(232,244,245))] box-border flex flex-col leading-[25.71px] max-w-[375px] min-h-[1000px] break-words overflow-x-hidden overflow-y-auto pb-[65px] font-instrument_sans md:max-w-screen-xl md:pb-0">
 
 <!-- Progress Bar Script -->
 <script>
@@ -357,9 +330,9 @@ Women's Health</button>
 </div>
 <div class="absolute bg-[linear-gradient(to_top,rgba(59,155,159,0.9),rgba(0,0,0,0),rgba(0,0,0,0))] box-border caret-transparent opacity-60 break-words inset-0 transition-opacity duration-300 group-hover:opacity-80"></div>
 <!-- Hover Overlay -->
-<div class="absolute inset-0 bg-gradient-to-t from-teal-600/95 via-teal-500/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
-<div class="transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
-<button class="bg-white text-teal-600 font-bold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+<div class="transform scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500">
+<button class="bg-white text-teal-600 font-black text-lg px-8 py-4 rounded-full shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all duration-300 hover:scale-110">
 View Treatment →
 </button>
 </div>
@@ -380,9 +353,9 @@ View Treatment →
 </div>
 <div class="absolute bg-[linear-gradient(to_top,rgba(44,122,126,0.9),rgba(0,0,0,0),rgba(0,0,0,0))] box-border caret-transparent opacity-60 break-words inset-0 transition-opacity duration-300 group-hover:opacity-80"></div>
 <!-- Hover Overlay -->
-<div class="absolute inset-0 bg-gradient-to-t from-teal-600/95 via-teal-500/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
-<div class="transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
-<button class="bg-white text-teal-600 font-bold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+<div class="transform scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500">
+<button class="bg-white text-teal-600 font-black text-lg px-8 py-4 rounded-full shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all duration-300 hover:scale-110">
 View Treatment →
 </button>
 </div>
@@ -403,9 +376,9 @@ View Treatment →
 </div>
 <div class="absolute bg-[linear-gradient(to_top,rgba(59,155,159,0.9),rgba(0,0,0,0),rgba(0,0,0,0))] box-border caret-transparent opacity-60 break-words inset-0 transition-opacity duration-300 group-hover:opacity-80"></div>
 <!-- Hover Overlay -->
-<div class="absolute inset-0 bg-gradient-to-t from-teal-600/95 via-teal-500/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
-<div class="transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
-<button class="bg-white text-teal-600 font-bold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+<div class="transform scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500">
+<button class="bg-white text-teal-600 font-black text-lg px-8 py-4 rounded-full shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all duration-300 hover:scale-110">
 View Treatment →
 </button>
 </div>
@@ -426,9 +399,9 @@ View Treatment →
 </div>
 <div class="absolute bg-[linear-gradient(to_top,rgba(44,122,126,0.9),rgba(0,0,0,0),rgba(0,0,0,0))] box-border caret-transparent opacity-60 break-words inset-0 transition-opacity duration-300 group-hover:opacity-80"></div>
 <!-- Hover Overlay -->
-<div class="absolute inset-0 bg-gradient-to-t from-teal-600/95 via-teal-500/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
-<div class="transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
-<button class="bg-white text-teal-600 font-bold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+<div class="transform scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500">
+<button class="bg-white text-teal-600 font-black text-lg px-8 py-4 rounded-full shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all duration-300 hover:scale-110">
 View Treatment →
 </button>
 </div>
@@ -449,9 +422,9 @@ View Treatment →
 </div>
 <div class="absolute bg-[linear-gradient(to_top,rgba(59,155,159,0.9),rgba(0,0,0,0),rgba(0,0,0,0))] box-border caret-transparent opacity-60 break-words inset-0 transition-opacity duration-300 group-hover:opacity-80"></div>
 <!-- Hover Overlay -->
-<div class="absolute inset-0 bg-gradient-to-t from-teal-600/95 via-teal-500/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
-<div class="transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
-<button class="bg-white text-teal-600 font-bold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+<div class="transform scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500">
+<button class="bg-white text-teal-600 font-black text-lg px-8 py-4 rounded-full shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all duration-300 hover:scale-110">
 View Treatment →
 </button>
 </div>
@@ -1319,9 +1292,9 @@ View Treatment →
 <img src="https://c.animaapp.com/mhiyf2riFan5kf/assets/28.jpg" alt="Hair Loss Treatment" class="absolute box-border caret-transparent h-full max-w-full object-cover break-words w-full inset-0 transition-transform duration-700 group-hover:scale-110" />
 <div class="absolute bg-[linear-gradient(to_top,rgba(0,0,0,0.9),rgba(0,0,0,0.5),rgba(0,0,0,0.2))] box-border caret-transparent break-words inset-0"></div>
 <!-- Hover Overlay -->
-<div class="absolute inset-0 bg-gradient-to-t from-teal-600/95 via-teal-500/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
-<div class="transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
-<button class="bg-white text-teal-600 font-black px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 antialiased">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+<div class="transform scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500">
+<button class="bg-white text-teal-600 font-black text-lg px-8 py-4 rounded-full shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all duration-300 hover:scale-110 antialiased">
 View Treatment →
 </button>
 </div>
@@ -1359,9 +1332,9 @@ View Treatment →
 <img src="https://c.animaapp.com/mhiyf2riFan5kf/assets/29.jpg" alt="Erectile Dysfunction Treatment" class="absolute box-border caret-transparent h-full max-w-full object-cover break-words w-full inset-0 transition-transform duration-700 group-hover:scale-110" />
 <div class="absolute bg-[linear-gradient(to_top,rgba(0,0,0,0.9),rgba(0,0,0,0.5),rgba(0,0,0,0.2))] box-border caret-transparent break-words inset-0"></div>
 <!-- Hover Overlay -->
-<div class="absolute inset-0 bg-gradient-to-t from-teal-600/95 via-teal-500/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
-<div class="transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
-<button class="bg-white text-teal-600 font-black px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 antialiased">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+<div class="transform scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500">
+<button class="bg-white text-teal-600 font-black text-lg px-8 py-4 rounded-full shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all duration-300 hover:scale-110 antialiased">
 View Treatment →
 </button>
 </div>
@@ -1723,23 +1696,6 @@ LU55BQ</p>
 
 <!-- Premium JavaScript -->
 <script>
-// Custom Cursor
-const cursor = document.getElementById('custom-cursor');
-let mouseX = 0, mouseY = 0;
-
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  cursor.style.left = mouseX + 'px';
-  cursor.style.top = mouseY + 'px';
-});
-
-// Hover effects for interactive elements
-document.querySelectorAll('a, button, .treatment-pill, .info-card, .service-card').forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-});
-
 // Counter Animation
 function animateCounter(element) {
   const target = parseInt(element.getAttribute('data-target'));

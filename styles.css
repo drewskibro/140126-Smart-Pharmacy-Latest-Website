@@ -37,30 +37,6 @@ body.relative {
   line-height: 1.65;
 }
 
-/* CUSTOM CURSOR */
-* {
-  cursor: none;
-}
-
-#custom-cursor {
-  position: fixed;
-  width: 20px;
-  height: 20px;
-  background: rgba(16, 192, 169, 0.3);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transition: all 0.1s ease;
-  mix-blend-mode: difference;
-}
-
-#custom-cursor.hover {
-  width: 40px;
-  height: 40px;
-  background: rgba(16, 192, 169, 0.6);
-  box-shadow: 0 0 20px rgba(16, 192, 169, 0.4);
-}
-
 /* SCROLL PROGRESS BAR */
 #scroll-progress {
   position: fixed;
@@ -412,14 +388,6 @@ body.relative {
   .ultra-heading {
     letter-spacing: -0.02em;
     line-height: 1.1;
-  }
-  
-  #custom-cursor {
-    display: none;
-  }
-  
-  * {
-    cursor: auto;
   }
 }
 
