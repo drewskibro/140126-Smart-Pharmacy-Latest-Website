@@ -2,6 +2,7 @@
 html {
   overflow-x: hidden;
   max-width: 100vw;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -17,350 +18,62 @@ body.relative {
   overflow-x: hidden !important;
 }
 
-/* Fix the animated ticker sections */
-.translate-x-\[-1614\.61px\],
-.translate-x-\[-1798\.33px\] {
-  animation: none !important;
+/* ULTRA-PREMIUM TYPOGRAPHY */
+.ultra-heading {
+  font-family: 'Instrument Sans', sans-serif;
+  letter-spacing: -0.04em;
+  font-weight: 900;
+  line-height: 1.05;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Better approach: contain the ticker overflow */
-section:first-of-type .overflow-hidden {
-  overflow-x: hidden !important;
-  max-width: 100vw;
+.serif-italic {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.65;
 }
 
-/* Ensure all sections respect viewport width */
-section {
-  max-width: 100vw;
-  overflow-x: hidden;
+/* CUSTOM CURSOR */
+* {
+  cursor: none;
 }
 
-/* Fix mobile nav that might be causing issues */
-nav.fixed {
-  max-width: 100vw;
-}
-
-/* Additional fixes for ticker container */
-.ticker-container {
-  width: 100vw;
-  overflow-x: hidden;
-  position: relative;
-}
-
-/* Hero Section Feature Badges Animation */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-}
-
-.feature-badge {
-  animation: fadeInUp 0.6s ease-out forwards;
-  opacity: 0;
-}
-
-.feature-badge:nth-child(1) { animation-delay: 0.1s; }
-.feature-badge:nth-child(2) { animation-delay: 0.2s; }
-.feature-badge:nth-child(3) { animation-delay: 0.3s; }
-.feature-badge:nth-child(4) { animation-delay: 0.4s; }
-.feature-badge:nth-child(5) { animation-delay: 0.5s; }
-
-.feature-badge:hover {
-  animation: float 2s ease-in-out infinite;
-}
-
-/* Treatment Cards Animation */
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.treatment-card {
-  animation: slideInUp 0.6s ease-out forwards;
-  opacity: 0;
-  transition: all 0.3s ease;
-}
-
-.treatment-card:nth-child(1) { animation-delay: 0.1s; }
-.treatment-card:nth-child(2) { animation-delay: 0.2s; }
-.treatment-card:nth-child(3) { animation-delay: 0.3s; }
-.treatment-card:nth-child(4) { animation-delay: 0.4s; }
-.treatment-card:nth-child(5) { animation-delay: 0.5s; }
-
-.treatment-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-}
-
-.treatment-card .progress-bar {
-  width: 0;
-  transition: width 0.4s ease;
-}
-
-.treatment-card:hover .progress-bar {
-  width: 100%;
-}
-
-/* Button Improvements */
-.btn-primary {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
+#custom-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background: rgba(16, 192, 169, 0.3);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
+  pointer-events: none;
+  z-index: 9999;
+  transition: all 0.1s ease;
+  mix-blend-mode: difference;
 }
 
-.btn-primary:hover::before {
-  width: 300px;
-  height: 300px;
+#custom-cursor.hover {
+  width: 40px;
+  height: 40px;
+  background: rgba(16, 192, 169, 0.6);
+  box-shadow: 0 0 20px rgba(16, 192, 169, 0.4);
 }
 
-.btn-primary:hover {
-  transform: translateY(-2px);
-}
-
-.btn-secondary {
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.btn-secondary::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
+/* SCROLL PROGRESS BAR */
+#scroll-progress {
+  position: fixed;
+  top: 0;
   left: 0;
-  width: 0;
-  height: 2px;
-  background: currentColor;
-  transition: width 0.3s ease;
+  height: 3px;
+  background: linear-gradient(to right, #10c0a9, #0da592);
+  z-index: 100;
+  transition: width 0.1s ease;
+  box-shadow: 0 2px 10px rgba(16, 192, 169, 0.3);
 }
 
-.btn-secondary:hover::after {
-  width: 100%;
-}
-
-/* Icon Animations */
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.icon-rotate:hover {
-  animation: rotate 0.6s ease-in-out;
-}
-
-/* Card Hover Effects */
-.info-card {
-  transition: all 0.3s ease;
-}
-
-.info-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-}
-
-/* Testimonial Cards */
-.testimonial-card {
-  transition: all 0.4s ease;
-}
-
-.testimonial-card:hover {
-  transform: scale(1.02);
-}
-
-/* FAQ Accordion Animation */
-details summary {
-  transition: all 0.3s ease;
-}
-
-details[open] summary {
-  color: rgb(59, 155, 159);
-}
-
-details summary:hover {
-  background: rgba(59, 155, 159, 0.05);
-}
-
-/* Smooth Scroll */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Loading Animation for Images */
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-.loading-shimmer {
-  animation: shimmer 2s infinite;
-  background: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
-  background-size: 1000px 100%;
-}
-
-/* Stagger Animation for Lists */
-@keyframes staggerFadeIn {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.stagger-item {
-  animation: staggerFadeIn 0.5s ease-out forwards;
-  opacity: 0;
-}
-
-.stagger-item:nth-child(1) { animation-delay: 0.1s; }
-.stagger-item:nth-child(2) { animation-delay: 0.2s; }
-.stagger-item:nth-child(3) { animation-delay: 0.3s; }
-.stagger-item:nth-child(4) { animation-delay: 0.4s; }
-.stagger-item:nth-child(5) { animation-delay: 0.5s; }
-.stagger-item:nth-child(6) { animation-delay: 0.6s; }
-
-/* Badge Pulse Animation */
-@keyframes badgePulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(59, 155, 159, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 0 10px rgba(59, 155, 159, 0);
-  }
-}
-
-.badge-pulse {
-  animation: badgePulse 2s infinite;
-}
-
-/* Gradient Animation */
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.gradient-animate {
-  background-size: 200% 200%;
-  animation: gradientShift 3s ease infinite;
-}
-
-/* Premium Treatment Pills */
-.treatment-pill {
-  position: relative;
-  cursor: pointer;
-}
-
-.treatment-pill:hover {
-  transform: translateY(-2px);
-}
-
-.treatment-pill:hover svg {
-  transform: scale(1.1);
-}
-
-.treatment-pill:active {
-  transform: translateY(0);
-}
-
-/* Search Dropdown Animation */
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.search-dropdown-show {
-  animation: slideDown 0.3s ease-out forwards;
-}
-
-#search-dropdown {
-  max-height: 500px;
-  overflow-y: auto;
-}
-
-#search-dropdown::-webkit-scrollbar {
-  width: 6px;
-}
-
-#search-dropdown::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-#search-dropdown::-webkit-scrollbar-thumb {
-  background: #3b9b9f;
-  border-radius: 10px;
-}
-
-#search-dropdown::-webkit-scrollbar-thumb:hover {
-  background: #2c7a7e;
-}
-
-/* Premium Weight Loss Section Animations */
-
+/* PREMIUM ANIMATIONS */
 @keyframes float {
   0%, 100% {
     transform: translateY(0px);
@@ -430,27 +143,320 @@ html {
   animation-delay: 0.3s;
 }
 
-/* Simple underline animation */
-@keyframes drawLine {
+/* TREATMENT CARD HOVER OVERLAYS */
+.treatment-card-hover {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.treatment-card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.treatment-card-hover .progress-bar {
+  width: 0;
+  transition: width 0.4s ease;
+}
+
+.treatment-card-hover:hover .progress-bar {
+  width: 100%;
+}
+
+/* SERVICE CARD ANIMATIONS */
+.service-card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-card:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* PREMIUM BUTTON EFFECTS */
+.premium-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.premium-button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.premium-button:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.premium-button.loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+/* TREATMENT PILLS */
+.treatment-pill {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.treatment-pill:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+
+.treatment-pill:hover svg {
+  transform: scale(1.15) rotate(5deg);
+}
+
+.treatment-pill:active {
+  transform: translateY(0) scale(1);
+}
+
+/* INFO CARDS */
+.info-card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.info-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+/* COUNTER ANIMATION */
+.counter {
+  font-variant-numeric: tabular-nums;
+  font-weight: 900;
+  transition: all 0.3s ease;
+}
+
+.counter.animated {
+  color: #10c0a9;
+}
+
+/* FADE IN ANIMATIONS */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* STAGGER ANIMATIONS */
+.stagger-item {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.stagger-item:nth-child(1) { animation-delay: 0.1s; }
+.stagger-item:nth-child(2) { animation-delay: 0.2s; }
+.stagger-item:nth-child(3) { animation-delay: 0.3s; }
+.stagger-item:nth-child(4) { animation-delay: 0.4s; }
+.stagger-item:nth-child(5) { animation-delay: 0.5s; }
+
+/* SEARCH DROPDOWN */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.search-dropdown-show {
+  animation: slideDown 0.3s ease-out forwards;
+}
+
+#search-dropdown {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+#search-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+#search-dropdown::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+#search-dropdown::-webkit-scrollbar-thumb {
+  background: #10c0a9;
+  border-radius: 10px;
+}
+
+#search-dropdown::-webkit-scrollbar-thumb:hover {
+  background: #0da592;
+}
+
+/* LOADING STATES */
+@keyframes shimmer {
   0% {
-    stroke-dashoffset: 400;
+    background-position: -1000px 0;
   }
   100% {
-    stroke-dashoffset: 0;
+    background-position: 1000px 0;
   }
 }
 
-.squiggle-path {
-  stroke-dasharray: 400;
-  stroke-dashoffset: 400;
-  animation: drawLine 1.5s ease-out forwards;
-  animation-delay: 0.3s;
+.loading-shimmer {
+  animation: shimmer 2s infinite;
+  background: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+  background-size: 1000px 100%;
 }
 
-/* Premium hover effects for images */
-.image-float:hover,
-.image-float-delayed:hover,
-.image-float-slow:hover,
-.image-float-fast:hover {
-  animation-play-state: paused;
+/* PREMIUM HOVER EFFECTS */
+.premium-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.15);
+}
+
+/* GRADIENT ANIMATIONS */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-animate {
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
+}
+
+/* MICRO-INTERACTIONS */
+.micro-bounce:hover {
+  animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+  0%, 20%, 60%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  80% {
+    transform: translateY(-5px);
+  }
+}
+
+/* PREMIUM SHADOWS */
+.premium-shadow {
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.premium-shadow:hover {
+  box-shadow: 
+    0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+/* RESPONSIVE IMPROVEMENTS */
+@media (max-width: 768px) {
+  .ultra-heading {
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  
+  #custom-cursor {
+    display: none;
+  }
+  
+  * {
+    cursor: auto;
+  }
+}
+
+/* ACCESSIBILITY IMPROVEMENTS */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .image-float,
+  .image-float-delayed,
+  .image-float-slow,
+  .image-float-fast,
+  .image-float-badge {
+    animation: none !important;
+  }
+}
+
+/* FOCUS STATES */
+button:focus,
+a:focus,
+input:focus {
+  outline: 2px solid #10c0a9;
+  outline-offset: 2px;
+}
+
+/* HIGH CONTRAST MODE */
+@media (prefers-contrast: high) {
+  .text-neutral-600 {
+    color: #374151;
+  }
+  
+  .bg-teal-500 {
+    background-color: #0f766e;
+  }
 }
