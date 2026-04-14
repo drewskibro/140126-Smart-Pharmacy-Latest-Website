@@ -7,8 +7,13 @@
  * lives in code, not the database.
  *
  * Registered so far:
- *   A1  Options (Homepage) — Hero section (rating badge, heading, search, trust badges, pills, info cards)
+ *   A1  Options (Homepage) — Hero section
  *   A2  Options (Homepage) — Popular Treatments carousel
+ *   A3  Options (Homepage) — Featured Treatment showcase (Weight Loss block)
+ *   A4  Options (Homepage) — How It Works
+ *   A5  Options (Homepage) — NHS Prescription
+ *   A6  Options (Homepage) — Safety / GPhC
+ *   A7  Options (Homepage) — Most Trusted Treatments
  *   F1  Options — Branding (logo, footer tagline, payment methods)
  *   G1  Options — Navigation (primary menu, footer link columns, search, NHS button)
  *   H1  Options — Contact (trading address, registered address)
@@ -16,7 +21,7 @@
  *   J1  Options — Social (platform URLs)
  *
  * Planned:
- *   A3–A8  Remaining front page sections (how it works, testimonials, FAQ, etc.)
+ *   A8     Remaining front page sections (testimonials, FAQ, bestsellers)
  *   B1–E1  Treatment CPT (meta, benefits, FAQ, related products)
  *
  * @package SmartPharmacy
@@ -349,6 +354,234 @@ function sp_register_acf_field_groups() {
 						),
 					),
 				),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * A3 — Featured Treatment Showcase (options)
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_a3_featured',
+			'title'    => 'A3 — Featured Treatment',
+			'location' => array(
+				array(
+					array( 'param' => 'options_page', 'operator' => '==', 'value' => 'sp-homepage' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_ft_enabled', 'label' => 'Show section', 'name' => 'ft_enabled', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1 ),
+				array( 'key' => 'field_sp_ft_badge_label', 'label' => 'Badge label', 'name' => 'ft_badge_label', 'type' => 'text', 'default_value' => 'Medical Weight Loss' ),
+				array( 'key' => 'field_sp_ft_badge_icon', 'label' => 'Badge icon', 'name' => 'ft_badge_icon', 'type' => 'select', 'choices' => $sp_icon_choices, 'default_value' => 'person', 'ui' => 1 ),
+				array( 'key' => 'field_sp_ft_heading_pre', 'label' => 'Heading — start', 'name' => 'ft_heading_pre', 'type' => 'text', 'default_value' => 'Transform your life with' ),
+				array( 'key' => 'field_sp_ft_heading_highlight', 'label' => 'Heading — highlighted (teal)', 'name' => 'ft_heading_highlight', 'type' => 'text', 'default_value' => 'prescription weight loss' ),
+				array( 'key' => 'field_sp_ft_subheading', 'label' => 'Subheading', 'name' => 'ft_subheading', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'Clinically-proven treatments delivered discreetly to your door. Expert medical support every step of the way.' ),
+				array(
+					'key'          => 'field_sp_ft_stats',
+					'label'        => 'Stats (max 3)',
+					'name'         => 'ft_stats',
+					'type'         => 'repeater',
+					'button_label' => 'Add stat',
+					'layout'       => 'table',
+					'min'          => 0,
+					'max'          => 3,
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_ft_stat_value', 'label' => 'Value', 'name' => 'value', 'type' => 'text', 'instructions' => 'Use numeric-only values for animated counters, or any text (e.g. "4.9★") for static display.' ),
+						array( 'key' => 'field_sp_ft_stat_animated', 'label' => 'Animate as counter?', 'name' => 'animated', 'type' => 'true_false', 'ui' => 1 ),
+						array( 'key' => 'field_sp_ft_stat_label', 'label' => 'Label', 'name' => 'label', 'type' => 'text' ),
+					),
+				),
+				array( 'key' => 'field_sp_ft_cta_label', 'label' => 'CTA label', 'name' => 'ft_cta_label', 'type' => 'text', 'default_value' => 'Start Your Journey' ),
+				array( 'key' => 'field_sp_ft_cta_url', 'label' => 'CTA URL', 'name' => 'ft_cta_url', 'type' => 'url', 'default_value' => '/treatments/weight-loss/' ),
+				array( 'key' => 'field_sp_ft_testimonial_quote', 'label' => 'Testimonial quote', 'name' => 'ft_testimonial_quote', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'The online consultation was seamless, medication arrived next day, and I\'ve lost 32 pounds in 4 months. This service changed my life.' ),
+				array( 'key' => 'field_sp_ft_testimonial_author', 'label' => 'Testimonial author', 'name' => 'ft_testimonial_author', 'type' => 'text', 'default_value' => 'Sarah M.' ),
+				array( 'key' => 'field_sp_ft_testimonial_meta', 'label' => 'Testimonial author meta (e.g. "Lost 32 lbs")', 'name' => 'ft_testimonial_meta', 'type' => 'text', 'default_value' => 'Lost 32 lbs' ),
+				array( 'key' => 'field_sp_ft_testimonial_age', 'label' => 'Testimonial age (e.g. "4 months ago")', 'name' => 'ft_testimonial_age', 'type' => 'text', 'default_value' => '4 months ago' ),
+				array( 'key' => 'field_sp_ft_image_main', 'label' => 'Main large image', 'name' => 'ft_image_main', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium' ),
+				array( 'key' => 'field_sp_ft_image_tr', 'label' => 'Top-right image', 'name' => 'ft_image_tr', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'thumbnail' ),
+				array( 'key' => 'field_sp_ft_image_bl', 'label' => 'Bottom-left image', 'name' => 'ft_image_bl', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'thumbnail' ),
+				array( 'key' => 'field_sp_ft_image_br', 'label' => 'Bottom-right accent image', 'name' => 'ft_image_br', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'thumbnail' ),
+				array( 'key' => 'field_sp_ft_main_badge_value', 'label' => 'Main image badge — value', 'name' => 'ft_main_badge_value', 'type' => 'text', 'default_value' => '32' ),
+				array( 'key' => 'field_sp_ft_main_badge_label', 'label' => 'Main image badge — label', 'name' => 'ft_main_badge_label', 'type' => 'text', 'default_value' => 'lbs Lost' ),
+				array( 'key' => 'field_sp_ft_corner_badge_value', 'label' => 'Bottom-right image badge — value', 'name' => 'ft_corner_badge_value', 'type' => 'text', 'default_value' => '-45 lbs' ),
+				array( 'key' => 'field_sp_ft_floating_value', 'label' => 'Floating badge — value', 'name' => 'ft_floating_value', 'type' => 'text', 'default_value' => '84' ),
+				array( 'key' => 'field_sp_ft_floating_label', 'label' => 'Floating badge — label', 'name' => 'ft_floating_label', 'type' => 'text', 'default_value' => '% Success Rate' ),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * A4 — How It Works (options)
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_a4_how_it_works',
+			'title'    => 'A4 — How It Works',
+			'location' => array(
+				array(
+					array( 'param' => 'options_page', 'operator' => '==', 'value' => 'sp-homepage' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_hw_enabled', 'label' => 'Show section', 'name' => 'hw_enabled', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1 ),
+				array( 'key' => 'field_sp_hw_badge_label', 'label' => 'Badge label', 'name' => 'hw_badge_label', 'type' => 'text', 'default_value' => 'Fast & Simple Process' ),
+				array( 'key' => 'field_sp_hw_heading_pre', 'label' => 'Heading — start', 'name' => 'hw_heading_pre', 'type' => 'text', 'default_value' => 'How it' ),
+				array( 'key' => 'field_sp_hw_heading_highlight', 'label' => 'Heading — highlighted', 'name' => 'hw_heading_highlight', 'type' => 'text', 'default_value' => 'Works' ),
+				array( 'key' => 'field_sp_hw_subheading', 'label' => 'Subheading', 'name' => 'hw_subheading', 'type' => 'text', 'default_value' => 'Three simple ways to access expert healthcare on your terms' ),
+				array(
+					'key'          => 'field_sp_hw_cards',
+					'label'        => 'Service cards (3 ideal)',
+					'name'         => 'hw_cards',
+					'type'         => 'repeater',
+					'button_label' => 'Add card',
+					'layout'       => 'block',
+					'min'          => 0,
+					'max'          => 4,
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_hw_card_icon', 'label' => 'Icon', 'name' => 'icon', 'type' => 'select', 'choices' => $sp_icon_choices, 'ui' => 1 ),
+						array( 'key' => 'field_sp_hw_card_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
+						array( 'key' => 'field_sp_hw_card_subtitle', 'label' => 'Subtitle', 'name' => 'subtitle', 'type' => 'text' ),
+						array( 'key' => 'field_sp_hw_card_tagline', 'label' => 'Tagline (teal)', 'name' => 'tagline', 'type' => 'text' ),
+						array( 'key' => 'field_sp_hw_card_cta', 'label' => 'Link label', 'name' => 'cta', 'type' => 'text', 'default_value' => 'Get Started' ),
+						array( 'key' => 'field_sp_hw_card_url', 'label' => 'Link URL', 'name' => 'url', 'type' => 'url' ),
+						array( 'key' => 'field_sp_hw_card_featured', 'label' => 'Featured (Most Popular border)', 'name' => 'featured', 'type' => 'true_false', 'ui' => 1 ),
+						array( 'key' => 'field_sp_hw_card_featured_label', 'label' => 'Featured badge text', 'name' => 'featured_label', 'type' => 'text', 'default_value' => 'Most Popular' ),
+					),
+				),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * A5 — NHS Prescription (options)
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_a5_nhs',
+			'title'    => 'A5 — NHS Prescription',
+			'location' => array(
+				array(
+					array( 'param' => 'options_page', 'operator' => '==', 'value' => 'sp-homepage' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_nhs_enabled', 'label' => 'Show section', 'name' => 'nhs_enabled', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1 ),
+				array( 'key' => 'field_sp_nhs_logo', 'label' => 'NHS logo image', 'name' => 'nhs_logo', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium' ),
+				array( 'key' => 'field_sp_nhs_heading_pre', 'label' => 'Heading — start', 'name' => 'nhs_heading_pre', 'type' => 'text', 'default_value' => 'Order your' ),
+				array( 'key' => 'field_sp_nhs_heading_highlight', 'label' => 'Heading — highlighted', 'name' => 'nhs_heading_highlight', 'type' => 'text', 'default_value' => 'NHS prescription' ),
+				array( 'key' => 'field_sp_nhs_subheading', 'label' => 'Subheading', 'name' => 'nhs_subheading', 'type' => 'text', 'default_value' => 'Fast, free NHS prescriptions delivered to your door' ),
+				array(
+					'key'          => 'field_sp_nhs_features',
+					'label'        => 'Feature bullets',
+					'name'         => 'nhs_features',
+					'type'         => 'repeater',
+					'button_label' => 'Add feature',
+					'layout'       => 'block',
+					'min'          => 0,
+					'max'          => 6,
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_nhs_feat_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
+						array( 'key' => 'field_sp_nhs_feat_body', 'label' => 'Body', 'name' => 'body', 'type' => 'text' ),
+					),
+				),
+				array( 'key' => 'field_sp_nhs_card_heading', 'label' => 'Sidebar card heading', 'name' => 'nhs_card_heading', 'type' => 'text', 'default_value' => 'Get Started' ),
+				array( 'key' => 'field_sp_nhs_card_body', 'label' => 'Sidebar card body', 'name' => 'nhs_card_body', 'type' => 'text', 'default_value' => 'Order your NHS prescription or login to your account' ),
+				array( 'key' => 'field_sp_nhs_primary_label', 'label' => 'Primary button label', 'name' => 'nhs_primary_label', 'type' => 'text', 'default_value' => 'Order Prescription' ),
+				array( 'key' => 'field_sp_nhs_primary_url', 'label' => 'Primary button URL', 'name' => 'nhs_primary_url', 'type' => 'url', 'default_value' => '/nhs-prescriptions/' ),
+				array( 'key' => 'field_sp_nhs_secondary_label', 'label' => 'Secondary button label', 'name' => 'nhs_secondary_label', 'type' => 'text', 'default_value' => 'Login to Account' ),
+				array( 'key' => 'field_sp_nhs_secondary_url', 'label' => 'Secondary button URL', 'name' => 'nhs_secondary_url', 'type' => 'url', 'default_value' => '/my-account/' ),
+				array( 'key' => 'field_sp_nhs_help_heading', 'label' => 'Help card heading', 'name' => 'nhs_help_heading', 'type' => 'text', 'default_value' => 'Need Help?' ),
+				array( 'key' => 'field_sp_nhs_help_body', 'label' => 'Help card body', 'name' => 'nhs_help_body', 'type' => 'text', 'default_value' => 'Contact our pharmacy team' ),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * A6 — Safety / GPhC (options)
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_a6_safety',
+			'title'    => 'A6 — Safety / GPhC',
+			'location' => array(
+				array(
+					array( 'param' => 'options_page', 'operator' => '==', 'value' => 'sp-homepage' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_sf_enabled', 'label' => 'Show section', 'name' => 'sf_enabled', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1 ),
+				array( 'key' => 'field_sp_sf_badge_label', 'label' => 'Badge label', 'name' => 'sf_badge_label', 'type' => 'text', 'default_value' => 'GPhC Registered Pharmacy' ),
+				array( 'key' => 'field_sp_sf_heading_pre', 'label' => 'Heading — start', 'name' => 'sf_heading_pre', 'type' => 'text', 'default_value' => 'Safe and' ),
+				array( 'key' => 'field_sp_sf_heading_highlight', 'label' => 'Heading — highlighted', 'name' => 'sf_heading_highlight', 'type' => 'text', 'default_value' => 'Secure' ),
+				array( 'key' => 'field_sp_sf_subheading', 'label' => 'Subheading', 'name' => 'sf_subheading', 'type' => 'textarea', 'rows' => 3, 'default_value' => "Your safety is our top priority. We're fully regulated and inspected to ensure the highest standards of care." ),
+				array(
+					'key'          => 'field_sp_sf_trust_cards',
+					'label'        => 'Trust cards',
+					'name'         => 'sf_trust_cards',
+					'type'         => 'repeater',
+					'button_label' => 'Add card',
+					'layout'       => 'block',
+					'min'          => 0,
+					'max'          => 6,
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_sf_card_icon', 'label' => 'Icon', 'name' => 'icon', 'type' => 'select', 'choices' => $sp_icon_choices, 'ui' => 1 ),
+						array( 'key' => 'field_sp_sf_card_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
+						array( 'key' => 'field_sp_sf_card_body', 'label' => 'Body', 'name' => 'body', 'type' => 'text' ),
+					),
+				),
+				array( 'key' => 'field_sp_sf_gphc_body', 'label' => 'GPhC description', 'name' => 'sf_gphc_body', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'The GPhC is the official body that regulates and inspects all pharmacies in the UK. They ensure we prioritise your safety and meet the highest standards.' ),
+				array( 'key' => 'field_sp_sf_verify_label', 'label' => 'Verify button label', 'name' => 'sf_verify_label', 'type' => 'text', 'default_value' => 'Verify our registration' ),
+				array( 'key' => 'field_sp_sf_verify_url', 'label' => 'Verify button URL', 'name' => 'sf_verify_url', 'type' => 'url', 'default_value' => 'https://www.pharmacyregulation.org/registers/pharmacy/registrationnumber/9012842' ),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * A7 — Most Trusted Treatments (options)
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_a7_most_trusted',
+			'title'    => 'A7 — Most Trusted Treatments',
+			'location' => array(
+				array(
+					array( 'param' => 'options_page', 'operator' => '==', 'value' => 'sp-homepage' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_mt_enabled', 'label' => 'Show section', 'name' => 'mt_enabled', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1 ),
+				array( 'key' => 'field_sp_mt_rating_score', 'label' => 'Rating — score', 'name' => 'mt_rating_score', 'type' => 'text', 'default_value' => '4.8/5' ),
+				array( 'key' => 'field_sp_mt_rating_count', 'label' => 'Rating — count (animated)', 'name' => 'mt_rating_count', 'type' => 'number', 'default_value' => 6093 ),
+				array( 'key' => 'field_sp_mt_heading_pre', 'label' => 'Heading — start', 'name' => 'mt_heading_pre', 'type' => 'text', 'default_value' => 'Our most' ),
+				array( 'key' => 'field_sp_mt_heading_highlight', 'label' => 'Heading — highlighted', 'name' => 'mt_heading_highlight', 'type' => 'text', 'default_value' => 'trusted' ),
+				array( 'key' => 'field_sp_mt_heading_post', 'label' => 'Heading — end', 'name' => 'mt_heading_post', 'type' => 'text', 'default_value' => 'treatments' ),
+				array( 'key' => 'field_sp_mt_subheading', 'label' => 'Subheading', 'name' => 'mt_subheading', 'type' => 'text', 'default_value' => 'Dispensed by UK-based Pharmacists, delivered with care' ),
+				array(
+					'key'          => 'field_sp_mt_cards',
+					'label'        => 'Cards (1 big + 2 small)',
+					'name'         => 'mt_cards',
+					'type'         => 'repeater',
+					'button_label' => 'Add card',
+					'layout'       => 'block',
+					'min'          => 0,
+					'max'          => 3,
+					'instructions' => 'First card renders large (left, ~60% width); next two render stacked on the right. Design works best with exactly 3.',
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_mt_card_image', 'label' => 'Background image', 'name' => 'image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium' ),
+						array( 'key' => 'field_sp_mt_card_badge', 'label' => 'Top badge (e.g. Most Popular)', 'name' => 'badge', 'type' => 'text' ),
+						array( 'key' => 'field_sp_mt_card_category', 'label' => 'Category eyebrow', 'name' => 'category', 'type' => 'text' ),
+						array( 'key' => 'field_sp_mt_card_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
+						array( 'key' => 'field_sp_mt_card_quote', 'label' => 'Testimonial quote', 'name' => 'quote', 'type' => 'textarea', 'rows' => 2 ),
+						array( 'key' => 'field_sp_mt_card_quote_author', 'label' => 'Testimonial author', 'name' => 'quote_author', 'type' => 'text' ),
+						array( 'key' => 'field_sp_mt_card_price', 'label' => 'Price (e.g. £199)', 'name' => 'price', 'type' => 'text' ),
+						array( 'key' => 'field_sp_mt_card_price_unit', 'label' => 'Price unit (e.g. /month)', 'name' => 'price_unit', 'type' => 'text', 'default_value' => '/month' ),
+						array( 'key' => 'field_sp_mt_card_cta_label', 'label' => 'CTA label', 'name' => 'cta_label', 'type' => 'text', 'default_value' => 'View →' ),
+						array( 'key' => 'field_sp_mt_card_cta_url', 'label' => 'CTA URL', 'name' => 'cta_url', 'type' => 'url' ),
+					),
+				),
+				array( 'key' => 'field_sp_mt_bottom_cta_label', 'label' => 'Bottom CTA label', 'name' => 'mt_bottom_cta_label', 'type' => 'text', 'default_value' => 'Browse All Treatments' ),
+				array( 'key' => 'field_sp_mt_bottom_cta_url', 'label' => 'Bottom CTA URL', 'name' => 'mt_bottom_cta_url', 'type' => 'url', 'default_value' => '/shop/' ),
 			),
 		)
 	);
