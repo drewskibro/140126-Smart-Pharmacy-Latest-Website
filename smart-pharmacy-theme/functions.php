@@ -2,6 +2,15 @@
 /**
  * Smart Pharmacy theme functions.
  *
+ * Architecture mirrors Denton / Easy Pharmacy (PharmoDigital pattern):
+ *   - ACF-powered content with a three-tier field fallback (see inc/helpers.php)
+ *   - Theme Settings options pages for global content (see inc/acf-options.php)
+ *   - Field groups declared in code (see inc/acf-fields.php)
+ *
+ * Divergences from other themes:
+ *   - Tailwind CSS is compiled in CI (see .github/workflows/deploy-smart-pharmacy-to-kinsta.yml)
+ *   - WooCommerce is supported (first theme in the suite with WC)
+ *
  * @package SmartPharmacy
  */
 
@@ -12,6 +21,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'SMART_PHARMACY_VERSION', '0.1.0' );
 define( 'SMART_PHARMACY_DIR', get_template_directory() );
 define( 'SMART_PHARMACY_URI', get_template_directory_uri() );
+
+require_once SMART_PHARMACY_DIR . '/inc/helpers.php';
+require_once SMART_PHARMACY_DIR . '/inc/acf-options.php';
+require_once SMART_PHARMACY_DIR . '/inc/acf-fields.php';
 
 /**
  * Theme setup: supports, menus, textdomain.
@@ -57,6 +70,24 @@ function smart_pharmacy_declare_wc_compatibility() {
 add_action( 'before_woocommerce_init', 'smart_pharmacy_declare_wc_compatibility' );
 
 /**
+ * Cache-bust a theme asset using its modification time.
+ *
+ * Per PharmoDigital convention: version strings are derived from the CSS/JS
+ * file's mtime, NOT functions.php. This guarantees a cache bust on every real
+ * asset change without manually bumping SMART_PHARMACY_VERSION.
+ *
+ * @param string $relative_path Path from the theme root, e.g. 'assets/css/tailwind.css'.
+ * @return string Version string.
+ */
+function sp_asset_version( $relative_path ) {
+	$full = SMART_PHARMACY_DIR . '/' . ltrim( $relative_path, '/' );
+	if ( file_exists( $full ) ) {
+		return (string) filemtime( $full );
+	}
+	return SMART_PHARMACY_VERSION;
+}
+
+/**
  * Enqueue front-end styles and scripts.
  */
 function smart_pharmacy_enqueue_assets() {
@@ -68,20 +99,20 @@ function smart_pharmacy_enqueue_assets() {
 		null
 	);
 
-	// Compiled Tailwind output.
+	// Compiled Tailwind output (built in CI by GitHub Actions).
 	wp_enqueue_style(
 		'smart-pharmacy-tailwind',
 		SMART_PHARMACY_URI . '/assets/css/tailwind.css',
 		array(),
-		SMART_PHARMACY_VERSION
+		sp_asset_version( 'assets/css/tailwind.css' )
 	);
 
-	// Custom CSS: animations, overrides, scroll progress, etc.
+	// Custom CSS: animations, overrides, scroll progress.
 	wp_enqueue_style(
 		'smart-pharmacy-styles',
 		SMART_PHARMACY_URI . '/assets/css/styles.css',
 		array( 'smart-pharmacy-tailwind' ),
-		SMART_PHARMACY_VERSION
+		sp_asset_version( 'assets/css/styles.css' )
 	);
 
 	// Search dropdown and rotating placeholder.
@@ -89,7 +120,7 @@ function smart_pharmacy_enqueue_assets() {
 		'smart-pharmacy-search',
 		SMART_PHARMACY_URI . '/assets/js/search-animation.js',
 		array(),
-		SMART_PHARMACY_VERSION,
+		sp_asset_version( 'assets/js/search-animation.js' ),
 		true
 	);
 }
@@ -98,9 +129,9 @@ add_action( 'wp_enqueue_scripts', 'smart_pharmacy_enqueue_assets' );
 /**
  * Register the Treatment custom post type.
  *
- * Treatment posts are SEO/educational landing pages (e.g. /treatments/weight-loss/).
- * They link out to one or more WooCommerce products (the actual SKUs) via a
- * related-products meta field added in a later stage.
+ * Treatments are SEO/educational landing pages (e.g. /treatments/weight-loss/)
+ * that link out to one or more WooCommerce products (the actual SKUs) via a
+ * related-products ACF relationship field added in Stage 2+.
  */
 function smart_pharmacy_register_treatment_cpt() {
 	$labels = array(
@@ -137,3 +168,23 @@ function smart_pharmacy_register_treatment_cpt() {
 	);
 }
 add_action( 'init', 'smart_pharmacy_register_treatment_cpt' );
+
+/**
+ * Admin notice if ACF Pro is not active.
+ *
+ * The theme degrades gracefully (sp_field() returns the hardcoded default),
+ * but most of the site will be blank without ACF content, so we surface it.
+ */
+function smart_pharmacy_admin_notice_acf() {
+	if ( function_exists( 'acf_add_options_page' ) ) {
+		return;
+	}
+	$screen = get_current_screen();
+	if ( ! $screen || ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	echo '<div class="notice notice-warning"><p><strong>Smart Pharmacy:</strong> ';
+	esc_html_e( 'ACF Pro is required for theme content to render. Please install and activate Advanced Custom Fields Pro.', 'smart-pharmacy' );
+	echo '</p></div>';
+}
+add_action( 'admin_notices', 'smart_pharmacy_admin_notice_acf' );
