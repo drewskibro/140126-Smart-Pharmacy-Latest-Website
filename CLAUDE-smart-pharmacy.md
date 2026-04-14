@@ -35,6 +35,18 @@ deliberate divergences.
   - Options page registrations live in `inc/acf-options.php`. Currently:
     Branding, Contact, Compliance, Social, Navigation. No "Homepage" options
     page — homepage fields bind to the front page post directly.
+- **Editing UX conventions (match Denton / Easy Pharmacy):**
+  - All page-level field groups MUST include `'position' => 'acf_after_title'`
+    so the ACF panel renders directly beneath the page title, above the
+    editor and Yoast. Editors see the ACF panel as the first thing on the
+    page edit screen, not buried below the WP editor + Yoast metabox.
+  - Gutenberg is disabled for `page` and `treatment` post types via the
+    `use_block_editor_for_post_type` filter in `functions.php`. ACF drives
+    content on these post types, so the block editor adds clutter and
+    breaks the `acf_after_title` position. Other post types (if any —
+    e.g. WooCommerce products) keep Gutenberg.
+  - Stage 3+ field groups on Treatment CPT (B1–E1) follow the same
+    convention: `'position' => 'acf_after_title'` on every group.
 - Page-specific CSS prefix: `sp_` (matching `dp_` for Denton, `ep_` for Easy).
 - Deployed via GitHub Actions → SCP to Kinsta staging.
 - Cache-busting uses `filemtime()` on CSS/JS files, never on `functions.php`.
