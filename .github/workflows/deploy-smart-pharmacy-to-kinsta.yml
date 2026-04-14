@@ -1,0 +1,72 @@
+name: Deploy Smart Pharmacy to Kinsta
+
+# Matches the PharmoDigital deploy pattern (Denton / Easy Pharmacy), with an
+# added Node + Tailwind build step before SCP because Smart Pharmacy uses
+# a compiled Tailwind CSS stylesheet.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'smart-pharmacy-theme/**'
+      - '.github/workflows/deploy-smart-pharmacy-to-kinsta.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to Kinsta Staging
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install theme build dependencies
+        working-directory: smart-pharmacy-theme
+        run: npm install --no-audit --no-fund
+
+      - name: Build Tailwind CSS
+        working-directory: smart-pharmacy-theme
+        run: npm run build
+
+      - name: Remove dev-only files before deploy
+        # Kinsta only needs the runtime theme files. Strip build tooling,
+        # node_modules, and source so SCP uploads the minimum set.
+        working-directory: smart-pharmacy-theme
+        run: |
+          rm -rf node_modules
+          rm -rf src
+          rm -f package.json package-lock.json postcss.config.js tailwind.config.js .gitignore
+
+      - name: Deploy theme files to Kinsta
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.KINSTA_SSH_HOST }}
+          username: ${{ secrets.KINSTA_SSH_USER }}
+          password: ${{ secrets.KINSTA_SSH_PASSWORD }}
+          port: ${{ secrets.KINSTA_SSH_PORT }}
+          source: "smart-pharmacy-theme/"
+          target: "~/public/wp-content/themes/"
+
+      - name: Verify deployment
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.KINSTA_SSH_HOST }}
+          username: ${{ secrets.KINSTA_SSH_USER }}
+          password: ${{ secrets.KINSTA_SSH_PASSWORD }}
+          port: ${{ secrets.KINSTA_SSH_PORT }}
+          script: |
+            echo "=== Deployed theme files ==="
+            ls -la ~/public/wp-content/themes/smart-pharmacy-theme/style.css
+            ls -la ~/public/wp-content/themes/smart-pharmacy-theme/assets/css/tailwind.css
+            echo ""
+            echo "=== Theme header ==="
+            head -12 ~/public/wp-content/themes/smart-pharmacy-theme/style.css
+            echo ""
+            echo "Deploy complete."
