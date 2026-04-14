@@ -51,6 +51,7 @@ function sp_register_acf_field_groups() {
 		array(
 			'key'      => 'group_sp_a1_hero',
 			'title'    => 'A1 — Homepage Hero',
+			'position' => 'acf_after_title',
 			'location' => array(
 				array(
 					array(
@@ -270,6 +271,7 @@ function sp_register_acf_field_groups() {
 		array(
 			'key'      => 'group_sp_a2_popular_treatments',
 			'title'    => 'A2 — Popular Treatments',
+			'position' => 'acf_after_title',
 			'location' => array(
 				array(
 					array(
@@ -367,6 +369,7 @@ function sp_register_acf_field_groups() {
 		array(
 			'key'      => 'group_sp_a3_featured',
 			'title'    => 'A3 — Featured Treatment',
+			'position' => 'acf_after_title',
 			'location' => array(
 				array(
 					array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ),
@@ -420,6 +423,7 @@ function sp_register_acf_field_groups() {
 		array(
 			'key'      => 'group_sp_a4_how_it_works',
 			'title'    => 'A4 — How It Works',
+			'position' => 'acf_after_title',
 			'location' => array(
 				array(
 					array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ),
@@ -462,6 +466,7 @@ function sp_register_acf_field_groups() {
 		array(
 			'key'      => 'group_sp_a5_nhs',
 			'title'    => 'A5 — NHS Prescription',
+			'position' => 'acf_after_title',
 			'location' => array(
 				array(
 					array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ),
@@ -506,6 +511,7 @@ function sp_register_acf_field_groups() {
 		array(
 			'key'      => 'group_sp_a6_safety',
 			'title'    => 'A6 — Safety / GPhC',
+			'position' => 'acf_after_title',
 			'location' => array(
 				array(
 					array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ),
@@ -546,6 +552,7 @@ function sp_register_acf_field_groups() {
 		array(
 			'key'      => 'group_sp_a7_most_trusted',
 			'title'    => 'A7 — Most Trusted Treatments',
+			'position' => 'acf_after_title',
 			'location' => array(
 				array(
 					array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ),
@@ -603,6 +610,7 @@ function sp_register_acf_field_groups() {
 		array(
 			'key'      => 'group_sp_a8_bestsellers',
 			'title'    => 'A8 — Shop Bestsellers',
+			'position' => 'acf_after_title',
 			'location' => array(
 				array(
 					array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ),
@@ -652,6 +660,7 @@ function sp_register_acf_field_groups() {
 		array(
 			'key'      => 'group_sp_a9_testimonials',
 			'title'    => 'A9 — Testimonials',
+			'position' => 'acf_after_title',
 			'location' => array(
 				array(
 					array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ),
@@ -706,6 +715,7 @@ function sp_register_acf_field_groups() {
 		array(
 			'key'      => 'group_sp_a10_faq',
 			'title'    => 'A10 — FAQ',
+			'position' => 'acf_after_title',
 			'location' => array(
 				array(
 					array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ),

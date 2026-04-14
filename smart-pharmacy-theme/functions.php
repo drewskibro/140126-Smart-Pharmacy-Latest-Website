@@ -179,6 +179,29 @@ function smart_pharmacy_register_treatment_cpt() {
 add_action( 'init', 'smart_pharmacy_register_treatment_cpt' );
 
 /**
+ * Disable the Gutenberg block editor for `page` and `treatment` post types.
+ *
+ * These post types are driven entirely by ACF field groups (positioned
+ * `acf_after_title` so editors see them immediately). Gutenberg would just
+ * add visual clutter and isn't used for content. The classic editor also
+ * makes the `acf_after_title` ACF position work properly -- with Gutenberg
+ * it silently falls back to `normal` (below the editor).
+ *
+ * Matches the editing pattern used in Denton / Easy Pharmacy.
+ *
+ * @param bool   $use_block_editor Whether the post type can use the block editor.
+ * @param string $post_type        The post type being checked.
+ * @return bool
+ */
+function smart_pharmacy_disable_gutenberg( $use_block_editor, $post_type ) {
+	if ( in_array( $post_type, array( 'page', 'treatment' ), true ) ) {
+		return false;
+	}
+	return $use_block_editor;
+}
+add_filter( 'use_block_editor_for_post_type', 'smart_pharmacy_disable_gutenberg', 10, 2 );
+
+/**
  * Admin notice if ACF Pro is not active.
  *
  * The theme degrades gracefully (sp_field() returns the hardcoded default),
