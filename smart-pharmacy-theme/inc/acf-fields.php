@@ -7,16 +7,16 @@
  * lives in code, not the database.
  *
  * Registered so far:
- *   A1  Options (Homepage) — Hero section
- *   A2  Options (Homepage) — Popular Treatments carousel
- *   A3  Options (Homepage) — Featured Treatment showcase (Weight Loss block)
- *   A4  Options (Homepage) — How It Works
- *   A5  Options (Homepage) — NHS Prescription
- *   A6  Options (Homepage) — Safety / GPhC
- *   A7  Options (Homepage) — Most Trusted Treatments
- *   A8  Options (Homepage) — Shop Bestsellers (static; real WC loop in Stage 4)
- *   A9  Options (Homepage) — Testimonials
- *   A10 Options (Homepage) — FAQ
+ *   A1  Page (front page) — Hero section
+ *   A2  Page (front page) — Popular Treatments carousel
+ *   A3  Page (front page) — Featured Treatment showcase
+ *   A4  Page (front page) — How It Works
+ *   A5  Page (front page) — NHS Prescription
+ *   A6  Page (front page) — Safety / GPhC
+ *   A7  Page (front page) — Most Trusted Treatments
+ *   A8  Page (front page) — Shop Bestsellers (static; real WC loop in Stage 4)
+ *   A9  Page (front page) — Testimonials
+ *   A10 Page (front page) — FAQ
  *   F1  Options — Branding (logo, footer tagline, payment methods)
  *   G1  Options — Navigation (primary menu, footer link columns, search, NHS button)
  *   H1  Options — Contact (trading address, registered address)
@@ -24,7 +24,7 @@
  *   J1  Options — Social (platform URLs)
  *
  * Planned:
- *   B1–E1  Treatment CPT (meta, benefits, FAQ, related products)
+ *   B1–E1  Treatment CPT (meta, benefits, FAQ, related products) — page-level on the CPT post
  *
  * @package SmartPharmacy
  */
@@ -54,9 +54,9 @@ function sp_register_acf_field_groups() {
 			'location' => array(
 				array(
 					array(
-						'param'    => 'options_page',
+						'param'    => 'page_type',
 						'operator' => '==',
-						'value'    => 'sp-homepage',
+						'value'    => 'front_page',
 					),
 				),
 			),
@@ -273,9 +273,9 @@ function sp_register_acf_field_groups() {
 			'location' => array(
 				array(
 					array(
-						'param'    => 'options_page',
+						'param'    => 'page_type',
 						'operator' => '==',
-						'value'    => 'sp-homepage',
+						'value'    => 'front_page',
 					),
 				),
 			),
@@ -369,7 +369,7 @@ function sp_register_acf_field_groups() {
 			'title'    => 'A3 — Featured Treatment',
 			'location' => array(
 				array(
-					array( 'param' => 'options_page', 'operator' => '==', 'value' => 'sp-homepage' ),
+					array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ),
 				),
 			),
 			'fields'   => array(
@@ -422,7 +422,7 @@ function sp_register_acf_field_groups() {
 			'title'    => 'A4 — How It Works',
 			'location' => array(
 				array(
-					array( 'param' => 'options_page', 'operator' => '==', 'value' => 'sp-homepage' ),
+					array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ),
 				),
 			),
 			'fields'   => array(
@@ -464,7 +464,7 @@ function sp_register_acf_field_groups() {
 			'title'    => 'A5 — NHS Prescription',
 			'location' => array(
 				array(
-					array( 'param' => 'options_page', 'operator' => '==', 'value' => 'sp-homepage' ),
+					array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ),
 				),
 			),
 			'fields'   => array(
@@ -508,7 +508,7 @@ function sp_register_acf_field_groups() {
 			'title'    => 'A6 — Safety / GPhC',
 			'location' => array(
 				array(
-					array( 'param' => 'options_page', 'operator' => '==', 'value' => 'sp-homepage' ),
+					array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ),
 				),
 			),
 			'fields'   => array(
@@ -548,7 +548,7 @@ function sp_register_acf_field_groups() {
 			'title'    => 'A7 — Most Trusted Treatments',
 			'location' => array(
 				array(
-					array( 'param' => 'options_page', 'operator' => '==', 'value' => 'sp-homepage' ),
+					array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ),
 				),
 			),
 			'fields'   => array(
@@ -605,7 +605,7 @@ function sp_register_acf_field_groups() {
 			'title'    => 'A8 — Shop Bestsellers',
 			'location' => array(
 				array(
-					array( 'param' => 'options_page', 'operator' => '==', 'value' => 'sp-homepage' ),
+					array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ),
 				),
 			),
 			'fields'   => array(
@@ -654,7 +654,7 @@ function sp_register_acf_field_groups() {
 			'title'    => 'A9 — Testimonials',
 			'location' => array(
 				array(
-					array( 'param' => 'options_page', 'operator' => '==', 'value' => 'sp-homepage' ),
+					array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ),
 				),
 			),
 			'fields'   => array(
@@ -708,7 +708,7 @@ function sp_register_acf_field_groups() {
 			'title'    => 'A10 — FAQ',
 			'location' => array(
 				array(
-					array( 'param' => 'options_page', 'operator' => '==', 'value' => 'sp-homepage' ),
+					array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ),
 				),
 			),
 			'fields'   => array(
