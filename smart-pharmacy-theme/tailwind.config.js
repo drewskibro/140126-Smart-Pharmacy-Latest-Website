@@ -3,9 +3,17 @@ module.exports = {
   content: [
     './*.php',
     './template-parts/**/*.php',
+    './page-templates/**/*.php',
     './woocommerce/**/*.php',
+    './inc/**/*.php',
     './assets/js/**/*.js',
     './src/**/*.css',
+  ],
+  // Safelist: classes only toggled dynamically by main.js must be preserved
+  // because Tailwind's JIT cannot detect class additions from JavaScript.
+  safelist: [
+    'translate-x-full',
+    'hidden',
   ],
   theme: {
     extend: {
