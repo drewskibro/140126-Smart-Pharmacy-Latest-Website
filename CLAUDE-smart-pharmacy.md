@@ -25,8 +25,16 @@ deliberate divergences.
   → hardcoded default.
 - Field groups registered in code via `acf_add_local_field_group()`, letter-
   coded (A1, A2, B1, ...) in `inc/acf-fields.php`.
-- Options pages in `inc/acf-options.php`: Branding, Contact, Compliance,
-  Social, Navigation.
+- **Where ACF fields live — decision tree:**
+  - *Page-specific content* (homepage, individual pages, CPT posts) → page-level
+    fields using `page_type == front_page`, `post == <id>`, `page_template == foo.php`,
+    or `post_type == treatment` location rules. Gives clients the expected "edit
+    this page" flow and gets revisions / previews / scheduling for free.
+  - *Truly global content* (branding, nav, contact info, compliance, social URLs)
+    → options pages. Changing once updates site-wide.
+  - Options page registrations live in `inc/acf-options.php`. Currently:
+    Branding, Contact, Compliance, Social, Navigation. No "Homepage" options
+    page — homepage fields bind to the front page post directly.
 - Page-specific CSS prefix: `sp_` (matching `dp_` for Denton, `ep_` for Easy).
 - Deployed via GitHub Actions → SCP to Kinsta staging.
 - Cache-busting uses `filemtime()` on CSS/JS files, never on `functions.php`.
