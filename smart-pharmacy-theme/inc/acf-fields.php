@@ -17,6 +17,9 @@
  *   A8  Page (front page) — Shop Bestsellers (static; real WC loop in Stage 4)
  *   A9  Page (front page) — Testimonials
  *   A10 Page (front page) — FAQ
+ *   B1  Post type (treatment) — Treatment Hero
+ *   B2  Post type (treatment) — Treatment How It Works
+ *   B3  Post type (treatment) — Treatment Options / Pricing (static; WC in Stage 4)
  *   F1  Options — Branding (logo, footer tagline, payment methods)
  *   G1  Options — Navigation (primary menu, footer link columns, search, NHS button)
  *   H1  Options — Contact (trading address, registered address)
@@ -24,7 +27,12 @@
  *   J1  Options — Social (platform URLs)
  *
  * Planned:
- *   B1–E1  Treatment CPT (meta, benefits, FAQ, related products) — page-level on the CPT post
+ *   C1  Post type (treatment) — What's Included / Benefits (Stage 3b)
+ *   C2  Post type (treatment) — Results / Testimonials (Stage 3b)
+ *   C3  Post type (treatment) — Eligibility Calculator (Stage 3b stub; Stage 5 real)
+ *   D1  Post type (treatment) — FAQ (Stage 3c)
+ *   D2  Post type (treatment) — Final CTA (Stage 3c)
+ *   E1  Post type (treatment) — Related WooCommerce products (Stage 3c stub; Stage 4 wires real relationships)
  *
  * @package SmartPharmacy
  */
@@ -758,6 +766,171 @@ function sp_register_acf_field_groups() {
 						array( 'key' => 'field_sp_faq_c_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
 						array( 'key' => 'field_sp_faq_c_body', 'label' => 'Body', 'name' => 'body', 'type' => 'text' ),
 						array( 'key' => 'field_sp_faq_c_url', 'label' => 'URL', 'name' => 'url', 'type' => 'text' ),
+					),
+				),
+			),
+		)
+	);
+
+	/* ===============================================================
+	 * TREATMENT CPT FIELD GROUPS (B1–E1)
+	 *
+	 * All scoped to the `treatment` post type. All use
+	 * `position => 'acf_after_title'` so the panel sits above the
+	 * (disabled) Gutenberg editor on the edit screen.
+	 * =============================================================== */
+
+	/* ---------------------------------------------------------------
+	 * B1 — Treatment Hero
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_b1_treatment_hero',
+			'title'    => 'B1 — Treatment Hero',
+			'position' => 'acf_after_title',
+			'location' => array(
+				array(
+					array( 'param' => 'post_type', 'operator' => '==', 'value' => 'treatment' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_tx_hero_category', 'label' => 'Category eyebrow', 'name' => 'tx_hero_category', 'type' => 'text', 'instructions' => 'Small label above the heading (e.g. WEIGHT MANAGEMENT).' ),
+				array( 'key' => 'field_sp_tx_hero_h_pre', 'label' => 'Heading — start', 'name' => 'tx_hero_heading_pre', 'type' => 'text' ),
+				array( 'key' => 'field_sp_tx_hero_h_hi', 'label' => 'Heading — highlighted (teal gradient)', 'name' => 'tx_hero_heading_highlight', 'type' => 'text' ),
+				array( 'key' => 'field_sp_tx_hero_h_post', 'label' => 'Heading — end', 'name' => 'tx_hero_heading_post', 'type' => 'text' ),
+				array( 'key' => 'field_sp_tx_hero_sub', 'label' => 'Subheading', 'name' => 'tx_hero_subheading', 'type' => 'textarea', 'rows' => 3 ),
+				array( 'key' => 'field_sp_tx_hero_cta1_l', 'label' => 'Primary CTA label', 'name' => 'tx_hero_primary_cta_label', 'type' => 'text', 'default_value' => 'Start Consultation' ),
+				array( 'key' => 'field_sp_tx_hero_cta1_u', 'label' => 'Primary CTA URL', 'name' => 'tx_hero_primary_cta_url', 'type' => 'url', 'default_value' => '#consultation' ),
+				array( 'key' => 'field_sp_tx_hero_cta2_l', 'label' => 'Secondary CTA label', 'name' => 'tx_hero_secondary_cta_label', 'type' => 'text', 'default_value' => 'Learn More' ),
+				array( 'key' => 'field_sp_tx_hero_cta2_u', 'label' => 'Secondary CTA URL', 'name' => 'tx_hero_secondary_cta_url', 'type' => 'url', 'default_value' => '#how-it-works' ),
+				array( 'key' => 'field_sp_tx_hero_image', 'label' => 'Hero image', 'name' => 'tx_hero_image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium' ),
+				array(
+					'key'          => 'field_sp_tx_hero_trust',
+					'label'        => 'Trust items (row below CTAs)',
+					'name'         => 'tx_hero_trust_items',
+					'type'         => 'repeater',
+					'button_label' => 'Add trust item',
+					'layout'       => 'table',
+					'min'          => 0,
+					'max'          => 6,
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_tx_hero_trust_icon', 'label' => 'Icon', 'name' => 'icon', 'type' => 'select', 'choices' => $sp_icon_choices, 'default_value' => 'check', 'ui' => 1 ),
+						array( 'key' => 'field_sp_tx_hero_trust_label', 'label' => 'Label', 'name' => 'label', 'type' => 'text' ),
+					),
+				),
+				array(
+					'key'          => 'field_sp_tx_hero_stats',
+					'label'        => 'Overlay stat cards (max 2)',
+					'name'         => 'tx_hero_stats',
+					'type'         => 'repeater',
+					'button_label' => 'Add stat',
+					'layout'       => 'table',
+					'min'          => 0,
+					'max'          => 2,
+					'instructions' => 'Two stat tiles that overlay the bottom of the hero image.',
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_tx_hero_stat_value', 'label' => 'Value', 'name' => 'value', 'type' => 'text' ),
+						array( 'key' => 'field_sp_tx_hero_stat_label', 'label' => 'Label', 'name' => 'label', 'type' => 'text' ),
+					),
+				),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * B2 — Treatment How It Works
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_b2_treatment_how_it_works',
+			'title'    => 'B2 — Treatment How It Works',
+			'position' => 'acf_after_title',
+			'location' => array(
+				array(
+					array( 'param' => 'post_type', 'operator' => '==', 'value' => 'treatment' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_tx_how_enabled', 'label' => 'Show section', 'name' => 'tx_how_enabled', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1 ),
+				array( 'key' => 'field_sp_tx_how_badge_pre', 'label' => 'Badge — start', 'name' => 'tx_how_badge_pre', 'type' => 'text', 'default_value' => 'Simple' ),
+				array( 'key' => 'field_sp_tx_how_badge_hi', 'label' => 'Badge — highlighted', 'name' => 'tx_how_badge_highlight', 'type' => 'text', 'default_value' => '3-Step' ),
+				array( 'key' => 'field_sp_tx_how_badge_suf', 'label' => 'Badge — suffix', 'name' => 'tx_how_badge_suffix', 'type' => 'text', 'default_value' => 'Process' ),
+				array( 'key' => 'field_sp_tx_how_h_pre', 'label' => 'Heading — start', 'name' => 'tx_how_heading_pre', 'type' => 'text', 'default_value' => 'How It' ),
+				array( 'key' => 'field_sp_tx_how_h_hi', 'label' => 'Heading — highlighted', 'name' => 'tx_how_heading_highlight', 'type' => 'text', 'default_value' => 'Works' ),
+				array( 'key' => 'field_sp_tx_how_sub', 'label' => 'Subheading', 'name' => 'tx_how_subheading', 'type' => 'text' ),
+				array(
+					'key'          => 'field_sp_tx_how_steps',
+					'label'        => 'Steps',
+					'name'         => 'tx_how_steps',
+					'type'         => 'repeater',
+					'button_label' => 'Add step',
+					'layout'       => 'block',
+					'min'          => 0,
+					'max'          => 4,
+					'instructions' => 'Each step renders as a numbered card. Design works best with 3.',
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_tx_how_step_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
+						array( 'key' => 'field_sp_tx_how_step_meta', 'label' => 'Meta pill label', 'name' => 'meta_label', 'type' => 'text', 'instructions' => 'Small pill inside the card (e.g. "2-5 Minutes", "UK Doctors", "Next Day").' ),
+						array( 'key' => 'field_sp_tx_how_step_icon', 'label' => 'Meta pill icon', 'name' => 'meta_icon', 'type' => 'select', 'choices' => $sp_icon_choices, 'default_value' => 'check', 'ui' => 1 ),
+						array( 'key' => 'field_sp_tx_how_step_desc', 'label' => 'Description', 'name' => 'description', 'type' => 'textarea', 'rows' => 3 ),
+					),
+				),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * B3 — Treatment Options / Pricing
+	 * (Static repeater for Stage 3a; Stage 4 replaces the data source
+	 *  with a real WC_Query or ACF Relationship to WC product objects.)
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_b3_treatment_options',
+			'title'    => 'B3 — Treatment Options / Pricing',
+			'position' => 'acf_after_title',
+			'location' => array(
+				array(
+					array( 'param' => 'post_type', 'operator' => '==', 'value' => 'treatment' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_tx_opts_enabled', 'label' => 'Show section', 'name' => 'tx_opts_enabled', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1 ),
+				array( 'key' => 'field_sp_tx_opts_badge_pre', 'label' => 'Badge — start', 'name' => 'tx_opts_badge_pre', 'type' => 'text', 'default_value' => 'Prescription' ),
+				array( 'key' => 'field_sp_tx_opts_badge_hi', 'label' => 'Badge — highlighted', 'name' => 'tx_opts_badge_highlight', 'type' => 'text', 'default_value' => 'Treatments' ),
+				array( 'key' => 'field_sp_tx_opts_h_pre', 'label' => 'Heading — start', 'name' => 'tx_opts_heading_pre', 'type' => 'text' ),
+				array( 'key' => 'field_sp_tx_opts_h_hi', 'label' => 'Heading — highlighted', 'name' => 'tx_opts_heading_highlight', 'type' => 'text' ),
+				array( 'key' => 'field_sp_tx_opts_sub', 'label' => 'Subheading', 'name' => 'tx_opts_subheading', 'type' => 'text' ),
+				array(
+					'key'          => 'field_sp_tx_opts_items',
+					'label'        => 'Options (max 4)',
+					'name'         => 'tx_opts_items',
+					'type'         => 'repeater',
+					'button_label' => 'Add option',
+					'layout'       => 'block',
+					'min'          => 0,
+					'max'          => 4,
+					'instructions' => 'Design works best with 1–2 options. Each renders as a pricing card.',
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_tx_opt_icon', 'label' => 'Icon', 'name' => 'icon', 'type' => 'select', 'choices' => $sp_icon_choices, 'default_value' => 'sparkle', 'ui' => 1 ),
+						array( 'key' => 'field_sp_tx_opt_name', 'label' => 'Name', 'name' => 'name', 'type' => 'text' ),
+						array( 'key' => 'field_sp_tx_opt_badge', 'label' => 'Top-right badge (optional)', 'name' => 'badge', 'type' => 'text', 'instructions' => 'E.g. "Most Popular", "New", "Best Value".' ),
+						array(
+							'key'          => 'field_sp_tx_opt_benefits',
+							'label'        => 'Bullet benefits',
+							'name'         => 'benefits',
+							'type'         => 'repeater',
+							'button_label' => 'Add benefit',
+							'layout'       => 'table',
+							'min'          => 0,
+							'sub_fields'   => array(
+								array( 'key' => 'field_sp_tx_opt_benefit_text', 'label' => 'Text', 'name' => 'text', 'type' => 'text' ),
+							),
+						),
+						array( 'key' => 'field_sp_tx_opt_price', 'label' => 'Price (e.g. £199)', 'name' => 'price', 'type' => 'text' ),
+						array( 'key' => 'field_sp_tx_opt_price_unit', 'label' => 'Price unit', 'name' => 'price_unit', 'type' => 'text', 'default_value' => '/month' ),
+						array( 'key' => 'field_sp_tx_opt_cta_l', 'label' => 'CTA label', 'name' => 'cta_label', 'type' => 'text', 'default_value' => 'Learn More' ),
+						array( 'key' => 'field_sp_tx_opt_cta_u', 'label' => 'CTA URL', 'name' => 'cta_url', 'type' => 'url', 'default_value' => '#consultation' ),
 					),
 				),
 			),
