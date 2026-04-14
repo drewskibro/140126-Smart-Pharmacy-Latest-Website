@@ -37,6 +37,10 @@ function sp_register_acf_options_pages() {
 
 	$subpages = array(
 		array(
+			'title' => __( 'Homepage', 'smart-pharmacy' ),
+			'slug'  => 'sp-homepage',
+		),
+		array(
 			'title' => __( 'Branding', 'smart-pharmacy' ),
 			'slug'  => 'sp-branding',
 		),
