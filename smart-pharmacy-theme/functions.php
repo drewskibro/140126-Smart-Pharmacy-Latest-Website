@@ -115,7 +115,16 @@ function smart_pharmacy_enqueue_assets() {
 		sp_asset_version( 'assets/css/styles.css' )
 	);
 
-	// Search dropdown and rotating placeholder.
+	// Shared JS: scroll progress bar, mobile menu toggle.
+	wp_enqueue_script(
+		'smart-pharmacy-main',
+		SMART_PHARMACY_URI . '/assets/js/main.js',
+		array(),
+		sp_asset_version( 'assets/js/main.js' ),
+		true
+	);
+
+	// Search dropdown and rotating placeholder (scoped to the hero search input).
 	wp_enqueue_script(
 		'smart-pharmacy-search',
 		SMART_PHARMACY_URI . '/assets/js/search-animation.js',
