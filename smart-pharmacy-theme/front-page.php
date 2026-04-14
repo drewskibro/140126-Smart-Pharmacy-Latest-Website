@@ -2,18 +2,20 @@
 /**
  * Front page template.
  *
- * Stage 2 will port the full homepage markup from index.html into this file,
- * broken into template-parts/ partials.
+ * Assembles the homepage from section-specific template parts. Each part is
+ * self-contained (pulls its own ACF data, has its own enabled toggle) so
+ * stages can add / reorder sections without touching unrelated files.
+ *
+ * Sections ported so far:
+ *   - Hero (Stage 2b)
+ *   - Popular Treatments carousel (Stage 2b)
  *
  * @package SmartPharmacy
  */
 
 get_header();
-?>
 
-<div class="front-page-placeholder">
-	<?php // Intentionally empty until stage 2. ?>
-</div>
+get_template_part( 'template-parts/front-page/hero' );
+get_template_part( 'template-parts/front-page/popular-treatments' );
 
-<?php
 get_footer();
