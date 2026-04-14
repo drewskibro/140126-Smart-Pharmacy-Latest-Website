@@ -1,0 +1,26 @@
+/*
+Theme Name:        Smart Pharmacy
+Theme URI:         https://example.com/smart-pharmacy
+Author:            Smart Pharmacy
+Author URI:        https://example.com
+Description:       A WooCommerce-ready pharmacy theme with treatment landing pages, consultation-gated checkout, and a bespoke teal brand design.
+Version:           0.1.0
+Requires at least: 6.4
+Tested up to:      6.5
+Requires PHP:      8.0
+License:           GPL-2.0-or-later
+License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain:       smart-pharmacy
+Tags:              woocommerce, e-commerce, pharmacy, custom-logo, custom-menu, translation-ready
+*/
+
+/*
+ * Intentionally empty.
+ *
+ * Theme styles live in:
+ *   - assets/css/tailwind.css  (compiled from src/input.css via `npm run build`)
+ *   - assets/css/styles.css    (custom animations and overrides)
+ *
+ * Both are enqueued in functions.php. This file exists only to satisfy
+ * WordPress's theme header requirement.
+ */
