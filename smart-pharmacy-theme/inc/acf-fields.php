@@ -14,6 +14,9 @@
  *   A5  Options (Homepage) — NHS Prescription
  *   A6  Options (Homepage) — Safety / GPhC
  *   A7  Options (Homepage) — Most Trusted Treatments
+ *   A8  Options (Homepage) — Shop Bestsellers (static; real WC loop in Stage 4)
+ *   A9  Options (Homepage) — Testimonials
+ *   A10 Options (Homepage) — FAQ
  *   F1  Options — Branding (logo, footer tagline, payment methods)
  *   G1  Options — Navigation (primary menu, footer link columns, search, NHS button)
  *   H1  Options — Contact (trading address, registered address)
@@ -21,7 +24,6 @@
  *   J1  Options — Social (platform URLs)
  *
  * Planned:
- *   A8     Remaining front page sections (testimonials, FAQ, bestsellers)
  *   B1–E1  Treatment CPT (meta, benefits, FAQ, related products)
  *
  * @package SmartPharmacy
@@ -582,6 +584,172 @@ function sp_register_acf_field_groups() {
 				),
 				array( 'key' => 'field_sp_mt_bottom_cta_label', 'label' => 'Bottom CTA label', 'name' => 'mt_bottom_cta_label', 'type' => 'text', 'default_value' => 'Browse All Treatments' ),
 				array( 'key' => 'field_sp_mt_bottom_cta_url', 'label' => 'Bottom CTA URL', 'name' => 'mt_bottom_cta_url', 'type' => 'url', 'default_value' => '/shop/' ),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * A8 — Shop Bestsellers (options)  — static, replaced with real WC query in Stage 4
+	 * ------------------------------------------------------------- */
+	$sp_colour_choices = array(
+		'teal'   => 'Teal',
+		'purple' => 'Purple',
+		'green'  => 'Green',
+		'orange' => 'Orange',
+		'red'    => 'Red',
+		'blue'   => 'Blue',
+	);
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_a8_bestsellers',
+			'title'    => 'A8 — Shop Bestsellers',
+			'location' => array(
+				array(
+					array( 'param' => 'options_page', 'operator' => '==', 'value' => 'sp-homepage' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_bs_enabled', 'label' => 'Show section', 'name' => 'bs_enabled', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1 ),
+				array( 'key' => 'field_sp_bs_badge_label', 'label' => 'Badge label', 'name' => 'bs_badge_label', 'type' => 'text', 'default_value' => 'Shop Bestsellers' ),
+				array( 'key' => 'field_sp_bs_heading_pre', 'label' => 'Heading — start', 'name' => 'bs_heading_pre', 'type' => 'text', 'default_value' => 'Top Pharmacy' ),
+				array( 'key' => 'field_sp_bs_heading_highlight', 'label' => 'Heading — highlighted', 'name' => 'bs_heading_highlight', 'type' => 'text', 'default_value' => 'Essentials' ),
+				array( 'key' => 'field_sp_bs_subheading', 'label' => 'Subheading', 'name' => 'bs_subheading', 'type' => 'text', 'default_value' => 'Fast delivery on everyday health essentials. Trusted brands, unbeatable prices.' ),
+				array(
+					'key'          => 'field_sp_bs_products',
+					'label'        => 'Products (static)',
+					'name'         => 'bs_products',
+					'type'         => 'repeater',
+					'button_label' => 'Add product',
+					'layout'       => 'block',
+					'min'          => 0,
+					'instructions' => 'Static product cards. Replaced with a real WooCommerce query in Stage 4.',
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_bs_p_image', 'label' => 'Image', 'name' => 'image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'thumbnail' ),
+						array( 'key' => 'field_sp_bs_p_bg', 'label' => 'Image bg tint', 'name' => 'bg', 'type' => 'select', 'choices' => $sp_colour_choices, 'default_value' => 'teal', 'ui' => 1 ),
+						array( 'key' => 'field_sp_bs_p_category', 'label' => 'Category label', 'name' => 'category', 'type' => 'text' ),
+						array( 'key' => 'field_sp_bs_p_category_colour', 'label' => 'Category text colour', 'name' => 'category_colour', 'type' => 'select', 'choices' => $sp_colour_choices, 'default_value' => 'teal', 'ui' => 1 ),
+						array( 'key' => 'field_sp_bs_p_name', 'label' => 'Name', 'name' => 'name', 'type' => 'text' ),
+						array( 'key' => 'field_sp_bs_p_desc', 'label' => 'Description', 'name' => 'description', 'type' => 'text' ),
+						array( 'key' => 'field_sp_bs_p_rating', 'label' => 'Rating (1-5)', 'name' => 'rating', 'type' => 'number', 'min' => 1, 'max' => 5, 'default_value' => 5 ),
+						array( 'key' => 'field_sp_bs_p_reviews', 'label' => 'Reviews count', 'name' => 'reviews', 'type' => 'number', 'default_value' => 2847 ),
+						array( 'key' => 'field_sp_bs_p_price', 'label' => 'Price', 'name' => 'price', 'type' => 'text' ),
+						array( 'key' => 'field_sp_bs_p_badge_text', 'label' => 'Top badge text (optional)', 'name' => 'badge_text', 'type' => 'text' ),
+						array( 'key' => 'field_sp_bs_p_badge_colour', 'label' => 'Top badge colour', 'name' => 'badge_colour', 'type' => 'select', 'choices' => $sp_colour_choices, 'default_value' => 'red', 'ui' => 1 ),
+						array( 'key' => 'field_sp_bs_p_cta_label', 'label' => 'CTA label', 'name' => 'cta_label', 'type' => 'text', 'default_value' => 'Add to Cart' ),
+						array( 'key' => 'field_sp_bs_p_cta_url', 'label' => 'CTA URL', 'name' => 'cta_url', 'type' => 'url' ),
+					),
+				),
+				array( 'key' => 'field_sp_bs_bottom_cta_label', 'label' => 'Bottom CTA label', 'name' => 'bs_bottom_cta_label', 'type' => 'text', 'default_value' => 'View All Products' ),
+				array( 'key' => 'field_sp_bs_bottom_cta_url', 'label' => 'Bottom CTA URL', 'name' => 'bs_bottom_cta_url', 'type' => 'url', 'default_value' => '/shop/' ),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * A9 — Testimonials (options)
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_a9_testimonials',
+			'title'    => 'A9 — Testimonials',
+			'location' => array(
+				array(
+					array( 'param' => 'options_page', 'operator' => '==', 'value' => 'sp-homepage' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_ts_enabled', 'label' => 'Show section', 'name' => 'ts_enabled', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1 ),
+				array( 'key' => 'field_sp_ts_patient_count', 'label' => 'Eyebrow patient count (animated)', 'name' => 'ts_patient_count', 'type' => 'number', 'default_value' => 50000 ),
+				array( 'key' => 'field_sp_ts_heading_pre', 'label' => 'Heading — start', 'name' => 'ts_heading_pre', 'type' => 'text', 'default_value' => 'Experience the' ),
+				array( 'key' => 'field_sp_ts_heading_highlight', 'label' => 'Heading — highlighted', 'name' => 'ts_heading_highlight', 'type' => 'text', 'default_value' => 'difference' ),
+				array( 'key' => 'field_sp_ts_subheading', 'label' => 'Subheading', 'name' => 'ts_subheading', 'type' => 'text', 'default_value' => 'Real stories from real patients who chose Smart Pharmacy for their healthcare journey' ),
+				array(
+					'key'          => 'field_sp_ts_cards',
+					'label'        => 'Testimonial cards (1 big + 2 small)',
+					'name'         => 'ts_cards',
+					'type'         => 'repeater',
+					'button_label' => 'Add card',
+					'layout'       => 'block',
+					'min'          => 0,
+					'max'          => 3,
+					'instructions' => 'First card = big (left, 7 cols, large stats). Next two stack on the right (5 cols, small stats). Design works best with exactly 3.',
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_ts_card_image', 'label' => 'Background image', 'name' => 'image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium' ),
+						array( 'key' => 'field_sp_ts_card_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
+						array( 'key' => 'field_sp_ts_card_quote', 'label' => 'Quote', 'name' => 'quote', 'type' => 'textarea', 'rows' => 3 ),
+						array( 'key' => 'field_sp_ts_card_author', 'label' => 'Author', 'name' => 'author', 'type' => 'text' ),
+						array(
+							'key'          => 'field_sp_ts_card_stats',
+							'label'        => 'Stats (max 2)',
+							'name'         => 'stats',
+							'type'         => 'repeater',
+							'button_label' => 'Add stat',
+							'layout'       => 'table',
+							'min'          => 0,
+							'max'          => 2,
+							'sub_fields'   => array(
+								array( 'key' => 'field_sp_ts_stat_value', 'label' => 'Value', 'name' => 'value', 'type' => 'text' ),
+								array( 'key' => 'field_sp_ts_stat_animate', 'label' => 'Animate?', 'name' => 'animate', 'type' => 'true_false', 'ui' => 1 ),
+								array( 'key' => 'field_sp_ts_stat_label', 'label' => 'Label', 'name' => 'label', 'type' => 'text' ),
+							),
+						),
+					),
+				),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * A10 — FAQ (options)
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_a10_faq',
+			'title'    => 'A10 — FAQ',
+			'location' => array(
+				array(
+					array( 'param' => 'options_page', 'operator' => '==', 'value' => 'sp-homepage' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_faq_enabled', 'label' => 'Show section', 'name' => 'faq_enabled', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1 ),
+				array( 'key' => 'field_sp_faq_badge_label', 'label' => 'Badge label', 'name' => 'faq_badge_label', 'type' => 'text', 'default_value' => '24/7 Support Available' ),
+				array( 'key' => 'field_sp_faq_heading_pre', 'label' => 'Heading — start', 'name' => 'faq_heading_pre', 'type' => 'text', 'default_value' => 'Ask us' ),
+				array( 'key' => 'field_sp_faq_heading_highlight', 'label' => 'Heading — highlighted', 'name' => 'faq_heading_highlight', 'type' => 'text', 'default_value' => 'anything' ),
+				array( 'key' => 'field_sp_faq_subheading', 'label' => 'Subheading', 'name' => 'faq_subheading', 'type' => 'textarea', 'rows' => 2, 'default_value' => 'Get instant answers to common questions, or speak with our pharmacy team for personalized support.' ),
+				array(
+					'key'          => 'field_sp_faq_items',
+					'label'        => 'Questions & answers',
+					'name'         => 'faq_items',
+					'type'         => 'repeater',
+					'button_label' => 'Add Q&A',
+					'layout'       => 'block',
+					'min'          => 0,
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_faq_q', 'label' => 'Question', 'name' => 'question', 'type' => 'text' ),
+						array( 'key' => 'field_sp_faq_a', 'label' => 'Answer', 'name' => 'answer', 'type' => 'textarea', 'rows' => 4 ),
+					),
+				),
+				array( 'key' => 'field_sp_faq_view_all_label', 'label' => 'View all label', 'name' => 'faq_view_all_label', 'type' => 'text', 'default_value' => 'View All Questions' ),
+				array( 'key' => 'field_sp_faq_view_all_url', 'label' => 'View all URL', 'name' => 'faq_view_all_url', 'type' => 'url', 'default_value' => '/faqs/' ),
+				array( 'key' => 'field_sp_faq_sidebar_heading', 'label' => 'Sidebar heading', 'name' => 'faq_sidebar_heading', 'type' => 'text', 'default_value' => 'Need more help?' ),
+				array( 'key' => 'field_sp_faq_sidebar_body', 'label' => 'Sidebar body', 'name' => 'faq_sidebar_body', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'Our pharmacy team is here to answer your questions and provide expert guidance on your healthcare journey.' ),
+				array(
+					'key'          => 'field_sp_faq_contacts',
+					'label'        => 'Sidebar contact links',
+					'name'         => 'faq_contacts',
+					'type'         => 'repeater',
+					'button_label' => 'Add link',
+					'layout'       => 'table',
+					'min'          => 0,
+					'max'          => 4,
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_faq_c_icon', 'label' => 'Icon', 'name' => 'icon', 'type' => 'select', 'choices' => $sp_icon_choices, 'ui' => 1 ),
+						array( 'key' => 'field_sp_faq_c_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
+						array( 'key' => 'field_sp_faq_c_body', 'label' => 'Body', 'name' => 'body', 'type' => 'text' ),
+						array( 'key' => 'field_sp_faq_c_url', 'label' => 'URL', 'name' => 'url', 'type' => 'text' ),
+					),
+				),
 			),
 		)
 	);

@@ -428,3 +428,20 @@ input:focus {
     background-color: #0f766e;
   }
 }
+
+/* FAQ ACCORDION */
+/* Remove native triangle marker on <summary> */
+.sp-faq summary::-webkit-details-marker {
+  display: none;
+}
+.sp-faq summary {
+  list-style: none;
+}
+/* Rotate + chevron to become an X when <details> is open */
+.sp-faq-item[open] .sp-faq-chevron {
+  transform: rotate(45deg);
+}
+/* Subtle teal border highlight when open */
+.sp-faq-item[open] {
+  border-color: rgba(16, 192, 169, 0.35);
+}

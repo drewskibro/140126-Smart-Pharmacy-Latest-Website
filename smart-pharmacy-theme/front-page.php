@@ -12,8 +12,13 @@
  *   - Featured Treatment showcase (Stage 2c)
  *   - How It Works (Stage 2c)
  *   - NHS Prescription (Stage 2c)
+ *   - Shop Bestsellers (Stage 2d — static; real WC query lands in Stage 4)
+ *   - Testimonials (Stage 2d)
  *   - Safety / GPhC (Stage 2c)
  *   - Most Trusted Treatments (Stage 2c)
+ *   - FAQ accordion (Stage 2d)
+ *
+ * Order matches the static prototype (index.html).
  *
  * @package SmartPharmacy
  */
@@ -25,7 +30,10 @@ get_template_part( 'template-parts/front-page/popular-treatments' );
 get_template_part( 'template-parts/front-page/featured-treatment' );
 get_template_part( 'template-parts/front-page/how-it-works' );
 get_template_part( 'template-parts/front-page/nhs-prescription' );
+get_template_part( 'template-parts/front-page/bestsellers' );
+get_template_part( 'template-parts/front-page/testimonials' );
 get_template_part( 'template-parts/front-page/safety' );
 get_template_part( 'template-parts/front-page/most-trusted' );
+get_template_part( 'template-parts/front-page/faq' );
 
 get_footer();
