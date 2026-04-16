@@ -23,6 +23,7 @@
  *   B4  Post type (treatment) — Treatment Meta (identity, card data, UK compliance, category taxonomy)
  *   C1  Post type (treatment) — What's Included / Benefits
  *   C2  Post type (treatment) — Results / Testimonials
+ *   C3  Post type (treatment) — Eligibility (Stage 3b stub UI; Stage 5 wires real calculator)
  *   F1  Options — Branding (logo, footer tagline, payment methods)
  *   G1  Options — Navigation (primary menu, footer link columns, search, NHS button)
  *   H1  Options — Contact (trading address, registered address)
@@ -30,7 +31,6 @@
  *   J1  Options — Social (platform URLs)
  *
  * Planned:
- *   C3  Post type (treatment) — Eligibility Calculator (Stage 3b stub; Stage 5 real)
  *   D1  Post type (treatment) — FAQ (Stage 3c)
  *   D2  Post type (treatment) — Final CTA (Stage 3c)
  *   E1  Post type (treatment) — Related WooCommerce products (Stage 3c stub; Stage 4 wires real relationships)
@@ -1169,6 +1169,53 @@ function sp_register_acf_field_groups() {
 						array( 'key' => 'field_sp_tx_tst_item_meta', 'label' => 'Outcome meta', 'name' => 'meta', 'type' => 'text', 'instructions' => 'Short outcome line under the name (e.g. "Lost 32 lbs • 4 months").' ),
 					),
 				),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * C3 — Treatment Eligibility (Stage 3b stub)
+	 *
+	 * Teal-gradient "Check Your Eligibility" CTA block with 3 criteria
+	 * tiles and a primary button. Anchor target for B3's `#consultation`
+	 * pricing-card CTAs. Stage 5 swaps the static tiles for a live BMI
+	 * calculator form + eligibility gating logic.
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_c3_treatment_eligibility',
+			'title'    => 'C3 — Treatment Eligibility',
+			'position' => 'acf_after_title',
+			'location' => array(
+				array(
+					array( 'param' => 'post_type', 'operator' => '==', 'value' => 'treatment' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_tx_elig_enabled', 'label' => 'Show section', 'name' => 'tx_elig_enabled', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1 ),
+				array( 'key' => 'field_sp_tx_elig_badge_text', 'label' => 'Eyebrow badge text', 'name' => 'tx_elig_badge_text', 'type' => 'text', 'default_value' => 'Check Your Eligibility' ),
+				array( 'key' => 'field_sp_tx_elig_badge_icon', 'label' => 'Eyebrow badge icon', 'name' => 'tx_elig_badge_icon', 'type' => 'select', 'choices' => $sp_icon_choices, 'default_value' => 'check_circle', 'ui' => 1 ),
+				array( 'key' => 'field_sp_tx_elig_heading', 'label' => 'Heading', 'name' => 'tx_elig_heading', 'type' => 'text', 'default_value' => 'Calculate Your Weight Loss Journey' ),
+				array( 'key' => 'field_sp_tx_elig_sub', 'label' => 'Subheading', 'name' => 'tx_elig_subheading', 'type' => 'textarea', 'rows' => 2, 'default_value' => 'Find out if weight loss medication is right for you with our quick eligibility checker' ),
+				array(
+					'key'          => 'field_sp_tx_elig_criteria',
+					'label'        => 'Eligibility criteria',
+					'name'         => 'tx_elig_criteria',
+					'type'         => 'repeater',
+					'button_label' => 'Add criterion',
+					'layout'       => 'table',
+					'min'          => 0,
+					'max'          => 4,
+					'instructions' => 'Each criterion renders as a tile with icon, title, and short description. Design works best with 3.',
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_tx_elig_c_icon', 'label' => 'Icon', 'name' => 'icon', 'type' => 'select', 'choices' => $sp_icon_choices, 'default_value' => 'check_circle', 'ui' => 1 ),
+						array( 'key' => 'field_sp_tx_elig_c_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
+						array( 'key' => 'field_sp_tx_elig_c_desc', 'label' => 'Description', 'name' => 'description', 'type' => 'text' ),
+					),
+				),
+				array( 'key' => 'field_sp_tx_elig_cta_label', 'label' => 'CTA button label', 'name' => 'tx_elig_cta_label', 'type' => 'text', 'default_value' => 'Start Free Assessment' ),
+				array( 'key' => 'field_sp_tx_elig_cta_url', 'label' => 'CTA button URL', 'name' => 'tx_elig_cta_url', 'type' => 'url', 'default_value' => '#consultation', 'instructions' => 'Stage 5 will replace this with the real consultation / eligibility-checker flow. Leave as "#consultation" for now.' ),
+				array( 'key' => 'field_sp_tx_elig_footer', 'label' => 'Footer microcopy', 'name' => 'tx_elig_footer_note', 'type' => 'text', 'default_value' => 'Takes less than 5 minutes • No payment required' ),
 			),
 		)
 	);
