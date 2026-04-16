@@ -12,6 +12,11 @@ minutes end to end.
 
 **Order matters** — settings first, then categories, then products.
 
+> **Shortcut:** Steps 3 + 4 (categories + products) can be auto-seeded
+> in ~30 seconds via the script at `docs/seed-wc-products.php`. Skip
+> straight to Step 6 after running it. See "Auto-seed shortcut" at
+> the bottom of this doc for instructions.
+
 ---
 
 ## Pre-flight
@@ -251,3 +256,50 @@ needs:
 3. Configure UK VAT properly
 4. Run **Stage 4c** to gate POM products
 5. Run **Stage 4e** to publish the Google Merchant Center feed
+
+---
+
+## Auto-seed shortcut
+
+The categories + products in Steps 3 and 4 can be created in one go
+via `docs/seed-wc-products.php`. Idempotent (safe to re-run; matches
+products by SKU and skips existing ones). Two ways to run it:
+
+### Option A — WP-CLI (recommended; available on Kinsta via SSH)
+
+```bash
+# SSH into Kinsta staging via the MyKinsta dashboard, then:
+cd /www/<your-site>/public
+wp eval-file wp-content/themes/smart-pharmacy-theme/../../../docs/seed-wc-products.php
+```
+
+If the path is awkward, copy the file to the site root first:
+
+```bash
+cp docs/seed-wc-products.php /www/<your-site>/public/seed.php
+wp eval-file seed.php
+rm /www/<your-site>/public/seed.php   # tidy up
+```
+
+Output prints `create` / `skip` / `ERROR` lines for each category and
+product. Whole script takes ~30–60 seconds (image sideloads from
+Unsplash dominate the time).
+
+### Option B — "Code Snippets" plugin (no SSH access required)
+
+1. Install the free [Code Snippets](https://wordpress.org/plugins/code-snippets/) plugin from the WP plugin directory
+2. Snippets → **Add New**
+3. Paste the **body** of `docs/seed-wc-products.php` (everything *after* the opening `<?php` tag)
+4. Set "Run snippet" to **Only run once**
+5. Click **Save Changes and Activate** — the snippet runs on activation, output appears in the panel below
+6. Once it's run, you can delete the snippet (or leave it; it's idempotent)
+
+### After it runs
+
+- Visit **Products → All Products** in WP admin — you should see 10 products
+- Visit **Products → Categories** — you should see 4 categories
+- Visit `/shop/` on the front-end — you should see the populated archive
+
+Then continue with **Step 6** (payment gateway) and **Step 7** (shipping zone) to make checkout work end-to-end for the demo.
+
+If a re-seed is needed (e.g. images failed to download), just re-run the script — existing products are skipped, only failed ones are retried. To force a re-run from scratch, delete the products via **Products → All Products → bulk delete** first.
