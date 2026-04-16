@@ -24,6 +24,7 @@
  *   C1  Post type (treatment) — What's Included / Benefits
  *   C2  Post type (treatment) — Results / Testimonials
  *   C3  Post type (treatment) — Eligibility (Stage 3b stub UI; Stage 5 wires real calculator)
+ *   D1  Post type (treatment) — FAQ
  *   F1  Options — Branding (logo, footer tagline, payment methods)
  *   G1  Options — Navigation (primary menu, footer link columns, search, NHS button)
  *   H1  Options — Contact (trading address, registered address)
@@ -31,7 +32,6 @@
  *   J1  Options — Social (platform URLs)
  *
  * Planned:
- *   D1  Post type (treatment) — FAQ (Stage 3c)
  *   D2  Post type (treatment) — Final CTA (Stage 3c)
  *   E1  Post type (treatment) — Related WooCommerce products (Stage 3c stub; Stage 4 wires real relationships)
  *
@@ -1216,6 +1216,70 @@ function sp_register_acf_field_groups() {
 				array( 'key' => 'field_sp_tx_elig_cta_label', 'label' => 'CTA button label', 'name' => 'tx_elig_cta_label', 'type' => 'text', 'default_value' => 'Start Free Assessment' ),
 				array( 'key' => 'field_sp_tx_elig_cta_url', 'label' => 'CTA button URL', 'name' => 'tx_elig_cta_url', 'type' => 'url', 'default_value' => '#consultation', 'instructions' => 'Stage 5 will replace this with the real consultation / eligibility-checker flow. Leave as "#consultation" for now.' ),
 				array( 'key' => 'field_sp_tx_elig_footer', 'label' => 'Footer microcopy', 'name' => 'tx_elig_footer_note', 'type' => 'text', 'default_value' => 'Takes less than 5 minutes • No payment required' ),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * D1 — Treatment FAQ
+	 *
+	 * Accordion of treatment-specific Q&As + sticky sidebar with a
+	 * "Need more help?" contact card and GPhC trust badge. Mirrors the
+	 * field shape of A10 (homepage FAQ) so editors learn one pattern,
+	 * but scoped per-treatment with tx_faq_* field names. GPhC number
+	 * is pulled from I1 Compliance (options) via the three-tier resolver.
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_d1_treatment_faq',
+			'title'    => 'D1 — Treatment FAQ',
+			'position' => 'acf_after_title',
+			'location' => array(
+				array(
+					array( 'param' => 'post_type', 'operator' => '==', 'value' => 'treatment' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_tx_faq_enabled', 'label' => 'Show section', 'name' => 'tx_faq_enabled', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1 ),
+				array( 'key' => 'field_sp_tx_faq_badge_pre', 'label' => 'Badge — start', 'name' => 'tx_faq_badge_pre', 'type' => 'text', 'default_value' => 'Common' ),
+				array( 'key' => 'field_sp_tx_faq_badge_hi', 'label' => 'Badge — highlighted', 'name' => 'tx_faq_badge_highlight', 'type' => 'text', 'default_value' => 'Questions' ),
+				array( 'key' => 'field_sp_tx_faq_h_pre', 'label' => 'Heading — start', 'name' => 'tx_faq_heading_pre', 'type' => 'text', 'default_value' => 'Frequently Asked' ),
+				array( 'key' => 'field_sp_tx_faq_h_hi', 'label' => 'Heading — highlighted', 'name' => 'tx_faq_heading_highlight', 'type' => 'text', 'default_value' => 'Questions' ),
+				array( 'key' => 'field_sp_tx_faq_sub', 'label' => 'Subheading', 'name' => 'tx_faq_subheading', 'type' => 'textarea', 'rows' => 2, 'default_value' => 'Everything you need to know about our weight loss service' ),
+				array(
+					'key'          => 'field_sp_tx_faq_items',
+					'label'        => 'Questions & answers',
+					'name'         => 'tx_faq_items',
+					'type'         => 'repeater',
+					'button_label' => 'Add Q&A',
+					'layout'       => 'block',
+					'min'          => 0,
+					'instructions' => 'Each entry renders as a <details> accordion item. No hard cap — but 5–8 reads best.',
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_tx_faq_q', 'label' => 'Question', 'name' => 'question', 'type' => 'text' ),
+						array( 'key' => 'field_sp_tx_faq_a', 'label' => 'Answer', 'name' => 'answer', 'type' => 'textarea', 'rows' => 4 ),
+					),
+				),
+				array( 'key' => 'field_sp_tx_faq_view_all_label', 'label' => 'View-all CTA label', 'name' => 'tx_faq_view_all_label', 'type' => 'text', 'default_value' => 'View All Questions' ),
+				array( 'key' => 'field_sp_tx_faq_view_all_url', 'label' => 'View-all CTA URL', 'name' => 'tx_faq_view_all_url', 'type' => 'url', 'default_value' => '/faqs/', 'instructions' => 'Leave blank to hide the button.' ),
+				array( 'key' => 'field_sp_tx_faq_side_h', 'label' => 'Sidebar heading', 'name' => 'tx_faq_sidebar_heading', 'type' => 'text', 'default_value' => 'Need more help?' ),
+				array( 'key' => 'field_sp_tx_faq_side_b', 'label' => 'Sidebar body', 'name' => 'tx_faq_sidebar_body', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'Our pharmacy team is here to answer your questions and provide expert guidance on your weight loss journey.' ),
+				array(
+					'key'          => 'field_sp_tx_faq_contacts',
+					'label'        => 'Sidebar contact links',
+					'name'         => 'tx_faq_contacts',
+					'type'         => 'repeater',
+					'button_label' => 'Add link',
+					'layout'       => 'table',
+					'min'          => 0,
+					'max'          => 4,
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_tx_faq_c_icon', 'label' => 'Icon', 'name' => 'icon', 'type' => 'select', 'choices' => $sp_icon_choices, 'ui' => 1 ),
+						array( 'key' => 'field_sp_tx_faq_c_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
+						array( 'key' => 'field_sp_tx_faq_c_body', 'label' => 'Body', 'name' => 'body', 'type' => 'text' ),
+						array( 'key' => 'field_sp_tx_faq_c_url', 'label' => 'URL', 'name' => 'url', 'type' => 'text', 'instructions' => 'Accepts any URL scheme (https://, mailto:, tel:). The esc_url() filter allows tel:/mailto: links.' ),
+					),
+				),
 			),
 		)
 	);

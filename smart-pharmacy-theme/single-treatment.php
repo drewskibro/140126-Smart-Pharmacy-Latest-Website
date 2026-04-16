@@ -13,9 +13,10 @@
  *   - What's Included (Stage 3b)
  *   - Results / Testimonials (Stage 3b)
  *   - Eligibility (Stage 3b — static UI; Stage 5 wires the real calculator)
+ *   - FAQ (Stage 3c)
  *
  * Planned:
- *   - FAQ, Final CTA, Related products (Stage 3c)
+ *   - Final CTA, Related products (Stage 3c)
  *
  * @package SmartPharmacy
  */
@@ -32,6 +33,7 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/single-treatment/whats-included' );
 		get_template_part( 'template-parts/single-treatment/testimonials' );
 		get_template_part( 'template-parts/single-treatment/eligibility' );
+		get_template_part( 'template-parts/single-treatment/faq' );
 
 	endwhile;
 endif;
