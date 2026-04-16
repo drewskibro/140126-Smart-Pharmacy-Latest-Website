@@ -1091,3 +1091,142 @@ input:focus {
 @keyframes sp-spin {
   to { transform: rotate(360deg); }
 }
+
+/* ================================================================
+ * STAGE 4a-5 — ORDER RECEIVED / THANK YOU BRAND OVERRIDES
+ *
+ * Templates:
+ *   - woocommerce/checkout/thankyou.php           (.sp-thankyou)
+ *   - woocommerce/order/order-details.php         (.sp-order-details)
+ *   - woocommerce/order/order-details-customer.php(.sp-customer-details)
+ *
+ * The product line items inside .sp-order-table use WC's default
+ * order-details-item.php template which outputs:
+ *   <tr class="order_item">
+ *     <td class="product-name">
+ *       <a>name</a> <strong class="product-quantity">×&nbsp;2</strong>
+ *       <ul class="wc-item-meta">...</ul>
+ *     </td>
+ *     <td class="product-total"><span class="amount">£5.99</span></td>
+ *   </tr>
+ * We don't override the per-item template -- just style the output.
+ * ================================================================ */
+
+/* --- Order details table -- per-item rows ------------------------ */
+.sp-order-details .sp-order-table tbody tr.order_item {
+  border-bottom: 1px solid #f5f5f5;
+}
+.sp-order-details .sp-order-table tbody tr.order_item:last-child {
+  border-bottom: none;
+}
+.sp-order-details .sp-order-table tbody td.product-name {
+  padding: 0.875rem 0.75rem 0.875rem 0;
+  color: #262626;
+  font-weight: 600;
+  font-size: 0.9rem;
+  vertical-align: top;
+}
+.sp-order-details .sp-order-table tbody td.product-name a {
+  color: #171717;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.sp-order-details .sp-order-table tbody td.product-name a:hover {
+  color: #0d9488;
+}
+.sp-order-details .sp-order-table tbody td.product-name .product-quantity {
+  display: inline-block;
+  margin-left: 0.5rem;
+  color: #737373;
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+.sp-order-details .sp-order-table tbody td.product-total {
+  padding: 0.875rem 0;
+  text-align: right;
+  color: #171717;
+  font-weight: 600;
+  font-size: 0.9rem;
+  vertical-align: top;
+  white-space: nowrap;
+}
+/* Variation / item meta (e.g. dosage, attributes). */
+.sp-order-details .sp-order-table .wc-item-meta {
+  list-style: none;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  font-size: 0.8rem;
+  color: #737373;
+  font-weight: 400;
+}
+.sp-order-details .sp-order-table .wc-item-meta li {
+  margin: 0;
+}
+.sp-order-details .sp-order-table .wc-item-meta strong {
+  font-weight: 600;
+  color: #525252;
+}
+
+/* --- Customer details — addresses block --------------------------- */
+.sp-customer-details address {
+  font-style: normal;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #404040;
+}
+.sp-customer-details address br {
+  display: block;
+  content: "";
+  margin-top: 0.125rem;
+}
+.sp-customer-details address p {
+  margin: 0.5rem 0 0;
+}
+
+/* --- Thank-you overview -- equalise stat-tile heights ------------ */
+.sp-thankyou__overview .woocommerce-order-overview li {
+  /* Override any WC default float/margins from when wc-blocks CSS
+   * leaks in. */
+  float: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+/* --- Bank details / BACS gateway notice ------------------------- */
+.sp-thankyou .woocommerce-order-bacs-bank-details,
+.sp-thankyou .wc-bacs-bank-details {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+.sp-thankyou .wc-bacs-bank-details-heading {
+  color: #171717;
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0 0 0.75rem;
+}
+.sp-thankyou .wc-bacs-bank-details-account-name {
+  color: #525252;
+  font-size: 0.85rem;
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
+.sp-thankyou .wc-bacs-bank-details ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.85rem;
+  color: #404040;
+}
+.sp-thankyou .wc-bacs-bank-details ul li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.375rem 0;
+  border-bottom: 1px dashed #f5f5f5;
+}
+.sp-thankyou .wc-bacs-bank-details ul li:last-child {
+  border-bottom: none;
+}
