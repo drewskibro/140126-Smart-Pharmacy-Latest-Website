@@ -25,6 +25,7 @@ define( 'SMART_PHARMACY_URI', get_template_directory_uri() );
 require_once SMART_PHARMACY_DIR . '/inc/helpers.php';
 require_once SMART_PHARMACY_DIR . '/inc/acf-options.php';
 require_once SMART_PHARMACY_DIR . '/inc/acf-fields.php';
+require_once SMART_PHARMACY_DIR . '/inc/woocommerce.php';
 
 /**
  * Theme setup: supports, menus, textdomain.
