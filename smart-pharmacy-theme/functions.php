@@ -179,6 +179,54 @@ function smart_pharmacy_register_treatment_cpt() {
 add_action( 'init', 'smart_pharmacy_register_treatment_cpt' );
 
 /**
+ * Register the `treatment_category` hierarchical taxonomy.
+ *
+ * Category-like taxonomy attached to Treatment posts. Lets editors group
+ * treatments (e.g. Weight Management > GLP-1, Men's Health > ED) and
+ * drives archive URLs at /treatment-category/{slug}/ for SEO and
+ * related-treatment widgets.
+ *
+ * Hierarchical so parent/child terms work (e.g. Men's Health > ED).
+ * Exposed to REST API so the block editor / WP admin list view / any
+ * future headless consumers can read it.
+ */
+function smart_pharmacy_register_treatment_taxonomy() {
+	$labels = array(
+		'name'              => _x( 'Treatment Categories', 'taxonomy general name', 'smart-pharmacy' ),
+		'singular_name'     => _x( 'Treatment Category', 'taxonomy singular name', 'smart-pharmacy' ),
+		'search_items'      => __( 'Search Categories', 'smart-pharmacy' ),
+		'all_items'         => __( 'All Categories', 'smart-pharmacy' ),
+		'parent_item'       => __( 'Parent Category', 'smart-pharmacy' ),
+		'parent_item_colon' => __( 'Parent Category:', 'smart-pharmacy' ),
+		'edit_item'         => __( 'Edit Category', 'smart-pharmacy' ),
+		'update_item'       => __( 'Update Category', 'smart-pharmacy' ),
+		'add_new_item'      => __( 'Add New Category', 'smart-pharmacy' ),
+		'new_item_name'     => __( 'New Category Name', 'smart-pharmacy' ),
+		'menu_name'         => __( 'Categories', 'smart-pharmacy' ),
+	);
+
+	register_taxonomy(
+		'treatment_category',
+		array( 'treatment' ),
+		array(
+			'labels'            => $labels,
+			'hierarchical'      => true,
+			'public'            => true,
+			'show_in_rest'      => true,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'show_in_nav_menus' => true,
+			'query_var'         => true,
+			'rewrite'           => array(
+				'slug'       => 'treatment-category',
+				'with_front' => false,
+			),
+		)
+	);
+}
+add_action( 'init', 'smart_pharmacy_register_treatment_taxonomy' );
+
+/**
  * Disable the Gutenberg block editor for `page` and `treatment` post types.
  *
  * These post types are driven entirely by ACF field groups (positioned

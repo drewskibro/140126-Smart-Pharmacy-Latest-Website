@@ -20,6 +20,7 @@
  *   B1  Post type (treatment) — Treatment Hero
  *   B2  Post type (treatment) — Treatment How It Works
  *   B3  Post type (treatment) — Treatment Options / Pricing (static; WC in Stage 4)
+ *   B4  Post type (treatment) — Treatment Meta (identity, card data, UK compliance, category taxonomy)
  *   F1  Options — Branding (logo, footer tagline, payment methods)
  *   G1  Options — Navigation (primary menu, footer link columns, search, NHS button)
  *   H1  Options — Contact (trading address, registered address)
@@ -912,7 +913,7 @@ function sp_register_acf_field_groups() {
 					'max'          => 4,
 					'instructions' => 'Design works best with 1–2 options. Each renders as a pricing card.',
 					'sub_fields'   => array(
-						array( 'key' => 'field_sp_tx_opt_icon', 'label' => 'Icon', 'name' => 'icon', 'type' => 'select', 'choices' => $sp_icon_choices, 'default_value' => 'sparkle', 'ui' => 1 ),
+						array( 'key' => 'field_sp_tx_opt_image', 'label' => 'Product image', 'name' => 'image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'thumbnail', 'instructions' => 'Replaces the icon in the top-left of the card. Recommended: square, ~200x200px.' ),
 						array( 'key' => 'field_sp_tx_opt_name', 'label' => 'Name', 'name' => 'name', 'type' => 'text' ),
 						array( 'key' => 'field_sp_tx_opt_badge', 'label' => 'Top-right badge (optional)', 'name' => 'badge', 'type' => 'text', 'instructions' => 'E.g. "Most Popular", "New", "Best Value".' ),
 						array(
@@ -932,6 +933,120 @@ function sp_register_acf_field_groups() {
 						array( 'key' => 'field_sp_tx_opt_cta_l', 'label' => 'CTA label', 'name' => 'cta_label', 'type' => 'text', 'default_value' => 'Learn More' ),
 						array( 'key' => 'field_sp_tx_opt_cta_u', 'label' => 'CTA URL', 'name' => 'cta_url', 'type' => 'url', 'default_value' => '#consultation' ),
 					),
+				),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * B4 — Treatment Meta
+	 *
+	 * Structured data about the treatment itself. Most of this drives
+	 * OTHER contexts -- homepage carousel cards, archive listings,
+	 * schema.org markup, consultation gating logic. The single-treatment
+	 * template surfaces just a couple of these (legal classification pill
+	 * in the hero, active ingredient near the headline).
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_b4_treatment_meta',
+			'title'    => 'B4 — Treatment Meta',
+			'position' => 'acf_after_title',
+			'location' => array(
+				array(
+					array( 'param' => 'post_type', 'operator' => '==', 'value' => 'treatment' ),
+				),
+			),
+			'fields'   => array(
+
+				/* --- Identity --- */
+				array(
+					'key'          => 'field_sp_tx_meta_active',
+					'label'        => 'Active ingredient',
+					'name'         => 'tx_meta_active_ingredient',
+					'type'         => 'text',
+					'instructions' => 'Generic name of the main active ingredient (e.g. "Semaglutide", "Finasteride"). Used in hero meta, schema.org markup, and search.',
+				),
+
+				/* --- Listing / card data --- */
+				array(
+					'key'          => 'field_sp_tx_meta_short',
+					'label'        => 'Short description',
+					'name'         => 'tx_meta_short_description',
+					'type'         => 'textarea',
+					'rows'         => 2,
+					'instructions' => '1-2 sentences used on homepage Popular Treatments cards, archive listings, and search results. NOT shown on the treatment page itself.',
+				),
+				array(
+					'key'           => 'field_sp_tx_meta_card_image',
+					'label'         => 'Card image',
+					'name'          => 'tx_meta_card_image',
+					'type'          => 'image',
+					'return_format' => 'array',
+					'preview_size'  => 'medium',
+					'instructions'  => 'Portrait 4:5 ratio works best. Used on homepage carousels and archive cards. Falls back to the hero image if left blank.',
+				),
+				array(
+					'key'           => 'field_sp_tx_meta_price_from',
+					'label'         => 'Price from',
+					'name'          => 'tx_meta_price_from',
+					'type'          => 'text',
+					'instructions'  => 'Short price summary for cards and listings (e.g. "£149", "From £12.99"). Full pricing lives in B3.',
+				),
+
+				/* --- Taxonomy (UK-native hierarchical) --- */
+				array(
+					'key'           => 'field_sp_tx_meta_category',
+					'label'         => 'Category',
+					'name'          => 'tx_meta_category',
+					'type'          => 'taxonomy',
+					'taxonomy'      => 'treatment_category',
+					'field_type'    => 'multi_select',
+					'add_term'      => 1,
+					'save_terms'    => 1,
+					'load_terms'    => 1,
+					'return_format' => 'id',
+					'instructions'  => 'Assign one or more categories (e.g. Weight Management > GLP-1). Can be added inline.',
+				),
+
+				/* --- UK pharmacy compliance --- */
+				array(
+					'key'          => 'field_sp_tx_meta_legal',
+					'label'        => 'Legal classification',
+					'name'         => 'tx_meta_legal_class',
+					'type'         => 'select',
+					'choices'      => array(
+						''    => '— Not set —',
+						'POM' => 'POM — Prescription-Only Medicine',
+						'P'   => 'P — Pharmacy Medicine',
+						'GSL' => 'GSL — General Sales List',
+					),
+					'ui'           => 1,
+					'instructions' => 'Drives whether consultation is required before purchase.',
+				),
+				array(
+					'key'           => 'field_sp_tx_meta_requires_consult',
+					'label'         => 'Requires consultation?',
+					'name'          => 'tx_meta_requires_consultation',
+					'type'          => 'true_false',
+					'ui'            => 1,
+					'default_value' => 1,
+					'instructions'  => 'If yes, CTAs route to the consultation flow. If no, CTAs go straight to cart/basket. Stage 5 eligibility checker reads this.',
+				),
+				array(
+					'key'          => 'field_sp_tx_meta_prescriber',
+					'label'        => 'Prescriber specialist required?',
+					'name'         => 'tx_meta_prescriber_required',
+					'type'         => 'true_false',
+					'ui'           => 1,
+					'instructions' => 'Tick for treatments that need a specialist prescriber (e.g. HRT).',
+				),
+				array(
+					'key'          => 'field_sp_tx_meta_mhra',
+					'label'        => 'MHRA license number',
+					'name'         => 'tx_meta_mhra_number',
+					'type'         => 'text',
+					'instructions' => 'Optional. Required for marketing-compliance display on POM products.',
 				),
 			),
 		)
