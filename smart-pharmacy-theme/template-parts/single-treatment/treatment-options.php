@@ -91,20 +91,49 @@ $sp_tx_cols = ( count( $tx_options ) === 1 ) ? '' : 'md:grid-cols-[repeat(2,minm
 
 				// Product image (replaces the old decorative icon box).
 				$sp_img      = isset( $sp_opt['image'] ) ? $sp_opt['image'] : null;
+				$sp_img_id   = ( is_array( $sp_img ) && ! empty( $sp_img['ID'] ) ) ? (int) $sp_img['ID'] : 0;
 				$sp_img_url  = ( is_array( $sp_img ) && ! empty( $sp_img['url'] ) ) ? $sp_img['url'] : '';
 				$sp_img_alt  = ( is_array( $sp_img ) && ! empty( $sp_img['alt'] ) ) ? $sp_img['alt'] : $sp_name;
+				$sp_has_img  = ( $sp_img_id || $sp_img_url );
+
+				// Product photo renders full-width-of-card, upscaled to fit the banner,
+				// with a radial "studio lighting" backdrop + soft drop shadow so the
+				// product reads as a showcased object rather than a floating icon.
+				$sp_img_class = 'relative w-full h-full object-contain transition-transform duration-500 ease-out group-hover:scale-[1.03] drop-shadow-[0_12px_24px_rgba(15,42,44,0.10)]';
 				?>
 				<div class="relative bg-white shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.1)_0px_20px_25px_-5px,rgba(0,0,0,0.1)_0px_8px_10px_-6px] box-border flex flex-col break-words border border-gray-100 overflow-hidden rounded-3xl border-solid hover:shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.25)_0px_25px_50px_-12px] hover:border-teal-500/30 transition-all duration-300 group">
 
-					<!-- Product image banner (full width of card, ~240px tall, object-contain so the whole product shows) -->
-					<?php if ( $sp_img_url ) : ?>
-						<div class="relative bg-gradient-to-br from-gray-50 via-white to-gray-50 overflow-hidden h-60 md:h-64 flex items-center justify-center p-8">
+					<!-- Product image banner: full-width of card, radial "studio lighting" backdrop,
+					     image fills to the banner edges (w-full h-full) so varied source aspect
+					     ratios all read as a showcase rather than a floating thumbnail.  Hairline
+					     bottom border softly separates the banner from the card body. -->
+					<?php if ( $sp_has_img ) : ?>
+						<div class="relative overflow-hidden h-64 md:h-72 flex items-center justify-center p-6 md:p-8 bg-[radial-gradient(ellipse_at_center,_rgb(255,255,255)_0%,_rgb(242,247,248)_75%)] border-b border-gray-100">
 							<?php if ( $sp_badge ) : ?>
 								<div class="absolute z-10 right-6 top-6">
 									<span class="text-white text-xs font-bold <?php echo esc_attr( $sp_tx_badge_colour( $sp_badge ) ); ?> shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.1)_0px_10px_15px_-3px,rgba(0,0,0,0.1)_0px_4px_6px_-4px] inline-block leading-4 px-4 py-2 rounded-full uppercase tracking-wider"><?php echo esc_html( $sp_badge ); ?></span>
 								</div>
 							<?php endif; ?>
-							<img src="<?php echo esc_url( $sp_img_url ); ?>" alt="<?php echo esc_attr( $sp_img_alt ); ?>" class="max-w-full max-h-full w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105" />
+							<?php
+							if ( $sp_img_id ) {
+								// Prefer wp_get_attachment_image() — emits srcset + sizes so the
+								// browser picks a file sharp enough for the ~240-288px banner,
+								// and adds native lazy / async decoding.
+								echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									$sp_img_id,
+									'large',
+									false,
+									array(
+										'class'    => $sp_img_class,
+										'alt'      => $sp_img_alt,
+										'sizes'    => '(min-width: 768px) 40vw, 90vw',
+										'loading'  => 'lazy',
+										'decoding' => 'async',
+									)
+								);
+							} else { ?>
+								<img src="<?php echo esc_url( $sp_img_url ); ?>" alt="<?php echo esc_attr( $sp_img_alt ); ?>" class="<?php echo esc_attr( $sp_img_class ); ?>" loading="lazy" decoding="async" />
+							<?php } ?>
 						</div>
 					<?php elseif ( $sp_badge ) : ?>
 						<!-- No image: keep the badge anchored to the card top-right -->
