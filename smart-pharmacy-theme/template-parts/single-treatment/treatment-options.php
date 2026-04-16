@@ -94,26 +94,31 @@ $sp_tx_cols = ( count( $tx_options ) === 1 ) ? '' : 'md:grid-cols-[repeat(2,minm
 				$sp_img_url  = ( is_array( $sp_img ) && ! empty( $sp_img['url'] ) ) ? $sp_img['url'] : '';
 				$sp_img_alt  = ( is_array( $sp_img ) && ! empty( $sp_img['alt'] ) ) ? $sp_img['alt'] : $sp_name;
 				?>
-				<div class="relative bg-white shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.1)_0px_20px_25px_-5px,rgba(0,0,0,0.1)_0px_8px_10px_-6px] box-border flex flex-col break-words border border-gray-100 overflow-hidden p-10 rounded-3xl border-solid hover:shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.25)_0px_25px_50px_-12px] hover:border-teal-500/30 transition-all duration-300 group">
-					<div class="absolute bg-[linear-gradient(to_right_bottom,rgba(59,155,159,0.05),rgba(0,0,0,0))] box-border h-32 break-words w-32 rounded-bl-full right-0 top-0" aria-hidden="true"></div>
+				<div class="relative bg-white shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.1)_0px_20px_25px_-5px,rgba(0,0,0,0.1)_0px_8px_10px_-6px] box-border flex flex-col break-words border border-gray-100 overflow-hidden rounded-3xl border-solid hover:shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.25)_0px_25px_50px_-12px] hover:border-teal-500/30 transition-all duration-300 group">
 
-					<?php if ( $sp_badge ) : ?>
-						<div class="absolute box-border break-words z-10 right-6 top-6">
-							<span class="text-white text-xs font-bold <?php echo esc_attr( $sp_tx_badge_colour( $sp_badge ) ); ?> shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.1)_0px_10px_15px_-3px,rgba(0,0,0,0.1)_0px_4px_6px_-4px] box-border inline-block leading-4 break-words px-4 py-2 rounded-full uppercase tracking-wider"><?php echo esc_html( $sp_badge ); ?></span>
+					<!-- Product image banner (full width of card, ~240px tall, object-contain so the whole product shows) -->
+					<?php if ( $sp_img_url ) : ?>
+						<div class="relative bg-gradient-to-br from-gray-50 via-white to-gray-50 overflow-hidden h-60 md:h-64 flex items-center justify-center p-8">
+							<?php if ( $sp_badge ) : ?>
+								<div class="absolute z-10 right-6 top-6">
+									<span class="text-white text-xs font-bold <?php echo esc_attr( $sp_tx_badge_colour( $sp_badge ) ); ?> shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.1)_0px_10px_15px_-3px,rgba(0,0,0,0.1)_0px_4px_6px_-4px] inline-block leading-4 px-4 py-2 rounded-full uppercase tracking-wider"><?php echo esc_html( $sp_badge ); ?></span>
+								</div>
+							<?php endif; ?>
+							<img src="<?php echo esc_url( $sp_img_url ); ?>" alt="<?php echo esc_attr( $sp_img_alt ); ?>" class="max-w-full max-h-full w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105" />
+						</div>
+					<?php elseif ( $sp_badge ) : ?>
+						<!-- No image: keep the badge anchored to the card top-right -->
+						<div class="absolute z-10 right-6 top-6">
+							<span class="text-white text-xs font-bold <?php echo esc_attr( $sp_tx_badge_colour( $sp_badge ) ); ?> shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.1)_0px_10px_15px_-3px,rgba(0,0,0,0.1)_0px_4px_6px_-4px] inline-block leading-4 px-4 py-2 rounded-full uppercase tracking-wider"><?php echo esc_html( $sp_badge ); ?></span>
 						</div>
 					<?php endif; ?>
 
-					<div class="relative box-border break-words z-10">
-						<?php if ( $sp_img_url ) : ?>
-							<!-- Product image (replaces the old decorative icon box) -->
-							<div class="relative box-border inline-block break-words mb-8">
-								<div class="relative items-center bg-white shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.1)_0px_20px_25px_-5px,rgba(0,0,0,0.1)_0px_8px_10px_-6px] box-border flex h-24 justify-center break-words w-24 rounded-3xl overflow-hidden transition-transform duration-300 group-hover:scale-105 border border-gray-100">
-									<img src="<?php echo esc_url( $sp_img_url ); ?>" alt="<?php echo esc_attr( $sp_img_alt ); ?>" class="w-full h-full object-cover" />
-								</div>
-							</div>
-						<?php endif; ?>
+					<!-- Card body -->
+					<div class="relative p-10 flex flex-col flex-grow">
+						<div class="absolute bg-[linear-gradient(to_right_bottom,rgba(59,155,159,0.05),rgba(0,0,0,0))] box-border h-32 break-words w-32 rounded-bl-full right-0 top-0" aria-hidden="true"></div>
 
-						<h3 class="text-neutral-900 text-3xl font-black box-border leading-9 break-words mb-4"><?php echo esc_html( $sp_name ); ?></h3>
+						<div class="relative box-border break-words z-10">
+							<h3 class="text-neutral-900 text-3xl font-black box-border leading-9 break-words mb-4"><?php echo esc_html( $sp_name ); ?></h3>
 
 						<?php if ( ! empty( $sp_benefits ) ) : ?>
 							<div class="box-border break-words space-y-4 mb-8">
@@ -145,8 +150,9 @@ $sp_tx_cols = ( count( $tx_options ) === 1 ) ? '' : 'md:grid-cols-[repeat(2,minm
 								<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 							</a>
 						</div>
-					</div>
-				</div>
+					</div><!-- /.z-10 inner content -->
+					</div><!-- /.card body -->
+				</div><!-- /.card wrapper -->
 			<?php endforeach; ?>
 		</div>
 	</div>
