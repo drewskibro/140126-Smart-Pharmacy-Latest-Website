@@ -715,3 +715,518 @@ input:focus {
   color: #fbbf24;
   margin-bottom: 0.5rem;
 }
+
+/* ================================================================
+ * STAGE 4a-4 — CART + CHECKOUT BRAND OVERRIDES
+ *
+ * Styles the following WC templates:
+ *   - woocommerce/cart/cart.php              (.sp-cart-page)
+ *   - woocommerce/cart/cart-totals.php       (.sp-cart-totals)
+ *   - woocommerce/cart/cart-empty.php        (.sp-cart-empty)
+ *   - woocommerce/checkout/form-checkout.php (.sp-checkout-page)
+ *   - woocommerce/checkout/review-order.php  (.sp-review-table)
+ *
+ * Because WC's default form CSS is dequeued (inc/woocommerce.php),
+ * everything here has to be re-provided from scratch: inputs, labels,
+ * notices, payment-method list, the whole form stack.
+ *
+ * Palette matches the rest of the theme: teal-600 #0d9488, teal-700
+ * #0f766e (focus rings), neutral-900 #171717, neutral-600 #525252,
+ * neutral-200 #e5e7eb, neutral-100 #f5f5f5.
+ * ================================================================ */
+
+/* --- Shared form primitives (used across cart + checkout) --------- */
+.sp-cart-page .input-text,
+.sp-cart-page input[type="text"],
+.sp-cart-page input[type="email"],
+.sp-cart-page input[type="tel"],
+.sp-cart-page select,
+.sp-checkout-page .input-text,
+.sp-checkout-page input[type="text"],
+.sp-checkout-page input[type="email"],
+.sp-checkout-page input[type="tel"],
+.sp-checkout-page input[type="password"],
+.sp-checkout-page textarea,
+.sp-checkout-page select,
+.sp-input {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #171717;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+.sp-cart-page .input-text:focus,
+.sp-cart-page input:focus,
+.sp-cart-page select:focus,
+.sp-checkout-page .input-text:focus,
+.sp-checkout-page input:focus,
+.sp-checkout-page textarea:focus,
+.sp-checkout-page select:focus,
+.sp-input:focus {
+  outline: none;
+  border-color: #0d9488;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+}
+.sp-cart-page textarea,
+.sp-checkout-page textarea {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+/* Secondary button (outline teal) -- apply coupon, update cart. */
+.sp-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0d9488;
+  background: #fff;
+  border: 2px solid #0d9488;
+  border-radius: 9999px;
+  transition: background 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+}
+.sp-btn-secondary:hover {
+  background: #0d9488;
+  color: #fff;
+}
+
+/* Ghost button (text + faint underline) -- update cart. */
+.sp-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #525252;
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  border-radius: 9999px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+}
+.sp-btn-ghost:hover {
+  color: #0d9488;
+  border-color: #0d9488;
+}
+
+/* --- Cart page (.sp-cart-page) ------------------------------------ */
+.sp-cart-page .sp-qty-wrap .quantity {
+  margin: 0;
+}
+.sp-cart-page .sp-qty-wrap input.qty {
+  width: 4.5rem;
+  text-align: center;
+  padding: 0.5rem 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.sp-cart-page .product-remove a.remove {
+  text-decoration: none;
+  /* Override WC default 1.5em "x" glyph -- our template uses an SVG. */
+  font-size: 0 !important;
+}
+
+/* Shipping options row in cart-totals. */
+.sp-cart-totals .shipping {
+  display: block;
+  padding: 0.5rem 0;
+}
+.sp-cart-totals .shipping .woocommerce-shipping-destination {
+  font-size: 0.8rem;
+  color: #737373;
+  margin: 0.5rem 0 0;
+}
+.sp-cart-totals .shipping ul#shipping_method {
+  list-style: none;
+  padding: 0.75rem 0 0;
+  margin: 0;
+}
+.sp-cart-totals .shipping ul#shipping_method li {
+  padding: 0.25rem 0;
+  font-size: 0.85rem;
+  color: #525252;
+}
+.sp-cart-totals .shipping ul#shipping_method li input[type="radio"] {
+  margin-right: 0.5rem;
+  accent-color: #0d9488;
+}
+
+/* --- Checkout page (.sp-checkout-page) ---------------------------- */
+.sp-checkout-page h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #171717;
+  margin: 0 0 1.25rem;
+}
+
+/* WC renders labels as spans in a <p class="form-row"> structure.
+ * Reset the default .form-row float layout and use flex-column. */
+.sp-checkout-page .form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+.sp-checkout-page .form-row label {
+  display: block;
+  margin-bottom: 0.375rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #404040;
+}
+.sp-checkout-page .form-row .required {
+  color: #dc2626;
+  text-decoration: none;
+  margin-left: 0.125rem;
+}
+.sp-checkout-page .form-row .optional {
+  color: #737373;
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+/* Two-column field rows (first_name / last_name). */
+@media (min-width: 640px) {
+  .sp-checkout-page .form-row-first,
+  .sp-checkout-page .form-row-last {
+    width: calc(50% - 0.5rem);
+    display: inline-flex;
+  }
+  .sp-checkout-page .form-row-first {
+    margin-right: 1rem;
+  }
+}
+
+/* Select2 drop-down (country / state selectors). WC loads select2
+ * which sets inline widths; override with !important so they match
+ * the sibling <input>s. */
+.sp-checkout-page .select2-container .select2-selection--single {
+  height: auto;
+  min-height: 2.75rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 0.75rem !important;
+  background: #fff;
+}
+.sp-checkout-page .select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: 2.25rem;
+  color: #171717;
+  padding-left: 0.5rem;
+}
+.sp-checkout-page .select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 2.75rem;
+}
+.sp-checkout-page .select2-container--default.select2-container--focus .select2-selection--single {
+  border-color: #0d9488 !important;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+}
+
+/* Ship-to-different toggle. */
+.sp-checkout-page #ship-to-different-address label {
+  font-weight: 700;
+  color: #171717;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+.sp-checkout-page #ship-to-different-address input[type="checkbox"] {
+  width: 1.125rem;
+  height: 1.125rem;
+  accent-color: #0d9488;
+}
+
+/* Additional info (order notes) heading. */
+.sp-checkout-page .woocommerce-additional-fields h3 {
+  margin-top: 2rem;
+}
+
+/* --- Review-order table (.sp-review-table) ----------------------- */
+.sp-review-table {
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.sp-review-table th,
+.sp-review-table td {
+  padding: 0.75rem 0.25rem;
+  vertical-align: top;
+}
+
+/* --- Payment methods list ---------------------------------------- */
+.woocommerce-checkout-payment .payment_methods {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.woocommerce-checkout-payment .payment_methods li {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  margin-bottom: 0.5rem;
+  padding: 0;
+  background: #fff;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+.woocommerce-checkout-payment .payment_methods li:hover {
+  border-color: #0d9488;
+}
+.woocommerce-checkout-payment .payment_methods li label {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1rem 1rem 0.75rem;
+  font-weight: 600;
+  color: #171717;
+  cursor: pointer;
+  margin: 0;
+}
+.woocommerce-checkout-payment .payment_methods li input[type="radio"] {
+  margin-right: 0.75rem;
+  accent-color: #0d9488;
+  width: 1.125rem;
+  height: 1.125rem;
+}
+.woocommerce-checkout-payment .payment_methods li .payment_box {
+  padding: 0 1rem 1rem 2.75rem;
+  font-size: 0.85rem;
+  color: #525252;
+  line-height: 1.6;
+}
+.woocommerce-checkout-payment .payment_methods li .payment_box p {
+  margin: 0;
+}
+.woocommerce-checkout-payment .payment_methods li img {
+  margin-left: auto;
+  max-height: 1.5rem;
+  width: auto;
+}
+
+/* Place-order + terms row. */
+.woocommerce-checkout-payment .woocommerce-terms-and-conditions-wrapper {
+  font-size: 0.85rem;
+  color: #525252;
+  margin: 1rem 0;
+}
+.woocommerce-checkout-payment .woocommerce-terms-and-conditions-wrapper label {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+.woocommerce-checkout-payment .woocommerce-terms-and-conditions-wrapper input[type="checkbox"] {
+  margin-top: 0.25rem;
+  accent-color: #0d9488;
+}
+
+/* --- WC notices (shared cart + checkout) ------------------------- */
+.woocommerce-notices-wrapper .woocommerce-error,
+.woocommerce-notices-wrapper .woocommerce-info,
+.woocommerce-notices-wrapper .woocommerce-message,
+.woocommerce-NoticeGroup .woocommerce-error,
+.woocommerce-NoticeGroup .woocommerce-message {
+  list-style: none;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  border: 1px solid;
+}
+.woocommerce-notices-wrapper .woocommerce-message {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+.woocommerce-notices-wrapper .woocommerce-info {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1e40af;
+}
+.woocommerce-notices-wrapper .woocommerce-error {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #991b1b;
+}
+.woocommerce-notices-wrapper li {
+  margin: 0;
+}
+.woocommerce-notices-wrapper .button {
+  margin-left: 0.5rem;
+  color: inherit;
+  text-decoration: underline;
+  background: transparent;
+  padding: 0;
+  font-weight: 600;
+}
+
+/* --- Blockui loading overlay (when WC updates totals via AJAX) --- */
+.blockUI.blockOverlay {
+  background: #fff !important;
+  opacity: 0.7 !important;
+  border-radius: 1rem;
+}
+.sp-checkout-review .blockUI.blockOverlay::before {
+  content: "";
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid #e5e7eb;
+  border-top-color: #0d9488;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -1rem 0 0 -1rem;
+  animation: sp-spin 0.8s linear infinite;
+}
+@keyframes sp-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ================================================================
+ * STAGE 4a-5 — ORDER RECEIVED / THANK YOU BRAND OVERRIDES
+ *
+ * Templates:
+ *   - woocommerce/checkout/thankyou.php           (.sp-thankyou)
+ *   - woocommerce/order/order-details.php         (.sp-order-details)
+ *   - woocommerce/order/order-details-customer.php(.sp-customer-details)
+ *
+ * The product line items inside .sp-order-table use WC's default
+ * order-details-item.php template which outputs:
+ *   <tr class="order_item">
+ *     <td class="product-name">
+ *       <a>name</a> <strong class="product-quantity">×&nbsp;2</strong>
+ *       <ul class="wc-item-meta">...</ul>
+ *     </td>
+ *     <td class="product-total"><span class="amount">£5.99</span></td>
+ *   </tr>
+ * We don't override the per-item template -- just style the output.
+ * ================================================================ */
+
+/* --- Order details table -- per-item rows ------------------------ */
+.sp-order-details .sp-order-table tbody tr.order_item {
+  border-bottom: 1px solid #f5f5f5;
+}
+.sp-order-details .sp-order-table tbody tr.order_item:last-child {
+  border-bottom: none;
+}
+.sp-order-details .sp-order-table tbody td.product-name {
+  padding: 0.875rem 0.75rem 0.875rem 0;
+  color: #262626;
+  font-weight: 600;
+  font-size: 0.9rem;
+  vertical-align: top;
+}
+.sp-order-details .sp-order-table tbody td.product-name a {
+  color: #171717;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.sp-order-details .sp-order-table tbody td.product-name a:hover {
+  color: #0d9488;
+}
+.sp-order-details .sp-order-table tbody td.product-name .product-quantity {
+  display: inline-block;
+  margin-left: 0.5rem;
+  color: #737373;
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+.sp-order-details .sp-order-table tbody td.product-total {
+  padding: 0.875rem 0;
+  text-align: right;
+  color: #171717;
+  font-weight: 600;
+  font-size: 0.9rem;
+  vertical-align: top;
+  white-space: nowrap;
+}
+/* Variation / item meta (e.g. dosage, attributes). */
+.sp-order-details .sp-order-table .wc-item-meta {
+  list-style: none;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  font-size: 0.8rem;
+  color: #737373;
+  font-weight: 400;
+}
+.sp-order-details .sp-order-table .wc-item-meta li {
+  margin: 0;
+}
+.sp-order-details .sp-order-table .wc-item-meta strong {
+  font-weight: 600;
+  color: #525252;
+}
+
+/* --- Customer details — addresses block --------------------------- */
+.sp-customer-details address {
+  font-style: normal;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #404040;
+}
+.sp-customer-details address br {
+  display: block;
+  content: "";
+  margin-top: 0.125rem;
+}
+.sp-customer-details address p {
+  margin: 0.5rem 0 0;
+}
+
+/* --- Thank-you overview -- equalise stat-tile heights ------------ */
+.sp-thankyou__overview .woocommerce-order-overview li {
+  /* Override any WC default float/margins from when wc-blocks CSS
+   * leaks in. */
+  float: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+/* --- Bank details / BACS gateway notice ------------------------- */
+.sp-thankyou .woocommerce-order-bacs-bank-details,
+.sp-thankyou .wc-bacs-bank-details {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+.sp-thankyou .wc-bacs-bank-details-heading {
+  color: #171717;
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0 0 0.75rem;
+}
+.sp-thankyou .wc-bacs-bank-details-account-name {
+  color: #525252;
+  font-size: 0.85rem;
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
+.sp-thankyou .wc-bacs-bank-details ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.85rem;
+  color: #404040;
+}
+.sp-thankyou .wc-bacs-bank-details ul li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.375rem 0;
+  border-bottom: 1px dashed #f5f5f5;
+}
+.sp-thankyou .wc-bacs-bank-details ul li:last-child {
+  border-bottom: none;
+}
