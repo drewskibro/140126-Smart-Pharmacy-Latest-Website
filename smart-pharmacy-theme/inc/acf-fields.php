@@ -25,6 +25,7 @@
  *   C2  Post type (treatment) — Results / Testimonials
  *   C3  Post type (treatment) — Eligibility (Stage 3b stub UI; Stage 5 wires real calculator)
  *   D1  Post type (treatment) — FAQ
+ *   D2  Post type (treatment) — Final CTA
  *   F1  Options — Branding (logo, footer tagline, payment methods)
  *   G1  Options — Navigation (primary menu, footer link columns, search, NHS button)
  *   H1  Options — Contact (trading address, registered address)
@@ -32,7 +33,6 @@
  *   J1  Options — Social (platform URLs)
  *
  * Planned:
- *   D2  Post type (treatment) — Final CTA (Stage 3c)
  *   E1  Post type (treatment) — Related WooCommerce products (Stage 3c stub; Stage 4 wires real relationships)
  *
  * @package SmartPharmacy
@@ -1278,6 +1278,52 @@ function sp_register_acf_field_groups() {
 						array( 'key' => 'field_sp_tx_faq_c_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
 						array( 'key' => 'field_sp_tx_faq_c_body', 'label' => 'Body', 'name' => 'body', 'type' => 'text' ),
 						array( 'key' => 'field_sp_tx_faq_c_url', 'label' => 'URL', 'name' => 'url', 'type' => 'text', 'instructions' => 'Accepts any URL scheme (https://, mailto:, tel:). The esc_url() filter allows tel:/mailto: links.' ),
+					),
+				),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * D2 — Treatment Final CTA
+	 *
+	 * Teal-gradient closing CTA band with eyebrow pill, h2, paired
+	 * primary (solid white) + secondary (glass) buttons, and a trust-
+	 * signal row. Primary CTA defaults to #consultation (anchors to
+	 * the C3 Eligibility section); secondary defaults to /contact/.
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_d2_treatment_final_cta',
+			'title'    => 'D2 — Treatment Final CTA',
+			'position' => 'acf_after_title',
+			'location' => array(
+				array(
+					array( 'param' => 'post_type', 'operator' => '==', 'value' => 'treatment' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_tx_cta_enabled', 'label' => 'Show section', 'name' => 'tx_cta_enabled', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1 ),
+				array( 'key' => 'field_sp_tx_cta_badge_text', 'label' => 'Eyebrow badge text', 'name' => 'tx_cta_badge_text', 'type' => 'text', 'default_value' => 'Start Your Journey Today' ),
+				array( 'key' => 'field_sp_tx_cta_badge_icon', 'label' => 'Eyebrow badge icon', 'name' => 'tx_cta_badge_icon', 'type' => 'select', 'choices' => $sp_icon_choices, 'default_value' => 'sparkle', 'ui' => 1 ),
+				array( 'key' => 'field_sp_tx_cta_heading', 'label' => 'Heading', 'name' => 'tx_cta_heading', 'type' => 'text', 'default_value' => 'Start Your Weight Loss Journey Online' ),
+				array( 'key' => 'field_sp_tx_cta_sub', 'label' => 'Subheading', 'name' => 'tx_cta_subheading', 'type' => 'textarea', 'rows' => 2, 'default_value' => 'Get started in under 5 minutes with our simple online assessment' ),
+				array( 'key' => 'field_sp_tx_cta_primary_label', 'label' => 'Primary button label', 'name' => 'tx_cta_primary_label', 'type' => 'text', 'default_value' => 'Start Consultation', 'instructions' => 'Leave blank to hide the primary button.' ),
+				array( 'key' => 'field_sp_tx_cta_primary_url', 'label' => 'Primary button URL', 'name' => 'tx_cta_primary_url', 'type' => 'url', 'default_value' => '#consultation', 'instructions' => 'Default `#consultation` anchors to the C3 Eligibility section above. Stage 5 may replace this with the real consultation flow URL.' ),
+				array( 'key' => 'field_sp_tx_cta_secondary_label', 'label' => 'Secondary button label', 'name' => 'tx_cta_secondary_label', 'type' => 'text', 'default_value' => 'Speak to a Pharmacist', 'instructions' => 'Leave blank to hide the secondary button.' ),
+				array( 'key' => 'field_sp_tx_cta_secondary_url', 'label' => 'Secondary button URL', 'name' => 'tx_cta_secondary_url', 'type' => 'url', 'default_value' => '/contact/' ),
+				array(
+					'key'          => 'field_sp_tx_cta_trust',
+					'label'        => 'Trust signals',
+					'name'         => 'tx_cta_trust',
+					'type'         => 'repeater',
+					'button_label' => 'Add trust item',
+					'layout'       => 'table',
+					'min'          => 0,
+					'max'          => 5,
+					'instructions' => 'Inline-separated items shown under the CTAs. Each renders with a white checkmark.',
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_tx_cta_trust_text', 'label' => 'Text', 'name' => 'text', 'type' => 'text' ),
 					),
 				),
 			),
