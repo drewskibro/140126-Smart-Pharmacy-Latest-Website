@@ -913,7 +913,7 @@ function sp_register_acf_field_groups() {
 					'max'          => 4,
 					'instructions' => 'Design works best with 1–2 options. Each renders as a pricing card.',
 					'sub_fields'   => array(
-						array( 'key' => 'field_sp_tx_opt_image', 'label' => 'Product image', 'name' => 'image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'thumbnail', 'instructions' => 'Replaces the icon in the top-left of the card. Recommended: square, ~200x200px.' ),
+						array( 'key' => 'field_sp_tx_opt_image', 'label' => 'Product image', 'name' => 'image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium', 'instructions' => 'Displays full-width at the top of the card (banner ~288px tall). Upload at least 1000×1000px, transparent PNG preferred. Any aspect ratio works — the product is centered without cropping.' ),
 						array( 'key' => 'field_sp_tx_opt_name', 'label' => 'Name', 'name' => 'name', 'type' => 'text' ),
 						array( 'key' => 'field_sp_tx_opt_badge', 'label' => 'Top-right badge (optional)', 'name' => 'badge', 'type' => 'text', 'instructions' => 'E.g. "Most Popular", "New", "Best Value".' ),
 						array(
