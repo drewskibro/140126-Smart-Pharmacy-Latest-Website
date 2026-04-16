@@ -445,3 +445,273 @@ input:focus {
 .sp-faq-item[open] {
   border-color: rgba(16, 192, 169, 0.35);
 }
+
+/* =====================================================================
+ * WOOCOMMERCE SINGLE-PRODUCT BRAND OVERRIDES (Stage 4a-3)
+ * ---------------------------------------------------------------------
+ * styles.css is plain CSS (no Tailwind compilation), but it loads AFTER
+ * tailwind.css so cascade priority lets us override WC's own classes
+ * with brand styling without needing !important.
+ *
+ * Templates in woocommerce/ handle the structural overrides; this
+ * section handles the inner WC summary classes (.product_title, .price,
+ * .stock, etc.) where overriding the WC sub-templates would multiply
+ * the maintenance surface for marginal benefit.
+ *
+ * If WC ships a markup change in a major version, update the selectors
+ * here -- the template overrides above are the more stable layer.
+ * ===================================================================== */
+
+/* --- Sale flash: position over the gallery, brand colours ------------ */
+.sp-product-gallery .onsale,
+.sp-single-product .onsale {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10;
+  background: #f97316; /* tailwind orange-500 */
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.375rem 0.875rem;
+  border-radius: 9999px;
+  line-height: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+}
+
+/* --- Product gallery: rounded corners + subtle shadow ---------------- */
+.sp-product-gallery .woocommerce-product-gallery {
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f0f9fa 0%, #ffffff 100%);
+  padding: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 4px 6px -4px rgba(0,0,0,0.05);
+}
+.sp-product-gallery .woocommerce-product-gallery img {
+  border-radius: 1rem;
+}
+
+/* --- Title ----------------------------------------------------------- */
+.sp-product-summary .product_title {
+  font-size: 1.875rem; /* 30px */
+  font-weight: 900;
+  color: #171717; /* neutral-900 */
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.75rem;
+}
+@media (min-width: 768px) {
+  .sp-product-summary .product_title {
+    font-size: 2.25rem; /* 36px */
+  }
+}
+
+/* --- Price (handles regular, sale, and range pricing) --------------- */
+.sp-product-summary .price {
+  font-size: 1.875rem; /* 30px */
+  font-weight: 900;
+  color: #171717;
+  margin: 0 0 1.25rem;
+  line-height: 1.2;
+}
+.sp-product-summary .price del {
+  color: #9ca3af; /* gray-400 */
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-decoration: line-through;
+  margin-right: 0.5rem;
+  opacity: 0.7;
+}
+.sp-product-summary .price ins {
+  text-decoration: none;
+  color: #171717;
+}
+.sp-product-summary .price .woocommerce-Price-amount {
+  font-weight: 900;
+}
+
+/* --- Star rating link in summary ------------------------------------- */
+.sp-product-summary .woocommerce-product-rating {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.sp-product-summary .woocommerce-product-rating .star-rating {
+  color: #fbbf24; /* yellow-400 */
+}
+.sp-product-summary .woocommerce-product-rating .woocommerce-review-link {
+  color: #6b7280; /* gray-500 */
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+.sp-product-summary .woocommerce-product-rating .woocommerce-review-link:hover {
+  color: #14b8a6; /* teal-500 */
+}
+
+/* --- Short description ----------------------------------------------- */
+.sp-product-summary .woocommerce-product-details__short-description {
+  color: #525252; /* neutral-600 */
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+.sp-product-summary .woocommerce-product-details__short-description p {
+  margin: 0 0 1rem;
+}
+.sp-product-summary .woocommerce-product-details__short-description p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- Stock status ---------------------------------------------------- */
+.sp-product-summary .stock {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+}
+.sp-product-summary .stock.in-stock {
+  color: #16a34a; /* green-600 */
+}
+.sp-product-summary .stock.out-of-stock,
+.sp-product-summary .stock.available-on-backorder {
+  color: #dc2626; /* red-600 */
+}
+
+/* --- Quantity input -------------------------------------------------- */
+.sp-product-summary .quantity {
+  display: inline-flex;
+  align-items: center;
+}
+.sp-product-summary .quantity .qty {
+  width: 5rem;
+  height: 100%;
+  min-height: 3.25rem;
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #171717;
+  border: 1px solid #d1d5db; /* gray-300 */
+  border-radius: 9999px;
+  background: #fff;
+  -moz-appearance: textfield;
+}
+.sp-product-summary .quantity .qty::-webkit-outer-spin-button,
+.sp-product-summary .quantity .qty::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.sp-product-summary .quantity .qty:focus {
+  outline: none;
+  border-color: #14b8a6; /* teal-500 */
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+}
+
+/* --- Product meta (SKU, categories, tags) ---------------------------- */
+.sp-product-summary .product_meta {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb; /* gray-200 */
+  font-size: 0.875rem;
+  color: #6b7280; /* gray-500 */
+}
+.sp-product-summary .product_meta > span {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.sp-product-summary .product_meta > span:last-child {
+  margin-bottom: 0;
+}
+.sp-product-summary .product_meta a {
+  color: #14b8a6; /* teal-500 */
+  text-decoration: none;
+}
+.sp-product-summary .product_meta a:hover {
+  text-decoration: underline;
+}
+
+/* --- Tabs (Description / Additional Info / Reviews) ----------------- */
+.sp-single-product .woocommerce-tabs {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+.sp-single-product .woocommerce-tabs ul.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0 0 2rem;
+  padding: 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+.sp-single-product .woocommerce-tabs ul.tabs li {
+  margin: 0;
+  padding: 0;
+}
+.sp-single-product .woocommerce-tabs ul.tabs li a {
+  display: block;
+  padding: 1rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #525252; /* neutral-600 */
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.sp-single-product .woocommerce-tabs ul.tabs li a:hover {
+  color: #14b8a6;
+}
+.sp-single-product .woocommerce-tabs ul.tabs li.active a {
+  color: #14b8a6;
+  border-bottom-color: #14b8a6;
+}
+.sp-single-product .woocommerce-tabs .panel {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #525252;
+}
+.sp-single-product .woocommerce-tabs .panel h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #171717;
+  margin: 0 0 1rem;
+}
+.sp-single-product .woocommerce-tabs .panel p {
+  margin: 0 0 1rem;
+}
+.sp-single-product .woocommerce-tabs .panel table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+.sp-single-product .woocommerce-tabs .panel table th,
+.sp-single-product .woocommerce-tabs .panel table td {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+.sp-single-product .woocommerce-tabs .panel table th {
+  font-weight: 700;
+  color: #171717;
+  background: #f9fafb;
+}
+
+/* --- Reviews block in tabs ------------------------------------------ */
+.sp-single-product #reviews .commentlist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+}
+.sp-single-product #reviews .commentlist li.review {
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  background: #fff;
+}
+.sp-single-product #reviews .star-rating {
+  color: #fbbf24;
+  margin-bottom: 0.5rem;
+}
