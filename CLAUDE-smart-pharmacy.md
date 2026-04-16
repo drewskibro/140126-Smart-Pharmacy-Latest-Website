@@ -60,6 +60,11 @@ deliberate divergences.
 - **Treatment CPT** (`/treatments/…`) is registered. Treatment landing pages
   are educational; they link to one or more WooCommerce products (the actual
   SKUs) via an ACF relationship field.
+- **`treatment_category` taxonomy** (hierarchical, `/treatment-category/…`)
+  groups Treatment posts. Used by homepage carousel, archives, related-
+  treatment widgets, and UK pharmacy category navigation. Assigned via the
+  B4 Treatment Meta ACF panel (taxonomy field with `add_term: true` so
+  editors can create categories inline).
 
 ## Critical patterns
 

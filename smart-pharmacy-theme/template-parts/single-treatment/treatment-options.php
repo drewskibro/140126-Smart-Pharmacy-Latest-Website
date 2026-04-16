@@ -81,14 +81,18 @@ $sp_tx_cols = ( count( $tx_options ) === 1 ) ? '' : 'md:grid-cols-[repeat(2,minm
 
 		<div class="box-border gap-x-8 grid grid-cols-[repeat(1,minmax(0px,1fr))] break-words gap-y-8 <?php echo esc_attr( $sp_tx_cols ); ?>">
 			<?php foreach ( $tx_options as $sp_opt ) :
-				$sp_name   = isset( $sp_opt['name'] ) ? (string) $sp_opt['name'] : '';
-				$sp_icon   = isset( $sp_opt['icon'] ) ? (string) $sp_opt['icon'] : 'sparkle';
-				$sp_badge  = isset( $sp_opt['badge'] ) ? (string) $sp_opt['badge'] : '';
-				$sp_price  = isset( $sp_opt['price'] ) ? (string) $sp_opt['price'] : '';
-				$sp_unit   = isset( $sp_opt['price_unit'] ) ? (string) $sp_opt['price_unit'] : '';
-				$sp_cta_l  = isset( $sp_opt['cta_label'] ) ? (string) $sp_opt['cta_label'] : 'Learn More';
-				$sp_cta_u  = isset( $sp_opt['cta_url'] ) ? (string) $sp_opt['cta_url'] : '#consultation';
+				$sp_name     = isset( $sp_opt['name'] ) ? (string) $sp_opt['name'] : '';
+				$sp_badge    = isset( $sp_opt['badge'] ) ? (string) $sp_opt['badge'] : '';
+				$sp_price    = isset( $sp_opt['price'] ) ? (string) $sp_opt['price'] : '';
+				$sp_unit     = isset( $sp_opt['price_unit'] ) ? (string) $sp_opt['price_unit'] : '';
+				$sp_cta_l    = isset( $sp_opt['cta_label'] ) ? (string) $sp_opt['cta_label'] : 'Learn More';
+				$sp_cta_u    = isset( $sp_opt['cta_url'] ) ? (string) $sp_opt['cta_url'] : '#consultation';
 				$sp_benefits = isset( $sp_opt['benefits'] ) && is_array( $sp_opt['benefits'] ) ? $sp_opt['benefits'] : array();
+
+				// Product image (replaces the old decorative icon box).
+				$sp_img      = isset( $sp_opt['image'] ) ? $sp_opt['image'] : null;
+				$sp_img_url  = ( is_array( $sp_img ) && ! empty( $sp_img['url'] ) ) ? $sp_img['url'] : '';
+				$sp_img_alt  = ( is_array( $sp_img ) && ! empty( $sp_img['alt'] ) ) ? $sp_img['alt'] : $sp_name;
 				?>
 				<div class="relative bg-white shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.1)_0px_20px_25px_-5px,rgba(0,0,0,0.1)_0px_8px_10px_-6px] box-border flex flex-col break-words border border-gray-100 overflow-hidden p-10 rounded-3xl border-solid hover:shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.25)_0px_25px_50px_-12px] hover:border-teal-500/30 transition-all duration-300 group">
 					<div class="absolute bg-[linear-gradient(to_right_bottom,rgba(59,155,159,0.05),rgba(0,0,0,0))] box-border h-32 break-words w-32 rounded-bl-full right-0 top-0" aria-hidden="true"></div>
@@ -100,12 +104,14 @@ $sp_tx_cols = ( count( $tx_options ) === 1 ) ? '' : 'md:grid-cols-[repeat(2,minm
 					<?php endif; ?>
 
 					<div class="relative box-border break-words z-10">
-						<div class="relative box-border inline-block break-words mb-8">
-							<div class="absolute bg-[linear-gradient(to_right_bottom,rgb(59,155,159),rgb(44,122,126))] box-border blur-xl opacity-30 break-words rounded-3xl inset-0" aria-hidden="true"></div>
-							<div class="relative items-center bg-[linear-gradient(to_right_bottom,rgb(59,155,159),rgb(44,122,126))] shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.1)_0px_20px_25px_-5px,rgba(0,0,0,0.1)_0px_8px_10px_-6px] box-border flex h-20 justify-center break-words w-20 rounded-3xl transition-transform duration-300 group-hover:scale-110">
-								<?php echo sp_icon( $sp_icon, 'w-10 h-10 text-white' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<?php if ( $sp_img_url ) : ?>
+							<!-- Product image (replaces the old decorative icon box) -->
+							<div class="relative box-border inline-block break-words mb-8">
+								<div class="relative items-center bg-white shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.1)_0px_20px_25px_-5px,rgba(0,0,0,0.1)_0px_8px_10px_-6px] box-border flex h-24 justify-center break-words w-24 rounded-3xl overflow-hidden transition-transform duration-300 group-hover:scale-105 border border-gray-100">
+									<img src="<?php echo esc_url( $sp_img_url ); ?>" alt="<?php echo esc_attr( $sp_img_alt ); ?>" class="w-full h-full object-cover" />
+								</div>
 							</div>
-						</div>
+						<?php endif; ?>
 
 						<h3 class="text-neutral-900 text-3xl font-black box-border leading-9 break-words mb-4"><?php echo esc_html( $sp_name ); ?></h3>
 
