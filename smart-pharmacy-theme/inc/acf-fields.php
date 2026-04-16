@@ -1053,6 +1053,63 @@ function sp_register_acf_field_groups() {
 	);
 
 	/* ---------------------------------------------------------------
+	 * B5 — Treatment What's Included
+	 *
+	 * Three feature cards highlighting what the customer receives
+	 * (medication, clinical support, lifestyle guidance). Content-only
+	 * -- no ties to WooCommerce or taxonomies.
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_b5_treatment_whats_included',
+			'title'    => "B5 — Treatment What's Included",
+			'position' => 'acf_after_title',
+			'location' => array(
+				array(
+					array( 'param' => 'post_type', 'operator' => '==', 'value' => 'treatment' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_tx_incl_enabled', 'label' => 'Show section', 'name' => 'tx_incl_enabled', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1 ),
+				array( 'key' => 'field_sp_tx_incl_badge_pre', 'label' => 'Badge — start', 'name' => 'tx_incl_badge_pre', 'type' => 'text', 'default_value' => 'Complete' ),
+				array( 'key' => 'field_sp_tx_incl_badge_hi', 'label' => 'Badge — highlighted', 'name' => 'tx_incl_badge_highlight', 'type' => 'text', 'default_value' => 'Package' ),
+				array( 'key' => 'field_sp_tx_incl_h_pre', 'label' => 'Heading — start', 'name' => 'tx_incl_heading_pre', 'type' => 'text', 'default_value' => "What's" ),
+				array( 'key' => 'field_sp_tx_incl_h_hi', 'label' => 'Heading — highlighted', 'name' => 'tx_incl_heading_highlight', 'type' => 'text', 'default_value' => 'Included' ),
+				array( 'key' => 'field_sp_tx_incl_sub', 'label' => 'Subheading', 'name' => 'tx_incl_subheading', 'type' => 'text', 'default_value' => 'Everything you need for successful weight loss' ),
+				array(
+					'key'          => 'field_sp_tx_incl_items',
+					'label'        => 'Items',
+					'name'         => 'tx_incl_items',
+					'type'         => 'repeater',
+					'button_label' => 'Add item',
+					'layout'       => 'block',
+					'min'          => 0,
+					'max'          => 6,
+					'instructions' => 'Each item renders as a feature card with icon, title, bullet list, and highlighted tagline. Design works best with 3.',
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_tx_incl_item_icon', 'label' => 'Icon', 'name' => 'icon', 'type' => 'select', 'choices' => $sp_icon_choices, 'default_value' => 'check_circle', 'ui' => 1 ),
+						array( 'key' => 'field_sp_tx_incl_item_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
+						array(
+							'key'          => 'field_sp_tx_incl_item_bullets',
+							'label'        => 'Bullet points',
+							'name'         => 'bullets',
+							'type'         => 'repeater',
+							'button_label' => 'Add bullet',
+							'layout'       => 'table',
+							'min'          => 0,
+							'max'          => 6,
+							'sub_fields'   => array(
+								array( 'key' => 'field_sp_tx_incl_item_bullet_text', 'label' => 'Text', 'name' => 'text', 'type' => 'text' ),
+							),
+						),
+						array( 'key' => 'field_sp_tx_incl_item_tagline', 'label' => 'Tagline', 'name' => 'tagline', 'type' => 'text', 'instructions' => 'Short highlighted line shown in the teal callout at the bottom of the card (e.g. "Available treatments: Wegovy, Mounjaro").' ),
+					),
+				),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
 	 * F1 — Branding (options)
 	 * ------------------------------------------------------------- */
 	acf_add_local_field_group(
