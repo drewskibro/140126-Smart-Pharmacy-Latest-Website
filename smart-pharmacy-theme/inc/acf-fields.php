@@ -21,6 +21,8 @@
  *   B2  Post type (treatment) — Treatment How It Works
  *   B3  Post type (treatment) — Treatment Options / Pricing (static; WC in Stage 4)
  *   B4  Post type (treatment) — Treatment Meta (identity, card data, UK compliance, category taxonomy)
+ *   C1  Post type (treatment) — What's Included / Benefits
+ *   C2  Post type (treatment) — Results / Testimonials
  *   F1  Options — Branding (logo, footer tagline, payment methods)
  *   G1  Options — Navigation (primary menu, footer link columns, search, NHS button)
  *   H1  Options — Contact (trading address, registered address)
@@ -28,8 +30,6 @@
  *   J1  Options — Social (platform URLs)
  *
  * Planned:
- *   C1  Post type (treatment) — What's Included / Benefits (Stage 3b)
- *   C2  Post type (treatment) — Results / Testimonials (Stage 3b)
  *   C3  Post type (treatment) — Eligibility Calculator (Stage 3b stub; Stage 5 real)
  *   D1  Post type (treatment) — FAQ (Stage 3c)
  *   D2  Post type (treatment) — Final CTA (Stage 3c)
@@ -1047,6 +1047,127 @@ function sp_register_acf_field_groups() {
 					'name'         => 'tx_meta_mhra_number',
 					'type'         => 'text',
 					'instructions' => 'Optional. Required for marketing-compliance display on POM products.',
+				),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * C1 — Treatment What's Included
+	 *
+	 * Three feature cards highlighting what the customer receives
+	 * (medication, clinical support, lifestyle guidance). Content-only
+	 * -- no ties to WooCommerce or taxonomies.
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_c1_treatment_whats_included',
+			'title'    => "C1 — Treatment What's Included",
+			'position' => 'acf_after_title',
+			'location' => array(
+				array(
+					array( 'param' => 'post_type', 'operator' => '==', 'value' => 'treatment' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_tx_incl_enabled', 'label' => 'Show section', 'name' => 'tx_incl_enabled', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1 ),
+				array( 'key' => 'field_sp_tx_incl_badge_pre', 'label' => 'Badge — start', 'name' => 'tx_incl_badge_pre', 'type' => 'text', 'default_value' => 'Complete' ),
+				array( 'key' => 'field_sp_tx_incl_badge_hi', 'label' => 'Badge — highlighted', 'name' => 'tx_incl_badge_highlight', 'type' => 'text', 'default_value' => 'Package' ),
+				array( 'key' => 'field_sp_tx_incl_h_pre', 'label' => 'Heading — start', 'name' => 'tx_incl_heading_pre', 'type' => 'text', 'default_value' => "What's" ),
+				array( 'key' => 'field_sp_tx_incl_h_hi', 'label' => 'Heading — highlighted', 'name' => 'tx_incl_heading_highlight', 'type' => 'text', 'default_value' => 'Included' ),
+				array( 'key' => 'field_sp_tx_incl_sub', 'label' => 'Subheading', 'name' => 'tx_incl_subheading', 'type' => 'text', 'default_value' => 'Everything you need for successful weight loss' ),
+				array(
+					'key'          => 'field_sp_tx_incl_items',
+					'label'        => 'Items',
+					'name'         => 'tx_incl_items',
+					'type'         => 'repeater',
+					'button_label' => 'Add item',
+					'layout'       => 'block',
+					'min'          => 0,
+					'max'          => 6,
+					'instructions' => 'Each item renders as a feature card with icon, title, bullet list, and highlighted tagline. Design works best with 3.',
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_tx_incl_item_icon', 'label' => 'Icon', 'name' => 'icon', 'type' => 'select', 'choices' => $sp_icon_choices, 'default_value' => 'check_circle', 'ui' => 1 ),
+						array( 'key' => 'field_sp_tx_incl_item_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
+						array(
+							'key'          => 'field_sp_tx_incl_item_bullets',
+							'label'        => 'Bullet points',
+							'name'         => 'bullets',
+							'type'         => 'repeater',
+							'button_label' => 'Add bullet',
+							'layout'       => 'table',
+							'min'          => 0,
+							'max'          => 6,
+							'sub_fields'   => array(
+								array( 'key' => 'field_sp_tx_incl_item_bullet_text', 'label' => 'Text', 'name' => 'text', 'type' => 'text' ),
+							),
+						),
+						array( 'key' => 'field_sp_tx_incl_item_tagline', 'label' => 'Tagline', 'name' => 'tagline', 'type' => 'text', 'instructions' => 'Short highlighted line shown in the teal callout at the bottom of the card (e.g. "Available treatments: Wegovy, Mounjaro").' ),
+					),
+				),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * C2 — Treatment Results / Testimonials
+	 *
+	 * Social-proof grid: rating summary + 3 testimonial cards per
+	 * treatment. Each card has a patient photo, star rating, editorial
+	 * italic quote, name, and outcome meta line. Content-only; no ties
+	 * to WooCommerce reviews (Stage 4 could swap in WC review data).
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_c2_treatment_testimonials',
+			'title'    => 'C2 — Treatment Results / Testimonials',
+			'position' => 'acf_after_title',
+			'location' => array(
+				array(
+					array( 'param' => 'post_type', 'operator' => '==', 'value' => 'treatment' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_tx_tst_enabled', 'label' => 'Show section', 'name' => 'tx_tst_enabled', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1 ),
+				array( 'key' => 'field_sp_tx_tst_rating_score', 'label' => 'Rating score', 'name' => 'tx_tst_rating_score', 'type' => 'text', 'default_value' => '4.9/5', 'instructions' => 'Summary score shown in the eyebrow pill (e.g. "4.9/5"). Leave blank to hide the pill.' ),
+				array( 'key' => 'field_sp_tx_tst_rating_count', 'label' => 'Rating count label', 'name' => 'tx_tst_rating_count', 'type' => 'text', 'default_value' => 'from 3,847 reviews', 'instructions' => 'Trailing text after the score (e.g. "from 3,847 reviews").' ),
+				array( 'key' => 'field_sp_tx_tst_h_pre', 'label' => 'Heading — start', 'name' => 'tx_tst_heading_pre', 'type' => 'text', 'default_value' => 'Real results.' ),
+				array( 'key' => 'field_sp_tx_tst_h_hi', 'label' => 'Heading — highlighted', 'name' => 'tx_tst_heading_highlight', 'type' => 'text', 'default_value' => 'Real people.' ),
+				array( 'key' => 'field_sp_tx_tst_sub', 'label' => 'Subheading', 'name' => 'tx_tst_subheading', 'type' => 'text', 'default_value' => 'See what our patients have achieved with Smart Pharmacy' ),
+				array(
+					'key'          => 'field_sp_tx_tst_items',
+					'label'        => 'Testimonials',
+					'name'         => 'tx_tst_items',
+					'type'         => 'repeater',
+					'button_label' => 'Add testimonial',
+					'layout'       => 'block',
+					'min'          => 0,
+					'max'          => 6,
+					'instructions' => 'Each testimonial renders as a card. Design works best with 3. Patient photo is optional — cards without an image render as text-only.',
+					'sub_fields'   => array(
+						array(
+							'key'           => 'field_sp_tx_tst_item_image',
+							'label'         => 'Patient photo',
+							'name'          => 'image',
+							'type'          => 'image',
+							'return_format' => 'array',
+							'preview_size'  => 'medium',
+							'instructions'  => 'Portrait photo; displays as a 256px-tall banner at the top of the card. Obtain signed consent before uploading patient imagery.',
+						),
+						array(
+							'key'           => 'field_sp_tx_tst_item_rating',
+							'label'         => 'Star rating (0-5)',
+							'name'          => 'rating',
+							'type'          => 'number',
+							'min'           => 0,
+							'max'           => 5,
+							'default_value' => 5,
+							'instructions'  => 'Number of filled stars shown above the quote. Use 0 to hide the rating row.',
+						),
+						array( 'key' => 'field_sp_tx_tst_item_quote', 'label' => 'Quote', 'name' => 'quote', 'type' => 'textarea', 'rows' => 3, 'instructions' => 'Patient testimonial. Rendered in italic serif with curly quotes auto-added.' ),
+						array( 'key' => 'field_sp_tx_tst_item_name', 'label' => 'Name', 'name' => 'name', 'type' => 'text', 'instructions' => 'Patient name or initials (e.g. "Sarah M.").' ),
+						array( 'key' => 'field_sp_tx_tst_item_meta', 'label' => 'Outcome meta', 'name' => 'meta', 'type' => 'text', 'instructions' => 'Short outcome line under the name (e.g. "Lost 32 lbs • 4 months").' ),
+					),
 				),
 			),
 		)
