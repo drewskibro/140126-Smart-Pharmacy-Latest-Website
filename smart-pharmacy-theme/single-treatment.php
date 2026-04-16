@@ -6,7 +6,7 @@
  * from section-specific template parts, each of which pulls its own ACF
  * data and has its own enabled toggle where appropriate.
  *
- * Sections ported so far:
+ * Sections ported (Stage 3 complete):
  *   - Hero (Stage 3a)
  *   - How It Works (Stage 3a)
  *   - Treatment Options / Pricing (Stage 3a — static; real WC data in Stage 4)
@@ -14,10 +14,8 @@
  *   - Results / Testimonials (Stage 3b)
  *   - Eligibility (Stage 3b — static UI; Stage 5 wires the real calculator)
  *   - FAQ (Stage 3c)
- *   - Final CTA (Stage 3c)
- *
- * Planned:
- *   - Related products (Stage 3c stub; Stage 4 wires real relationships)
+ *   - Related Products (Stage 3c stub; Stage 4 wires real WC_Query / Relationship)
+ *   - Final CTA (Stage 3c — last section before footer)
  *
  * @package SmartPharmacy
  */
@@ -35,6 +33,7 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/single-treatment/testimonials' );
 		get_template_part( 'template-parts/single-treatment/eligibility' );
 		get_template_part( 'template-parts/single-treatment/faq' );
+		get_template_part( 'template-parts/single-treatment/related-products' );
 		get_template_part( 'template-parts/single-treatment/final-cta' );
 
 	endwhile;

@@ -26,14 +26,16 @@
  *   C3  Post type (treatment) — Eligibility (Stage 3b stub UI; Stage 5 wires real calculator)
  *   D1  Post type (treatment) — FAQ
  *   D2  Post type (treatment) — Final CTA
+ *   E1  Post type (treatment) — Related products (Stage 3c stub; Stage 4 wires real WC_Query / Relationship)
  *   F1  Options — Branding (logo, footer tagline, payment methods)
  *   G1  Options — Navigation (primary menu, footer link columns, search, NHS button)
  *   H1  Options — Contact (trading address, registered address)
  *   I1  Options — Compliance (GPhC number)
  *   J1  Options — Social (platform URLs)
  *
- * Planned:
- *   E1  Post type (treatment) — Related WooCommerce products (Stage 3c stub; Stage 4 wires real relationships)
+ * Stage 3 (B1–E1) is complete; future ACF groups will be added here as
+ * Stage 4 (WooCommerce overrides) and Stage 5 (additional treatment
+ * pages + eligibility logic) require them.
  *
  * @package SmartPharmacy
  */
@@ -1326,6 +1328,89 @@ function sp_register_acf_field_groups() {
 						array( 'key' => 'field_sp_tx_cta_trust_text', 'label' => 'Text', 'name' => 'text', 'type' => 'text' ),
 					),
 				),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * E1 — Treatment Related Products (Stage 3c stub)
+	 *
+	 * Repeater of product cards shown at the bottom of a treatment
+	 * page. Field shape deliberately mirrors A8 Shop Bestsellers
+	 * (homepage) so Stage 4 can share the eventual WC_Query data
+	 * loader between both sections. Stage 4 will additionally support
+	 * an ACF Relationship to WC_Product IDs and category-derived
+	 * fallbacks; for Stage 3c, editors curate the list manually.
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_e1_treatment_related',
+			'title'    => 'E1 — Treatment Related',
+			'position' => 'acf_after_title',
+			'location' => array(
+				array(
+					array( 'param' => 'post_type', 'operator' => '==', 'value' => 'treatment' ),
+				),
+			),
+			'fields'   => array(
+				array( 'key' => 'field_sp_tx_rel_enabled', 'label' => 'Show section', 'name' => 'tx_rel_enabled', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1, 'instructions' => 'Section is hidden automatically if no items are added below.' ),
+				array( 'key' => 'field_sp_tx_rel_badge_pre', 'label' => 'Badge — start', 'name' => 'tx_rel_badge_pre', 'type' => 'text', 'default_value' => 'Recommended' ),
+				array( 'key' => 'field_sp_tx_rel_badge_hi', 'label' => 'Badge — highlighted', 'name' => 'tx_rel_badge_highlight', 'type' => 'text', 'default_value' => 'For You' ),
+				array( 'key' => 'field_sp_tx_rel_h_pre', 'label' => 'Heading — start', 'name' => 'tx_rel_heading_pre', 'type' => 'text', 'default_value' => 'You May Also' ),
+				array( 'key' => 'field_sp_tx_rel_h_hi', 'label' => 'Heading — highlighted', 'name' => 'tx_rel_heading_highlight', 'type' => 'text', 'default_value' => 'Like' ),
+				array( 'key' => 'field_sp_tx_rel_sub', 'label' => 'Subheading', 'name' => 'tx_rel_subheading', 'type' => 'text', 'default_value' => 'Other treatments and products that may support your journey' ),
+				array(
+					'key'          => 'field_sp_tx_rel_items',
+					'label'        => 'Related products',
+					'name'         => 'tx_rel_items',
+					'type'         => 'repeater',
+					'button_label' => 'Add product',
+					'layout'       => 'block',
+					'min'          => 0,
+					'max'          => 6,
+					'instructions' => 'Each entry renders as a product card. Design works best with 3 (one row on desktop). Stage 4 will optionally swap this for an automatic WC_Query.',
+					'sub_fields'   => array(
+						array( 'key' => 'field_sp_tx_rel_p_image', 'label' => 'Image', 'name' => 'image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium' ),
+						array(
+							'key'           => 'field_sp_tx_rel_p_bg',
+							'label'         => 'Image background colour',
+							'name'          => 'bg',
+							'type'          => 'select',
+							'choices'       => array( 'teal' => 'Teal', 'purple' => 'Purple', 'green' => 'Green', 'orange' => 'Orange', 'red' => 'Red', 'blue' => 'Blue' ),
+							'default_value' => 'teal',
+							'ui'            => 1,
+						),
+						array( 'key' => 'field_sp_tx_rel_p_category', 'label' => 'Category label', 'name' => 'category', 'type' => 'text', 'instructions' => 'Small uppercase tag above the product name (e.g. "Weight Loss", "Vitamins").' ),
+						array(
+							'key'           => 'field_sp_tx_rel_p_cat_colour',
+							'label'         => 'Category colour',
+							'name'          => 'category_colour',
+							'type'          => 'select',
+							'choices'       => array( 'teal' => 'Teal', 'purple' => 'Purple', 'green' => 'Green', 'orange' => 'Orange', 'red' => 'Red', 'blue' => 'Blue' ),
+							'default_value' => 'teal',
+							'ui'            => 1,
+						),
+						array( 'key' => 'field_sp_tx_rel_p_name', 'label' => 'Product name', 'name' => 'name', 'type' => 'text' ),
+						array( 'key' => 'field_sp_tx_rel_p_desc', 'label' => 'Short description', 'name' => 'description', 'type' => 'text' ),
+						array( 'key' => 'field_sp_tx_rel_p_rating', 'label' => 'Star rating (0-5)', 'name' => 'rating', 'type' => 'number', 'min' => 0, 'max' => 5, 'default_value' => 0, 'instructions' => 'Use 0 to hide the rating row.' ),
+						array( 'key' => 'field_sp_tx_rel_p_reviews', 'label' => 'Review count', 'name' => 'reviews', 'type' => 'number', 'min' => 0, 'default_value' => 0 ),
+						array( 'key' => 'field_sp_tx_rel_p_price', 'label' => 'Price label', 'name' => 'price', 'type' => 'text', 'instructions' => 'Free-text (e.g. "£12.99", "From £149").' ),
+						array( 'key' => 'field_sp_tx_rel_p_badge_text', 'label' => 'Card badge', 'name' => 'badge_text', 'type' => 'text', 'instructions' => 'Optional pill in the card top-left (e.g. "New", "Bestseller", "20% Off").' ),
+						array(
+							'key'           => 'field_sp_tx_rel_p_badge_colour',
+							'label'         => 'Badge colour',
+							'name'          => 'badge_colour',
+							'type'          => 'select',
+							'choices'       => array( 'teal' => 'Teal', 'purple' => 'Purple', 'green' => 'Green', 'orange' => 'Orange', 'red' => 'Red', 'blue' => 'Blue' ),
+							'default_value' => 'teal',
+							'ui'            => 1,
+						),
+						array( 'key' => 'field_sp_tx_rel_p_cta_label', 'label' => 'CTA label', 'name' => 'cta_label', 'type' => 'text', 'default_value' => 'Learn More' ),
+						array( 'key' => 'field_sp_tx_rel_p_cta_url', 'label' => 'CTA URL', 'name' => 'cta_url', 'type' => 'url' ),
+					),
+				),
+				array( 'key' => 'field_sp_tx_rel_cta_label', 'label' => 'Bottom CTA label', 'name' => 'tx_rel_cta_label', 'type' => 'text', 'default_value' => 'View All Treatments', 'instructions' => 'Leave label or URL blank to hide the bottom button.' ),
+				array( 'key' => 'field_sp_tx_rel_cta_url', 'label' => 'Bottom CTA URL', 'name' => 'tx_rel_cta_url', 'type' => 'url', 'default_value' => '/treatments/' ),
 			),
 		)
 	);
