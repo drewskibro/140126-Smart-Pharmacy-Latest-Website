@@ -6,7 +6,7 @@
  * teal callout tagline). Repeater-driven; 3 is the design default. Matches
  * the prototype "What's Included" section of weight-loss.html.
  *
- * Editable via the Treatment post edit screen → B5 — Treatment What's Included.
+ * Editable via the Treatment post edit screen → C1 — Treatment What's Included.
  *
  * @package SmartPharmacy
  */

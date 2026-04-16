@@ -21,6 +21,7 @@
  *   B2  Post type (treatment) — Treatment How It Works
  *   B3  Post type (treatment) — Treatment Options / Pricing (static; WC in Stage 4)
  *   B4  Post type (treatment) — Treatment Meta (identity, card data, UK compliance, category taxonomy)
+ *   C1  Post type (treatment) — What's Included / Benefits
  *   F1  Options — Branding (logo, footer tagline, payment methods)
  *   G1  Options — Navigation (primary menu, footer link columns, search, NHS button)
  *   H1  Options — Contact (trading address, registered address)
@@ -28,7 +29,6 @@
  *   J1  Options — Social (platform URLs)
  *
  * Planned:
- *   C1  Post type (treatment) — What's Included / Benefits (Stage 3b)
  *   C2  Post type (treatment) — Results / Testimonials (Stage 3b)
  *   C3  Post type (treatment) — Eligibility Calculator (Stage 3b stub; Stage 5 real)
  *   D1  Post type (treatment) — FAQ (Stage 3c)
@@ -1053,7 +1053,7 @@ function sp_register_acf_field_groups() {
 	);
 
 	/* ---------------------------------------------------------------
-	 * B5 — Treatment What's Included
+	 * C1 — Treatment What's Included
 	 *
 	 * Three feature cards highlighting what the customer receives
 	 * (medication, clinical support, lifestyle guidance). Content-only
@@ -1061,8 +1061,8 @@ function sp_register_acf_field_groups() {
 	 * ------------------------------------------------------------- */
 	acf_add_local_field_group(
 		array(
-			'key'      => 'group_sp_b5_treatment_whats_included',
-			'title'    => "B5 — Treatment What's Included",
+			'key'      => 'group_sp_c1_treatment_whats_included',
+			'title'    => "C1 — Treatment What's Included",
 			'position' => 'acf_after_title',
 			'location' => array(
 				array(
