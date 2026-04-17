@@ -4,8 +4,8 @@
  *
  * Drives /shop/ and /product-category/{slug}/.  Replaces WC's default
  * archive-product.php with a brand layout: gradient page header on
- * top, an optional filter sidebar on the left, a 3-col card grid on
- * the right, pagination underneath.
+ * top, a filter sidebar on the left (template-parts/shop/filters.php),
+ * a 3-col card grid on the right, pagination underneath.
  *
  * Hooks preserved (intentional):
  *   - woocommerce_before_main_content  → sp_wc_wrapper_open()  - 10
@@ -47,16 +47,16 @@ get_header( 'shop' );
  */
 do_action( 'woocommerce_before_main_content' );
 
-$sp_has_sidebar   = sp_wc_has_shop_sidebar();
-$sp_layout_class  = $sp_has_sidebar
-	? 'sp-shop-layout sp-shop-layout--with-sidebar grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-10'
+$sp_has_sidebar  = sp_wc_has_shop_sidebar();
+$sp_layout_class = $sp_has_sidebar
+	? 'sp-shop-layout sp-shop-layout--with-sidebar grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-10'
 	: 'sp-shop-layout';
 ?>
 <div class="<?php echo esc_attr( $sp_layout_class ); ?>">
 
 	<?php if ( $sp_has_sidebar ) : ?>
 		<aside class="sp-shop-sidebar" aria-label="<?php esc_attr_e( 'Shop filters', 'smart-pharmacy' ); ?>">
-			<?php dynamic_sidebar( 'shop-sidebar' ); ?>
+			<?php get_template_part( 'template-parts/shop/filters' ); ?>
 		</aside>
 	<?php endif; ?>
 
