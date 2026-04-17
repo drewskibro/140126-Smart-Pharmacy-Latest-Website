@@ -4,22 +4,26 @@
  *
  * Drives /shop/ and /product-category/{slug}/.  Replaces WC's default
  * archive-product.php with a brand layout: gradient page header on
- * top, 3-col card grid in the middle, pagination at the bottom.
+ * top, an optional filter sidebar on the left, a 3-col card grid on
+ * the right, pagination underneath.
  *
  * Hooks preserved (intentional):
  *   - woocommerce_before_main_content  → sp_wc_wrapper_open()  - 10
  *                                      → sp_wc_page_header()   - 15
  *   - woocommerce_archive_description  → category descriptions, rendered
  *                                        inside sp_wc_page_header()
- *   - woocommerce_before_shop_loop     → notices (priority 10)
+ *   - woocommerce_before_shop_loop     → notices                - 10
+ *                                      → sp_wc_shop_loop_header_open  - 15
+ *                                      → woocommerce_result_count     - 20
+ *                                      → woocommerce_catalog_ordering - 30
+ *                                      → sp_wc_shop_loop_header_close - 35
  *   - woocommerce_after_shop_loop      → pagination (priority 10)
  *   - woocommerce_no_products_found    → empty-state template
  *   - woocommerce_after_main_content   → sp_wc_wrapper_close()
  *
- * Hooks intentionally NOT re-added here:
- *   - woocommerce_result_count   (Stage 4a-1 stripped it; Stage 4b
- *                                  will re-add a brand-styled version)
- *   - woocommerce_catalog_ordering (same — sort dropdown lands in 4b)
+ * The filter sidebar renders only when the `shop-sidebar` widget
+ * area has at least one widget -- otherwise the grid expands to fill
+ * the container, preserving the pre-Stage-4b layout.
  *
  * The ul.products / li.product wrapper that WC normally emits via
  * woocommerce_product_loop_start/_end is replaced with an explicit
@@ -43,48 +47,68 @@ get_header( 'shop' );
  */
 do_action( 'woocommerce_before_main_content' );
 
-/**
- * Hook: woocommerce_before_shop_loop.
- *
- * @hooked woocommerce_output_all_notices - 10  (kept)
- * @hooked woocommerce_result_count       - 20  (removed in Stage 4a-1)
- * @hooked woocommerce_catalog_ordering   - 30  (removed in Stage 4a-1)
- */
-do_action( 'woocommerce_before_shop_loop' );
+$sp_has_sidebar   = sp_wc_has_shop_sidebar();
+$sp_layout_class  = $sp_has_sidebar
+	? 'sp-shop-layout sp-shop-layout--with-sidebar grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-10'
+	: 'sp-shop-layout';
+?>
+<div class="<?php echo esc_attr( $sp_layout_class ); ?>">
 
-if ( woocommerce_product_loop() ) :
-	?>
-	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+	<?php if ( $sp_has_sidebar ) : ?>
+		<aside class="sp-shop-sidebar" aria-label="<?php esc_attr_e( 'Shop filters', 'smart-pharmacy' ); ?>">
+			<?php dynamic_sidebar( 'shop-sidebar' ); ?>
+		</aside>
+	<?php endif; ?>
+
+	<div class="sp-shop-main">
 		<?php
-		while ( have_posts() ) :
-			the_post();
+		/**
+		 * Hook: woocommerce_before_shop_loop.
+		 *
+		 * @hooked woocommerce_output_all_notices    - 10
+		 * @hooked sp_wc_shop_loop_header_open       - 15  (Stage 4b)
+		 * @hooked woocommerce_result_count          - 20  (re-added 4b)
+		 * @hooked woocommerce_catalog_ordering      - 30  (re-added 4b)
+		 * @hooked sp_wc_shop_loop_header_close      - 35  (Stage 4b)
+		 */
+		do_action( 'woocommerce_before_shop_loop' );
+
+		if ( woocommerce_product_loop() ) :
+			?>
+			<div class="grid grid-cols-1 md:grid-cols-2 <?php echo $sp_has_sidebar ? 'xl:grid-cols-3' : 'lg:grid-cols-3'; ?> gap-6 mb-12">
+				<?php
+				while ( have_posts() ) :
+					the_post();
+					/**
+					 * Each iteration loads woocommerce/content-product.php
+					 * (our brand override at the same path).
+					 */
+					wc_get_template_part( 'content', 'product' );
+				endwhile;
+				?>
+			</div>
+			<?php
 			/**
-			 * Each iteration loads woocommerce/content-product.php
-			 * (our brand override at the same path).
+			 * Hook: woocommerce_after_shop_loop.
+			 *
+			 * @hooked woocommerce_pagination - 10
 			 */
-			wc_get_template_part( 'content', 'product' );
-		endwhile;
+			do_action( 'woocommerce_after_shop_loop' );
+		else :
+			/**
+			 * Hook: woocommerce_no_products_found.
+			 *
+			 * @hooked wc_no_products_found - 10  (renders woocommerce/loop/
+			 *                                     no-products-found.php)
+			 */
+			do_action( 'woocommerce_no_products_found' );
+		endif;
 		?>
 	</div>
-	<?php
-	/**
-	 * Hook: woocommerce_after_shop_loop.
-	 *
-	 * @hooked woocommerce_pagination - 10  (kept; default WC pagination
-	 *                                       markup, restyled in 4b)
-	 */
-	do_action( 'woocommerce_after_shop_loop' );
-else :
-	/**
-	 * Hook: woocommerce_no_products_found.
-	 *
-	 * @hooked wc_no_products_found - 10  (renders woocommerce/loop/
-	 *                                     no-products-found.php — our
-	 *                                     branded empty state)
-	 */
-	do_action( 'woocommerce_no_products_found' );
-endif;
 
+</div>
+
+<?php
 /**
  * Hook: woocommerce_after_main_content.
  *

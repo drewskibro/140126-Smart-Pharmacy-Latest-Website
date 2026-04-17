@@ -251,3 +251,93 @@ function sp_wc_page_header() {
 	<?php
 }
 add_action( 'woocommerce_before_main_content', 'sp_wc_page_header', 15 );
+
+/* ===============================================================
+ * 6. SHOP SIDEBAR (Stage 4b)
+ *
+ * Registers a `shop-sidebar` widget area that appears to the left
+ * of the product grid on /shop/ and /product-category/{slug}/ when
+ * populated.  Left empty, archive-product.php falls through to a
+ * full-width grid -- so the shop still looks right before an admin
+ * ever opens Appearance -> Widgets.
+ *
+ * Intended population (for the client during admin setup):
+ *   - Filter Products by Price           (WC block / widget)
+ *   - Filter Products by Attribute       (WC block / widget)
+ *   - Filter Products by Stock           (WC block / widget)
+ *   - Active Filters                     (WC block / widget)
+ *   - Product Categories                 (WC or WP block)
+ *
+ * Classic widgets AND Gutenberg blocks both render into this area
+ * because register_sidebar() is agnostic to either.
+ * =============================================================== */
+
+/**
+ * Register the shop sidebar.
+ */
+function sp_wc_register_shop_sidebar() {
+	register_sidebar(
+		array(
+			'name'          => __( 'Shop Sidebar', 'smart-pharmacy' ),
+			'id'            => 'shop-sidebar',
+			'description'   => __( 'Filter widgets shown beside the product grid on the shop and category archives. Typical widgets: Filter by Price, Filter by Stock, Active Filters, Product Categories.', 'smart-pharmacy' ),
+			'before_widget' => '<section id="%1$s" class="sp-shop-widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h3 class="sp-shop-widget__title">',
+			'after_title'   => '</h3>',
+		)
+	);
+}
+add_action( 'widgets_init', 'sp_wc_register_shop_sidebar' );
+
+/**
+ * Is the shop sidebar populated on the current archive?
+ *
+ * Centralised so the archive template can decide between a two-
+ * column layout and a full-width layout without re-querying the
+ * widget state in two places.
+ *
+ * @return bool
+ */
+function sp_wc_has_shop_sidebar() {
+	return ( is_shop() || is_product_taxonomy() )
+		&& is_active_sidebar( 'shop-sidebar' );
+}
+
+/* ===============================================================
+ * 7. SHOP LOOP HEADER: RESULT COUNT + ORDERING (Stage 4b)
+ *
+ * Re-add the hooks stripped in Stage 4a-1 so the archive shows
+ * "Showing 1-12 of 47 products" and a sort dropdown above the
+ * grid, now wrapped in a branded flex row.  The outputs themselves
+ * still come from woocommerce_result_count / woocommerce_catalog_
+ * ordering -- we only handle the wrapper + the brand styling in
+ * styles.css.
+ *
+ * Priority 15 for the opener (before result_count@20 and
+ * catalog_ordering@30), priority 35 for the closer (after both).
+ * =============================================================== */
+add_action( 'woocommerce_before_shop_loop', 'sp_wc_shop_loop_header_open', 15 );
+add_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
+add_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
+add_action( 'woocommerce_before_shop_loop', 'sp_wc_shop_loop_header_close', 35 );
+
+/**
+ * Open the flex wrapper around result count + ordering.
+ */
+function sp_wc_shop_loop_header_open() {
+	if ( ! woocommerce_product_loop() ) {
+		return;
+	}
+	echo '<div class="sp-shop-loop-header">';
+}
+
+/**
+ * Close the flex wrapper.
+ */
+function sp_wc_shop_loop_header_close() {
+	if ( ! woocommerce_product_loop() ) {
+		return;
+	}
+	echo '</div>';
+}
