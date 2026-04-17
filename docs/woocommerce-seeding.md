@@ -185,16 +185,24 @@ demo without entering real card details.
 
 ## Step 8 — Smoke test before the meeting
 
-Walk the demo path yourself in an incognito window:
+Walk the demo path yourself in an incognito window. Stage 4a-4 adds
+the branded header (eyebrow pill + gradient title) to every WC page,
+so watch for that on cart / checkout / my-account as well as shop.
 
 - [ ] Visit `/shop/` — see 6+ product cards in a 3-column grid, branded styling
 - [ ] Click into a product (e.g. Paracetamol 500mg) — see single-product
       page with image, price, short description, Add to Cart button
 - [ ] Click *Add to Cart* — success notice appears
-- [ ] Click cart icon / visit `/cart/` — see line item with correct price
-- [ ] Click *Proceed to Checkout* — see checkout form with billing
-      fields, shipping options, Cash on Delivery option
-- [ ] Fill in test details, place order — see order confirmation page
+- [ ] Click cart icon / visit `/cart/` — **branded "Shopping Cart" header**,
+      line item with correct price, rounded card totals panel
+- [ ] Click *Proceed to Checkout* — **branded "Checkout" header**, form in a
+      rounded card, pill-shaped Place Order button
+- [ ] Fill in test details, place order — **branded thank-you page** with
+      green "Order received" heading inside a rounded card
+- [ ] Visit `/my-account/` while logged out — **branded "Sign In" header**,
+      login / register split in two rounded cards
+- [ ] Log in, revisit `/my-account/` — **branded "My Account" header**, side
+      nav with active-tab pill + content panel in a rounded card
 - [ ] Visit **WooCommerce → Orders** — confirm the test order is there
 
 If any of these break visually or functionally, ping me and I'll

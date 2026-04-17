@@ -715,3 +715,397 @@ input:focus {
   color: #fbbf24;
   margin-bottom: 0.5rem;
 }
+
+/* =====================================================================
+ * WOOCOMMERCE CART / CHECKOUT / MY-ACCOUNT BRAND PASS (Stage 4a-4)
+ * ---------------------------------------------------------------------
+ * Cart and checkout on modern WC installs render via Gutenberg blocks
+ * (wc-block-cart / wc-block-checkout).  Their container markup is fixed
+ * but the inner classes are documented and stable enough to restyle.
+ * My-account is still classic PHP templates on all versions.
+ *
+ * We sit inside the .sp-wc-page wrapper opened by sp_wc_wrapper_open(),
+ * so selectors below are scoped loosely to the WC body classes WP emits
+ * (body.woocommerce-cart, .woocommerce-checkout, .woocommerce-account)
+ * to keep the blast radius contained.
+ * ===================================================================== */
+
+/* --- Shared primitives: form fields + primary buttons --------------- */
+.woocommerce-cart .woocommerce input[type="text"],
+.woocommerce-cart .woocommerce input[type="email"],
+.woocommerce-cart .woocommerce input[type="tel"],
+.woocommerce-cart .woocommerce input[type="password"],
+.woocommerce-cart .woocommerce select,
+.woocommerce-cart .woocommerce textarea,
+.woocommerce-checkout .woocommerce input[type="text"],
+.woocommerce-checkout .woocommerce input[type="email"],
+.woocommerce-checkout .woocommerce input[type="tel"],
+.woocommerce-checkout .woocommerce input[type="password"],
+.woocommerce-checkout .woocommerce select,
+.woocommerce-checkout .woocommerce textarea,
+.woocommerce-account .woocommerce input[type="text"],
+.woocommerce-account .woocommerce input[type="email"],
+.woocommerce-account .woocommerce input[type="tel"],
+.woocommerce-account .woocommerce input[type="password"],
+.woocommerce-account .woocommerce select,
+.woocommerce-account .woocommerce textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: #171717;
+  background: #fff;
+  border: 1px solid #d1d5db; /* gray-300 */
+  border-radius: 0.75rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.woocommerce-cart .woocommerce input[type="text"]:focus,
+.woocommerce-cart .woocommerce input[type="email"]:focus,
+.woocommerce-cart .woocommerce input[type="tel"]:focus,
+.woocommerce-cart .woocommerce input[type="password"]:focus,
+.woocommerce-cart .woocommerce select:focus,
+.woocommerce-cart .woocommerce textarea:focus,
+.woocommerce-checkout .woocommerce input[type="text"]:focus,
+.woocommerce-checkout .woocommerce input[type="email"]:focus,
+.woocommerce-checkout .woocommerce input[type="tel"]:focus,
+.woocommerce-checkout .woocommerce input[type="password"]:focus,
+.woocommerce-checkout .woocommerce select:focus,
+.woocommerce-checkout .woocommerce textarea:focus,
+.woocommerce-account .woocommerce input[type="text"]:focus,
+.woocommerce-account .woocommerce input[type="email"]:focus,
+.woocommerce-account .woocommerce input[type="tel"]:focus,
+.woocommerce-account .woocommerce input[type="password"]:focus,
+.woocommerce-account .woocommerce select:focus,
+.woocommerce-account .woocommerce textarea:focus {
+  outline: none;
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+}
+
+/* Primary WC buttons (Proceed to Checkout, Place Order, Update Cart,
+ * Login, Register, Save Address, etc.) -- pill gradient matching the
+ * site-wide premium-button treatment. Excludes .wc-block-* buttons
+ * which get their own block-scoped rules below. */
+.woocommerce-cart .woocommerce .button,
+.woocommerce-cart .woocommerce button[type="submit"],
+.woocommerce-checkout .woocommerce .button,
+.woocommerce-checkout .woocommerce button[type="submit"],
+.woocommerce-account .woocommerce .button:not(.wc-block-components-button),
+.woocommerce-account .woocommerce button[type="submit"] {
+  display: inline-block;
+  padding: 0.875rem 1.75rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(to right, #3b9b9f, #2c7a7e);
+  border: none;
+  border-radius: 9999px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.woocommerce-cart .woocommerce .button:hover,
+.woocommerce-checkout .woocommerce .button:hover,
+.woocommerce-account .woocommerce .button:not(.wc-block-components-button):hover,
+.woocommerce-cart .woocommerce button[type="submit"]:hover,
+.woocommerce-checkout .woocommerce button[type="submit"]:hover,
+.woocommerce-account .woocommerce button[type="submit"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Cart/checkout blocks: shared card treatment -------------------- */
+.wc-block-cart,
+.wc-block-checkout {
+  background: #fff;
+  border: 1px solid #e5e7eb; /* gray-200 */
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
+@media (max-width: 768px) {
+  .wc-block-cart,
+  .wc-block-checkout {
+    padding: 1.25rem;
+  }
+}
+
+/* Line-item product titles + prices inside the blocks. */
+.wc-block-cart-item__product-name,
+.wc-block-components-product-name {
+  font-weight: 800;
+  color: #171717;
+  text-decoration: none;
+}
+.wc-block-cart-item__product-name:hover,
+.wc-block-components-product-name:hover {
+  color: #14b8a6;
+}
+
+/* Cart totals + checkout sidebar totals panel. */
+.wc-block-cart__totals-title,
+.wc-block-components-checkout-order-summary__title {
+  font-size: 1.125rem !important;
+  font-weight: 800 !important;
+  color: #171717 !important;
+  margin-bottom: 1rem !important;
+}
+
+/* Checkout step headings (Contact, Shipping, Payment). */
+.wc-block-components-checkout-step__title {
+  font-size: 1.25rem !important;
+  font-weight: 800 !important;
+  color: #171717 !important;
+}
+
+/* Proceed-to-checkout / place-order primary buttons. Block buttons use
+ * their own class tree so we target them without inheriting from the
+ * classic .button rule above. */
+.wc-block-cart__submit-button,
+.wc-block-components-checkout-place-order-button {
+  background: linear-gradient(to right, #3b9b9f, #2c7a7e) !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  font-weight: 700 !important;
+  padding: 1rem 2rem !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+.wc-block-cart__submit-button:hover,
+.wc-block-components-checkout-place-order-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* --- Classic cart fallback + coupon form ---------------------------- */
+/* Older installs (or [woocommerce_cart] shortcode) render this markup.
+ * Brand lightly so the fallback still looks native. */
+.woocommerce-cart .woocommerce-cart-form,
+.woocommerce-cart .cart_totals,
+.woocommerce-cart .cross-sells {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.woocommerce-cart .cart_totals h2,
+.woocommerce-cart .cross-sells h2 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #171717;
+  margin: 0 0 1rem;
+}
+
+/* --- Order-received / thank-you page -------------------------------- */
+.woocommerce-order-received .woocommerce-order {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+.woocommerce-order-received .woocommerce-thankyou-order-received {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #16a34a; /* green-600 */
+  margin-bottom: 1.5rem;
+}
+.woocommerce-order-received .woocommerce-order-overview {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  background: linear-gradient(135deg, #f0f9fa 0%, #ffffff 100%);
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+.woocommerce-order-received .woocommerce-order-overview li {
+  font-size: 0.875rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+.woocommerce-order-received .woocommerce-order-overview li strong {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 1rem;
+  color: #171717;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* --- My Account navigation ------------------------------------------ */
+.woocommerce-account .woocommerce {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .woocommerce-account .woocommerce {
+    grid-template-columns: 1fr;
+  }
+}
+
+.woocommerce-MyAccount-navigation {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1.5rem;
+  padding: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+.woocommerce-MyAccount-navigation ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.woocommerce-MyAccount-navigation li {
+  margin: 0;
+}
+.woocommerce-MyAccount-navigation li a {
+  display: block;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #525252; /* neutral-600 */
+  text-decoration: none;
+  border-radius: 0.75rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.woocommerce-MyAccount-navigation li a:hover {
+  background: #f0f9fa;
+  color: #14b8a6;
+}
+.woocommerce-MyAccount-navigation li.is-active a {
+  background: linear-gradient(to right, #3b9b9f, #2c7a7e);
+  color: #fff;
+  box-shadow: 0 4px 6px -4px rgba(0, 0, 0, 0.15);
+}
+
+/* --- My Account content panel --------------------------------------- */
+.woocommerce-MyAccount-content {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+.woocommerce-MyAccount-content h2,
+.woocommerce-MyAccount-content h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #171717;
+  margin: 0 0 1rem;
+}
+.woocommerce-MyAccount-content p {
+  color: #525252;
+  line-height: 1.7;
+  margin: 0 0 1rem;
+}
+.woocommerce-MyAccount-content a:not(.button) {
+  color: #14b8a6;
+  text-decoration: none;
+  font-weight: 600;
+}
+.woocommerce-MyAccount-content a:not(.button):hover {
+  text-decoration: underline;
+}
+
+/* Orders / downloads / addresses tables inside My Account. */
+.woocommerce-MyAccount-content .woocommerce-orders-table,
+.woocommerce-MyAccount-content .shop_table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-bottom: 1rem;
+}
+.woocommerce-MyAccount-content .woocommerce-orders-table th,
+.woocommerce-MyAccount-content .shop_table th {
+  text-align: left;
+  padding: 0.875rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+.woocommerce-MyAccount-content .woocommerce-orders-table td,
+.woocommerce-MyAccount-content .shop_table td {
+  padding: 1rem;
+  font-size: 0.95rem;
+  color: #171717;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+/* --- Login / register split view ------------------------------------ */
+.woocommerce-account .woocommerce #customer_login {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  grid-column: 1 / -1; /* logged-out state: no nav column yet */
+}
+@media (max-width: 768px) {
+  .woocommerce-account .woocommerce #customer_login {
+    grid-template-columns: 1fr;
+  }
+}
+.woocommerce-account .u-column1,
+.woocommerce-account .u-column2 {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+.woocommerce-account .u-column1 h2,
+.woocommerce-account .u-column2 h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #171717;
+  margin: 0 0 0.5rem;
+}
+.woocommerce-account .u-column1 h2 + *,
+.woocommerce-account .u-column2 h2 + * {
+  color: #525252;
+  margin-bottom: 1.5rem;
+}
+
+/* --- Notices (success / error / info) ------------------------------- */
+/* WC renders these on cart / checkout / account for flash messages.
+ * Keep them readable over our cream backdrop. */
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error,
+.woocommerce-notice {
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid transparent;
+}
+.woocommerce-message {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+.woocommerce-info {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1e40af;
+}
+.woocommerce-error {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #991b1b;
+}
+.woocommerce-message a,
+.woocommerce-info a {
+  font-weight: 700;
+  color: inherit;
+  text-decoration: underline;
+}
