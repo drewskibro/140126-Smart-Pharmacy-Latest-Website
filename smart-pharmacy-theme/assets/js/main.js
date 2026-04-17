@@ -5,6 +5,7 @@
  *   - Scroll progress bar
  *   - Mobile menu open/close
  *   - Animated counters (hero rating count, popular treatments patient count, etc.)
+ *   - Horizontal carousels ([data-sp-carousel]) — shop bestsellers + anything else
  */
 (function () {
 	'use strict';
@@ -135,4 +136,50 @@
 		// No IO support — run immediately.
 		counters.forEach(animateCounter);
 	}
+
+	/* Horizontal carousels ---------------------------------------- */
+	// Markup contract:
+	//   <div data-sp-carousel>
+	//     <button data-sp-carousel-prev>...</button>
+	//     <div data-sp-carousel-track> ...cards... </div>
+	//     <button data-sp-carousel-next>...</button>
+	//   </div>
+	// Each click scrolls the track by ~90% of its visible width so
+	// the user always sees a sliver of the previous frame, keeping
+	// continuity. Disabled state toggles when the track hits either
+	// end so the arrow buttons reflect scroll position.
+	var carousels = document.querySelectorAll('[data-sp-carousel]');
+	carousels.forEach(function (root) {
+		var track = root.querySelector('[data-sp-carousel-track]');
+		var prev  = root.querySelector('[data-sp-carousel-prev]');
+		var next  = root.querySelector('[data-sp-carousel-next]');
+		if (!track) {
+			return;
+		}
+
+		var step = function () {
+			return Math.max(240, track.clientWidth * 0.9);
+		};
+
+		var updateButtons = function () {
+			var atStart = track.scrollLeft <= 4;
+			var atEnd   = Math.ceil(track.scrollLeft + track.clientWidth) >= track.scrollWidth - 4;
+			if (prev) { prev.disabled = atStart; }
+			if (next) { next.disabled = atEnd; }
+		};
+
+		if (prev) {
+			prev.addEventListener('click', function () {
+				track.scrollBy({ left: -step(), behavior: 'smooth' });
+			});
+		}
+		if (next) {
+			next.addEventListener('click', function () {
+				track.scrollBy({ left: step(), behavior: 'smooth' });
+			});
+		}
+		track.addEventListener('scroll', updateButtons, { passive: true });
+		window.addEventListener('resize', updateButtons);
+		updateButtons();
+	});
 })();

@@ -148,6 +148,12 @@ function sp_wc_page_header_context() {
 		return null;
 	}
 
+	// /shop/ gets the rich Stage 4d hero (template-parts/shop/hero.php)
+	// instead of the compact gradient header.
+	if ( is_shop() ) {
+		return null;
+	}
+
 	if ( is_cart() ) {
 		return array(
 			'icon'       => 'check_circle',
@@ -180,17 +186,12 @@ function sp_wc_page_header_context() {
 		);
 	}
 
-	if ( is_shop() || is_product_taxonomy() ) {
-		$title    = woocommerce_page_title( false );
-		$subhead  = '';
-		if ( is_product_category() || is_product_tag() ) {
-			$term    = get_queried_object();
-			$subhead = ( $term && ! empty( $term->description ) )
-				? wp_strip_all_tags( $term->description )
-				: '';
-		} elseif ( is_shop() ) {
-			$subhead = __( 'Browse our full pharmacy range. Genuine UK-licensed products, dispatched discreetly with free delivery on orders over £30.', 'smart-pharmacy' );
-		}
+	if ( is_product_taxonomy() ) {
+		$title = woocommerce_page_title( false );
+		$term  = get_queried_object();
+		$subhead = ( $term && ! empty( $term->description ) )
+			? wp_strip_all_tags( $term->description )
+			: '';
 
 		return array(
 			'icon'       => 'truck',
@@ -703,4 +704,68 @@ function sp_wc_shop_max_price() {
 	$price = (float) $wpdb->get_var( "SELECT MAX(meta_value+0) FROM {$wpdb->postmeta} WHERE meta_key = '_price'" );
 	$max   = $price > 0 ? (int) ceil( $price / 10 ) * 10 : 300;
 	return $max;
+}
+
+/* ===============================================================
+ * 10. CATEGORY COLOUR MAPPING (Stage 4d)
+ *
+ * Product cards, category tiles on the shop hero, and any future
+ * category-aware UI share the same slug -> colour-key mapping so
+ * a "Vitamins" tile, a "Vitamins" eyebrow on a product card, and
+ * a "Vitamins" filter pill all wear the same brand accent.
+ *
+ * Tailwind JIT needs literal class strings, so the colour-key
+ * lookup maps return pre-baked class names rather than composing
+ * them dynamically (e.g. "text-${colour}-600" would not compile).
+ * =============================================================== */
+
+/**
+ * Slug → colour-key lookup (extend as new categories are seeded).
+ *
+ * @return array<string,string>
+ */
+function sp_wc_category_colour_map() {
+	return apply_filters(
+		'sp_wc_category_colour_map',
+		array(
+			'pain-relief'       => 'red',
+			'vitamins'          => 'orange',
+			'first-aid'         => 'green',
+			'weight-management' => 'teal',
+			'mens-health'       => 'blue',
+			'womens-health'     => 'purple',
+			'hair-care'         => 'blue',
+			'cold-flu'          => 'green',
+			'sexual-wellness'   => 'purple',
+			'skincare'          => 'pink',
+		)
+	);
+}
+
+/**
+ * Resolve a colour bundle for a given product-category slug.
+ *
+ * Each bundle has the four class strings consumed by our UI: the
+ * tinted gradient (bg), tile border, eyebrow text colour, and
+ * "Shop Now" CTA text colour. Unknown slugs fall back to teal.
+ *
+ * @param string $slug product_cat term slug.
+ * @return array{bg:string,border:string,text:string,cta:string}
+ */
+function sp_wc_category_colour_classes( $slug ) {
+	$map    = sp_wc_category_colour_map();
+	$colour = isset( $map[ $slug ] ) ? $map[ $slug ] : 'teal';
+
+	$bundles = array(
+		'teal'   => array( 'bg' => 'bg-gradient-to-br from-teal-50 to-cyan-50',   'border' => 'border-teal-100',   'text' => 'text-teal-600',   'cta' => 'text-teal-600' ),
+		'purple' => array( 'bg' => 'bg-gradient-to-br from-purple-50 to-violet-50','border' => 'border-purple-100', 'text' => 'text-purple-600', 'cta' => 'text-teal-600' ),
+		'green'  => array( 'bg' => 'bg-gradient-to-br from-green-50 to-emerald-50','border' => 'border-green-100',  'text' => 'text-green-600',  'cta' => 'text-teal-600' ),
+		'orange' => array( 'bg' => 'bg-gradient-to-br from-orange-50 to-amber-50', 'border' => 'border-orange-100', 'text' => 'text-orange-600', 'cta' => 'text-teal-600' ),
+		'red'    => array( 'bg' => 'bg-gradient-to-br from-red-50 to-rose-50',    'border' => 'border-red-100',    'text' => 'text-red-600',    'cta' => 'text-teal-600' ),
+		'blue'   => array( 'bg' => 'bg-gradient-to-br from-blue-50 to-cyan-50',   'border' => 'border-blue-100',   'text' => 'text-blue-600',   'cta' => 'text-teal-600' ),
+		'yellow' => array( 'bg' => 'bg-gradient-to-br from-yellow-50 to-amber-50','border' => 'border-yellow-100', 'text' => 'text-amber-600',  'cta' => 'text-teal-600' ),
+		'pink'   => array( 'bg' => 'bg-gradient-to-br from-pink-50 to-rose-50',   'border' => 'border-pink-100',   'text' => 'text-pink-600',   'cta' => 'text-teal-600' ),
+	);
+
+	return isset( $bundles[ $colour ] ) ? $bundles[ $colour ] : $bundles['teal'];
 }
