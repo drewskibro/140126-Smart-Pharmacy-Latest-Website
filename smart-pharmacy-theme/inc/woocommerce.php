@@ -9,7 +9,8 @@
  *   - Stage 4b:   sidebar filters, search refinement
  *   - Stage 4c:   POM gating (hide Add-to-Cart for prescription products,
  *                 swap in "Start Consultation" routing to the linked
- *                 treatment landing page via B4 Treatment Meta)
+ *                 treatment landing page via B4 Treatment Meta + E1
+ *                 relationship)
  *
  * Loaded unconditionally from functions.php; the class_exists guard at the
  * top makes the file a no-op when WooCommerce is deactivated.
@@ -340,4 +341,240 @@ function sp_wc_shop_loop_header_close() {
 		return;
 	}
 	echo '</div>';
+}
+
+/* ===============================================================
+ * 8. POM GATING (Stage 4c)
+ *
+ * Prescription-Only Medicines can't be sold without a consultation.
+ * A product is treated as POM when the Treatment it's linked to
+ * (via ACF E1 `tx_related_products`) has B4 `tx_meta_legal_class`
+ * set to "POM" OR `tx_meta_requires_consultation` ticked.
+ *
+ * When flagged:
+ *   - content-product.php and PDP hide the Add-to-Cart button and
+ *     swap in a gradient "Start Consultation" button that deep-links
+ *     to the linked treatment's landing page.
+ *   - The product is marked non-purchasable server-side so direct
+ *     ?add-to-cart=ID URLs and AJAX calls also bounce.
+ *   - An orange "Prescription only" eyebrow chip surfaces everywhere
+ *     a product card renders (archive, Bestsellers, Related).
+ *
+ * Data flow
+ * ---------
+ *   1. Editor picks WC products on a Treatment in the E1 field.
+ *   2. acf/save_post below mirrors each product's linked treatment
+ *      ID onto `_sp_linked_treatment_id` postmeta so product-side
+ *      lookups are O(1).
+ *   3. sp_product_is_pom() reads B4 off that treatment.
+ *
+ * If a product is linked to multiple treatments (E1 is multi-select,
+ * rare but legal), any POM flag wins -- GSL-safe fallback products
+ * can't "downgrade" a POM on a sibling treatment.
+ * =============================================================== */
+
+/**
+ * Resolve which Treatment (if any) this product is linked to.
+ *
+ * Returns the treatment post ID stored in `_sp_linked_treatment_id`
+ * postmeta (populated by the acf/save_post hook below). Products
+ * created before a treatment was saved won't have this meta yet,
+ * so sp_wc_backfill_product_treatment_links() can be run once from
+ * an admin tool to populate historical data.
+ *
+ * @param int $product_id WC product ID.
+ * @return int Treatment post ID, or 0 if unlinked.
+ */
+function sp_product_linked_treatment( $product_id ) {
+	$treatment_id = (int) get_post_meta( (int) $product_id, '_sp_linked_treatment_id', true );
+	if ( $treatment_id > 0 && 'treatment' === get_post_type( $treatment_id ) && 'publish' === get_post_status( $treatment_id ) ) {
+		return $treatment_id;
+	}
+	return 0;
+}
+
+/**
+ * Is this product a Prescription-Only Medicine?
+ *
+ * @param int $product_id WC product ID.
+ * @return bool
+ */
+function sp_product_is_pom( $product_id ) {
+	static $cache = array();
+	$product_id = (int) $product_id;
+	if ( isset( $cache[ $product_id ] ) ) {
+		return $cache[ $product_id ];
+	}
+
+	$treatment_id = sp_product_linked_treatment( $product_id );
+	if ( ! $treatment_id ) {
+		return $cache[ $product_id ] = false;
+	}
+
+	if ( ! function_exists( 'get_field' ) ) {
+		return $cache[ $product_id ] = false;
+	}
+
+	$legal   = get_field( 'tx_meta_legal_class', $treatment_id );
+	$consult = get_field( 'tx_meta_requires_consultation', $treatment_id );
+
+	$is_pom = ( 'POM' === $legal ) || ( true === (bool) $consult );
+	return $cache[ $product_id ] = $is_pom;
+}
+
+/**
+ * URL for the "Start Consultation" CTA on a POM product.
+ *
+ * Resolves to the linked treatment's permalink. Falls back to the
+ * treatment archive so the CTA never dead-ends, even if the link
+ * was broken after the treatment was deleted.
+ *
+ * @param int $product_id WC product ID.
+ * @return string URL.
+ */
+function sp_product_consultation_url( $product_id ) {
+	$treatment_id = sp_product_linked_treatment( $product_id );
+	if ( $treatment_id ) {
+		return (string) get_permalink( $treatment_id );
+	}
+	return (string) get_post_type_archive_link( 'treatment' );
+}
+
+/**
+ * Mirror E1 relationship field onto each linked product as postmeta.
+ *
+ * Runs on acf/save_post for the treatment CPT. Cleans up any
+ * previously-linked products that were removed from the field, so
+ * orphan mirrors don't linger.
+ *
+ * @param int $post_id Post ID being saved.
+ */
+function sp_wc_mirror_e1_to_products( $post_id ) {
+	if ( 'treatment' !== get_post_type( $post_id ) ) {
+		return;
+	}
+	if ( ! function_exists( 'get_field' ) ) {
+		return;
+	}
+
+	$current = get_field( 'tx_related_products', $post_id );
+	$current = is_array( $current ) ? array_map( 'intval', $current ) : array();
+
+	// Find products that previously pointed at THIS treatment.
+	$previous = get_posts(
+		array(
+			'post_type'      => 'product',
+			'post_status'    => 'any',
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'meta_key'       => '_sp_linked_treatment_id',
+			'meta_value'     => $post_id,
+			'no_found_rows'  => true,
+		)
+	);
+	$previous = array_map( 'intval', (array) $previous );
+
+	// Write new links.
+	foreach ( $current as $product_id ) {
+		update_post_meta( $product_id, '_sp_linked_treatment_id', (int) $post_id );
+	}
+
+	// Clear stale links (products that were removed from the E1 field).
+	foreach ( array_diff( $previous, $current ) as $orphan_id ) {
+		delete_post_meta( $orphan_id, '_sp_linked_treatment_id', (int) $post_id );
+	}
+}
+add_action( 'acf/save_post', 'sp_wc_mirror_e1_to_products', 20 );
+
+/**
+ * Mark POM products as non-purchasable so direct URLs + AJAX get
+ * rejected by WC's own validation rather than silently succeeding.
+ *
+ * @param bool       $purchasable Current WC state.
+ * @param WC_Product $product     Product being tested.
+ * @return bool
+ */
+function sp_wc_pom_not_purchasable( $purchasable, $product ) {
+	if ( $purchasable && sp_product_is_pom( $product->get_id() ) ) {
+		return false;
+	}
+	return $purchasable;
+}
+add_filter( 'woocommerce_is_purchasable', 'sp_wc_pom_not_purchasable', 10, 2 );
+
+/**
+ * Replace the archive-loop Add-to-Cart link with a consultation CTA.
+ *
+ * Filters `woocommerce_loop_add_to_cart_link`. content-product.php
+ * emits its own CTA markup and therefore doesn't go through this
+ * filter, but third-party templates / A8 Bestsellers / E1 Related
+ * Products that call woocommerce_template_loop_add_to_cart() do,
+ * so the consultation swap still happens for them.
+ *
+ * @param string     $html    Default WC button HTML.
+ * @param WC_Product $product Product being rendered.
+ * @return string
+ */
+function sp_wc_pom_loop_cta( $html, $product ) {
+	if ( ! sp_product_is_pom( $product->get_id() ) ) {
+		return $html;
+	}
+
+	return sprintf(
+		'<a href="%s" class="sp-pom-consult-cta text-white text-sm font-semibold bg-[linear-gradient(to_right,rgb(59,155,159),rgb(44,122,126))] shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.1)_0px_10px_15px_-3px,rgba(0,0,0,0.1)_0px_4px_6px_-4px] px-6 py-3 rounded-full hover:shadow-lg transition-all inline-block">%s</a>',
+		esc_url( sp_product_consultation_url( $product->get_id() ) ),
+		esc_html__( 'Start Consultation', 'smart-pharmacy' )
+	);
+}
+add_filter( 'woocommerce_loop_add_to_cart_link', 'sp_wc_pom_loop_cta', 10, 2 );
+
+/**
+ * On the PDP: remove WC's add-to-cart markup for POM products and
+ * emit a branded consultation block in its place.
+ *
+ * WC hooks woocommerce_template_single_add_to_cart at priority 30 on
+ * woocommerce_single_product_summary. We bump past 30 after the
+ * current post is resolved so we only strip on POM products.
+ */
+function sp_wc_pom_pdp_swap_add_to_cart() {
+	global $product;
+	if ( ! $product instanceof WC_Product ) {
+		return;
+	}
+	if ( ! sp_product_is_pom( $product->get_id() ) ) {
+		return;
+	}
+
+	remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
+	add_action( 'woocommerce_single_product_summary', 'sp_wc_pom_pdp_consultation_block', 30 );
+}
+add_action( 'woocommerce_before_single_product', 'sp_wc_pom_pdp_swap_add_to_cart', 20 );
+
+/**
+ * Renders the POM consultation block on the PDP summary column.
+ */
+function sp_wc_pom_pdp_consultation_block() {
+	global $product;
+	$url = sp_product_consultation_url( $product->get_id() );
+	?>
+	<div class="sp-pom-pdp-block">
+		<div class="sp-pom-pdp-block__badge">
+			<?php echo sp_icon( 'shield', 'w-4 h-4' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<span><?php esc_html_e( 'Prescription-only medicine', 'smart-pharmacy' ); ?></span>
+		</div>
+		<h3 class="sp-pom-pdp-block__title"><?php esc_html_e( 'Free consultation required', 'smart-pharmacy' ); ?></h3>
+		<p class="sp-pom-pdp-block__body">
+			<?php esc_html_e( 'This treatment is a UK-regulated prescription medicine. Complete a short, secure consultation with our GPhC-registered prescriber and we\'ll confirm suitability before dispensing. Usually under 5 minutes.', 'smart-pharmacy' ); ?>
+		</p>
+		<a href="<?php echo esc_url( $url ); ?>" class="sp-pom-pdp-block__cta">
+			<?php esc_html_e( 'Start Consultation', 'smart-pharmacy' ); ?>
+			<?php echo sp_icon( 'check', 'w-4 h-4 ml-2' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+		</a>
+		<ul class="sp-pom-pdp-block__assurances">
+			<li><?php echo sp_icon( 'lock', 'w-4 h-4 text-teal-500' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span><?php esc_html_e( 'Confidential — clinician-reviewed', 'smart-pharmacy' ); ?></span></li>
+			<li><?php echo sp_icon( 'truck', 'w-4 h-4 text-teal-500' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span><?php esc_html_e( 'Discreet tracked dispatch', 'smart-pharmacy' ); ?></span></li>
+			<li><?php echo sp_icon( 'shield', 'w-4 h-4 text-teal-500' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span><?php esc_html_e( 'GPhC-registered UK pharmacy', 'smart-pharmacy' ); ?></span></li>
+		</ul>
+	</div>
+	<?php
 }
