@@ -1111,14 +1111,236 @@ input:focus {
 }
 
 /* =====================================================================
- * SHOP SIDEBAR, LOOP HEADER, PAGINATION (Stage 4b)
+ * SHOP FILTERS, LOOP HEADER, PAGINATION (Stage 4b + 4b-revisit)
  * ---------------------------------------------------------------------
- * Activated when the `shop-sidebar` widget area is populated. The
- * archive-product.php override swaps its wrapper class based on
- * sp_wc_has_shop_sidebar(); these rules only target the "with-sidebar"
- * layout so a blank widget area falls through to the pre-4b full-width
- * grid unchanged.
+ * Stage 4b-revisit replaced the widget-dependent sidebar with a
+ * hardcoded .sp-filters panel rendered from template-parts/shop/
+ * filters.php. The legacy .sp-shop-widget rules are kept because the
+ * widget area still renders below the hardcoded panel when populated.
  * ===================================================================== */
+
+/* --- New hardcoded filter panel (Stage 4b-revisit) ------------------ */
+.sp-filters {
+  position: sticky;
+  top: 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 2px solid #e5e7eb;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.06);
+}
+@media (max-width: 1024px) {
+  .sp-filters {
+    position: static;
+    gap: 1.25rem;
+    padding: 1.25rem;
+  }
+}
+
+.sp-filters__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0 0 1rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+.sp-filters__title {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: #171717;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.sp-filters__clear {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #14b8a6; /* teal-500 */
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.sp-filters__clear:hover {
+  color: #0f766e; /* teal-700 */
+  text-decoration: underline;
+}
+
+.sp-filters__block {
+  border: none;
+  margin: 0;
+  padding: 0 0 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+.sp-filters__block--last {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.sp-filters__legend {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #171717;
+  margin: 0 0 0.75rem;
+  padding: 0;
+  letter-spacing: -0.005em;
+}
+
+.sp-filters__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+.sp-filters__list li {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.sp-filters__option {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  cursor: pointer;
+  font-size: 0.925rem;
+  color: #525252; /* neutral-600 */
+  transition: color 0.15s ease;
+  padding: 0;
+}
+.sp-filters__option:hover {
+  color: #14b8a6;
+}
+.sp-filters__option input[type="checkbox"],
+.sp-filters__option input[type="radio"] {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  accent-color: #14b8a6;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.sp-filters__option-label {
+  flex: 1;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.sp-filters__option-count {
+  display: inline-block;
+  min-width: 1.75rem;
+  text-align: center;
+  padding: 0.125rem 0.5rem;
+  background: #f3f4f6;
+  color: #6b7280;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.sp-filters__option input[type="checkbox"]:checked ~ .sp-filters__option-label,
+.sp-filters__option input[type="radio"]:checked ~ .sp-filters__option-label {
+  color: #171717;
+  font-weight: 700;
+}
+
+/* Rating: stars row inline with the label. */
+.sp-filters__stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.125rem;
+  flex-shrink: 0;
+}
+
+/* Price range: two number inputs either side of a dash. */
+.sp-filters__price {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+.sp-filters__price-field {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.sp-filters__price-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.sp-filters__price-prefix {
+  position: absolute;
+  left: 0.875rem;
+  bottom: 0.625rem;
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: #6b7280;
+  pointer-events: none;
+}
+.sp-filters__price-field input[type="number"] {
+  width: 100%;
+  padding: 0.5rem 0.75rem 0.5rem 1.75rem;
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: #171717;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 0.625rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  -moz-appearance: textfield;
+}
+.sp-filters__price-field input[type="number"]::-webkit-outer-spin-button,
+.sp-filters__price-field input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.sp-filters__price-field input[type="number"]:focus {
+  outline: none;
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+}
+.sp-filters__price-dash {
+  font-weight: 700;
+  color: #9ca3af;
+  padding: 0 0.25rem 0.625rem;
+}
+
+/* Apply Filters button. */
+.sp-filters__submit {
+  display: block;
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #3b9b9f, #2c7a7e);
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px -4px rgba(44, 122, 126, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.sp-filters__submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px -6px rgba(44, 122, 126, 0.45);
+}
+
+/* Extras stack (the old widget area) below the hardcoded filters. */
+.sp-shop-sidebar-extras {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* --- Legacy .sp-shop-widget rules kept for the optional extras area. --*/
 
 /* --- Sidebar widget cards ------------------------------------------- */
 .sp-shop-sidebar {

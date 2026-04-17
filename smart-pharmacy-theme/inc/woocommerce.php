@@ -254,23 +254,24 @@ function sp_wc_page_header() {
 add_action( 'woocommerce_before_main_content', 'sp_wc_page_header', 15 );
 
 /* ===============================================================
- * 6. SHOP SIDEBAR (Stage 4b)
+ * 6. SHOP SIDEBAR (Stage 4b → revisited Stage 4b-r)
  *
- * Registers a `shop-sidebar` widget area that appears to the left
- * of the product grid on /shop/ and /product-category/{slug}/ when
- * populated.  Left empty, archive-product.php falls through to a
- * full-width grid -- so the shop still looks right before an admin
- * ever opens Appearance -> Widgets.
+ * Originally registered a widget area and only showed the sidebar
+ * when editors populated it. Stage 4b-revisit ships a hardcoded
+ * branded filter panel (template-parts/shop/filters.php) that is
+ * always visible on the shop / category archives, because relying
+ * on admin widget setup for the filter UX turned out to be both
+ * fragile and visually inconsistent.
  *
- * Intended population (for the client during admin setup):
- *   - Filter Products by Price           (WC block / widget)
- *   - Filter Products by Attribute       (WC block / widget)
- *   - Filter Products by Stock           (WC block / widget)
- *   - Active Filters                     (WC block / widget)
- *   - Product Categories                 (WC or WP block)
+ * The widget area stays registered -- it renders BELOW the hardcoded
+ * filter panel if populated, so the client can still drop extra
+ * widgets (e.g. a promo banner, custom HTML block) without touching
+ * code. Just no longer required for filters to appear.
  *
- * Classic widgets AND Gutenberg blocks both render into this area
- * because register_sidebar() is agnostic to either.
+ * Intended population (optional now; for the client during admin setup):
+ *   - Promo banner (e.g. "Free NHS prescriptions")
+ *   - Custom HTML / text blocks
+ *   - Any Gutenberg block the admin wants in the sidebar
  * =============================================================== */
 
 /**
@@ -292,17 +293,18 @@ function sp_wc_register_shop_sidebar() {
 add_action( 'widgets_init', 'sp_wc_register_shop_sidebar' );
 
 /**
- * Is the shop sidebar populated on the current archive?
+ * Should the two-column sidebar layout render on this archive?
  *
- * Centralised so the archive template can decide between a two-
- * column layout and a full-width layout without re-querying the
- * widget state in two places.
+ * Always true on /shop/ and /product-category/{slug}/ now -- the
+ * hardcoded filter panel doesn't need any admin setup to appear.
+ * Kept as a helper so archive-product.php stays readable and so
+ * Stage 4c+ can introduce device-specific rules (e.g. hide the
+ * sidebar on /product-tag/ pages) in one place.
  *
  * @return bool
  */
 function sp_wc_has_shop_sidebar() {
-	return ( is_shop() || is_product_taxonomy() )
-		&& is_active_sidebar( 'shop-sidebar' );
+	return is_shop() || is_product_taxonomy();
 }
 
 /* ===============================================================
@@ -577,4 +579,128 @@ function sp_wc_pom_pdp_consultation_block() {
 		</ul>
 	</div>
 	<?php
+}
+
+/* ===============================================================
+ * 9. SHOP FILTER QUERY + PANEL (Stage 4b-revisit)
+ *
+ * Replaces the widget-driven sidebar filtering with a self-contained
+ * filter panel whose state lives entirely in URL query params:
+ *
+ *   ?sp_cat[]=vitamins&sp_cat[]=pain-relief    product_cat terms
+ *   ?sp_min_price=0&sp_max_price=50            price range
+ *   ?sp_rating[]=4&sp_rating[]=5               minimum ratings
+ *   ?sp_stock=instock|onbackorder              stock status
+ *
+ * Keeping state in GET params means:
+ *   - filtered shop URLs are shareable / bookmarkable
+ *   - pagination + sort preserve filters automatically (WC's
+ *     add_query_arg-based links inherit the whole query string)
+ *   - no JS / AJAX plumbing; submit is a plain <form method="get">
+ *
+ * Rating filter uses _wc_average_rating postmeta (written by WC
+ * whenever a review is approved) so no extra seeding is needed;
+ * it just takes a few reviews per product to show up.
+ * =============================================================== */
+
+/**
+ * Apply the sp_* GET filters to the main shop query.
+ *
+ * Hooks woocommerce_product_query which fires on shop + category
+ * + tag archives before the main loop runs. Safe to no-op when no
+ * filters are present.
+ *
+ * @param WP_Query $q The WC main product query.
+ */
+function sp_wc_apply_shop_filters( $q ) {
+	$tax_query  = (array) $q->get( 'tax_query', array() );
+	$meta_query = (array) $q->get( 'meta_query', array() );
+
+	// Category filter: multi-select checkboxes.
+	$cats = isset( $_GET['sp_cat'] ) ? (array) wp_unslash( $_GET['sp_cat'] ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$cats = array_filter( array_map( 'sanitize_title', $cats ) );
+	if ( ! empty( $cats ) ) {
+		$tax_query[] = array(
+			'taxonomy' => 'product_cat',
+			'field'    => 'slug',
+			'terms'    => $cats,
+			'operator' => 'IN',
+		);
+	}
+
+	// Price range.
+	$min_price = isset( $_GET['sp_min_price'] ) ? (float) $_GET['sp_min_price'] : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$max_price = isset( $_GET['sp_max_price'] ) ? (float) $_GET['sp_max_price'] : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( $min_price > 0 || $max_price > 0 ) {
+		$range = array();
+		if ( $min_price > 0 ) {
+			$range[] = $min_price;
+		}
+		if ( $max_price > 0 ) {
+			$range[] = $max_price;
+		}
+		if ( count( $range ) === 2 ) {
+			$meta_query[] = array(
+				'key'     => '_price',
+				'value'   => array( $range[0], $range[1] ),
+				'compare' => 'BETWEEN',
+				'type'    => 'NUMERIC',
+			);
+		} else {
+			$meta_query[] = array(
+				'key'     => '_price',
+				'value'   => $range[0],
+				'compare' => $min_price > 0 ? '>=' : '<=',
+				'type'    => 'NUMERIC',
+			);
+		}
+	}
+
+	// Rating: keep only products with _wc_average_rating >= min of the ticked values.
+	$ratings = isset( $_GET['sp_rating'] ) ? (array) wp_unslash( $_GET['sp_rating'] ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$ratings = array_filter( array_map( 'intval', $ratings ) );
+	if ( ! empty( $ratings ) ) {
+		$meta_query[] = array(
+			'key'     => '_wc_average_rating',
+			'value'   => min( $ratings ),
+			'compare' => '>=',
+			'type'    => 'DECIMAL',
+		);
+	}
+
+	// Stock status.
+	$stock = isset( $_GET['sp_stock'] ) ? sanitize_key( wp_unslash( $_GET['sp_stock'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( in_array( $stock, array( 'instock', 'onbackorder' ), true ) ) {
+		$meta_query[] = array(
+			'key'     => '_stock_status',
+			'value'   => $stock,
+			'compare' => '=',
+		);
+	}
+
+	$q->set( 'tax_query', $tax_query );
+	$q->set( 'meta_query', $meta_query );
+}
+add_action( 'woocommerce_product_query', 'sp_wc_apply_shop_filters' );
+
+/**
+ * Highest product price in the shop (or in the currently-viewed
+ * category) — used by the filter panel to configure the price-range
+ * slider's max attribute without hardcoding a magic number.
+ *
+ * Cached per request; WC stores _price as sortable meta so the
+ * ORDER BY query is cheap.
+ *
+ * @return int Ceil'd highest price, or 300 as a sensible default.
+ */
+function sp_wc_shop_max_price() {
+	static $max = null;
+	if ( null !== $max ) {
+		return $max;
+	}
+
+	global $wpdb;
+	$price = (float) $wpdb->get_var( "SELECT MAX(meta_value+0) FROM {$wpdb->postmeta} WHERE meta_key = '_price'" );
+	$max   = $price > 0 ? (int) ceil( $price / 10 ) * 10 : 300;
+	return $max;
 }
