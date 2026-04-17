@@ -235,11 +235,37 @@ placeholder:
 
 ---
 
+## Step 9 — Shop sidebar (Stage 4b)
+
+Stage 4b registers a `Shop Sidebar` widget area that renders to the
+left of the product grid when populated. If you leave it empty, the
+grid stays full-width, so this step is optional for the first demo.
+Populate it for a more impressive filtering demo.
+
+**Appearance → Widgets → Shop Sidebar** (or the Customize screen).
+Add these in order:
+
+- [ ] **Active Filters** (block or classic widget) — shows current
+      filters as removable chips
+- [ ] **Filter by Price** — slider + two number inputs
+- [ ] **Filter by Stock** — in-stock / out-of-stock checkboxes
+- [ ] **Product Categories** — hierarchical list of `product_cat` terms
+
+Smoke-test after saving:
+
+- [ ] `/shop/` now shows a sidebar on the left, grid on the right
+- [ ] Click a category filter → grid updates, URL gains query params
+- [ ] Active-filters widget shows a removable chip for the applied filter
+- [ ] Clear all filters → back to the full grid
+
+---
+
 ## What we're explicitly NOT doing in this seeding pass
 
 - Variable products (e.g. Vitamin D3 with multiple bottle sizes) —
   Stage 4 templates support these but we don't need them for the demo
-- Product attributes / filtering UI — Stage 4b
+- Product attributes (size / form / dose) — Stage 4b sidebar styles the
+  Filter-by-Attribute widget but we haven't declared attributes yet
 - Customer reviews — needs a few days of real reviews to look good;
   Stage 4 covers the markup
 - Email transactional templates — Stage 4d

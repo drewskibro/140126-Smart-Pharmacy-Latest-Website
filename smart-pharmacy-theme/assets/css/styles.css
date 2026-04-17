@@ -1109,3 +1109,264 @@ input:focus {
   color: inherit;
   text-decoration: underline;
 }
+
+/* =====================================================================
+ * SHOP SIDEBAR, LOOP HEADER, PAGINATION (Stage 4b)
+ * ---------------------------------------------------------------------
+ * Activated when the `shop-sidebar` widget area is populated. The
+ * archive-product.php override swaps its wrapper class based on
+ * sp_wc_has_shop_sidebar(); these rules only target the "with-sidebar"
+ * layout so a blank widget area falls through to the pre-4b full-width
+ * grid unchanged.
+ * ===================================================================== */
+
+/* --- Sidebar widget cards ------------------------------------------- */
+.sp-shop-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.sp-shop-widget {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
+.sp-shop-widget__title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+/* Generic list inside widgets (Product Categories, legacy Filter by
+ * Category / Attribute). Each item = a link with optional count in a
+ * grey pill. */
+.sp-shop-widget ul,
+.sp-shop-widget ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sp-shop-widget li {
+  margin: 0;
+}
+.sp-shop-widget li a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+  color: #525252;
+  text-decoration: none;
+  border-bottom: 1px solid #f3f4f6;
+  transition: color 0.15s ease;
+}
+.sp-shop-widget li:last-child a {
+  border-bottom: none;
+}
+.sp-shop-widget li a:hover {
+  color: #14b8a6;
+}
+.sp-shop-widget .count {
+  display: inline-block;
+  min-width: 1.5rem;
+  text-align: center;
+  padding: 0.125rem 0.5rem;
+  background: #f3f4f6;
+  color: #6b7280;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.sp-shop-widget li.current-cat > a,
+.sp-shop-widget li.chosen > a {
+  color: #14b8a6;
+  font-weight: 700;
+}
+
+/* Checkboxes in WC block filters + classic widgets. */
+.sp-shop-widget input[type="checkbox"],
+.sp-shop-widget input[type="radio"] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: #14b8a6;
+  margin-right: 0.5rem;
+}
+
+/* Price filter (both classic widget and wc-block-price-filter). */
+.sp-shop-widget .price_slider_wrapper,
+.sp-shop-widget .wc-block-price-filter {
+  margin-top: 0.5rem;
+}
+.sp-shop-widget .price_slider_amount {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #525252;
+}
+.sp-shop-widget .price_slider_amount .button,
+.sp-shop-widget .wc-block-components-filter-submit-button {
+  padding: 0.5rem 1.25rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 700;
+  color: #fff !important;
+  background: linear-gradient(to right, #3b9b9f, #2c7a7e) !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -4px rgba(0, 0, 0, 0.15);
+}
+
+/* Active filters list -- chips you can click to remove a filter. */
+.sp-shop-widget .widget_layered_nav_filters ul,
+.sp-shop-widget .wc-block-active-filters ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.sp-shop-widget .widget_layered_nav_filters li,
+.sp-shop-widget .wc-block-active-filters li {
+  border: none;
+}
+.sp-shop-widget .widget_layered_nav_filters li a,
+.sp-shop-widget .wc-block-active-filters li a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #14b8a6;
+  background: #f0f9fa;
+  border: 1px solid #a7f3d0;
+  border-radius: 9999px;
+  border-bottom: 1px solid #a7f3d0;
+}
+.sp-shop-widget .widget_layered_nav_filters li a::before {
+  content: "×";
+  font-weight: 900;
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+/* Mobile: sidebar collapses above the grid. The lg:grid-cols-[280px_1fr]
+ * in archive-product.php already stacks it; this just tightens spacing. */
+@media (max-width: 1024px) {
+  .sp-shop-sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .sp-shop-widget {
+    flex: 1 1 260px;
+    padding: 1rem 1.25rem;
+  }
+}
+
+/* --- Shop loop header: result count + ordering ---------------------- */
+.sp-shop-loop-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+.sp-shop-loop-header .woocommerce-result-count {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6b7280;
+}
+.sp-shop-loop-header .woocommerce-ordering {
+  margin: 0;
+}
+.sp-shop-loop-header .woocommerce-ordering select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: #fff;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #14b8a6 50%),
+    linear-gradient(-45deg, transparent 50%, #14b8a6 50%);
+  background-position:
+    calc(100% - 16px) center,
+    calc(100% - 10px) center;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding: 0.5rem 2.25rem 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #171717;
+  border: 1px solid #d1d5db;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.sp-shop-loop-header .woocommerce-ordering select:focus {
+  outline: none;
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+}
+
+/* --- Pagination ------------------------------------------------------ */
+.woocommerce-pagination {
+  margin-top: 2rem;
+  text-align: center;
+}
+.woocommerce-pagination ul.page-numbers {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+.woocommerce-pagination ul.page-numbers li {
+  margin: 0;
+  border: none;
+}
+.woocommerce-pagination .page-numbers {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #525252;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+.woocommerce-pagination .page-numbers:hover {
+  color: #14b8a6;
+  border-color: #14b8a6;
+}
+.woocommerce-pagination .page-numbers.current {
+  color: #fff;
+  background: linear-gradient(to right, #3b9b9f, #2c7a7e);
+  border-color: transparent;
+  box-shadow: 0 4px 6px -4px rgba(0, 0, 0, 0.15);
+}
+.woocommerce-pagination .page-numbers.dots {
+  background: transparent;
+  border-color: transparent;
+}
