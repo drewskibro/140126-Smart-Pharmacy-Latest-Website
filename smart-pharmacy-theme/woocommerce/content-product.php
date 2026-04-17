@@ -32,45 +32,17 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 	return;
 }
 
-/* ---------- Category-slug → colour-key map ---------------------- */
-// Add new entries as categories are created in WC admin. Keys are
-// product_cat term slugs; values are the colour keys used by the
-// Tailwind class maps below.
-$sp_wc_cat_colour_map = array(
-	'pain-relief'       => 'red',
-	'vitamins'          => 'orange',
-	'first-aid'         => 'green',
-	'weight-management' => 'teal',
-	'mens-health'       => 'blue',
-	'womens-health'     => 'purple',
-);
-
-/* ---------- Tailwind class look-ups (literal strings for JIT) --- */
-$sp_wc_bg_class = array(
-	'teal'   => 'bg-gradient-to-br from-teal-50 to-white',
-	'purple' => 'bg-gradient-to-br from-purple-50 to-white',
-	'green'  => 'bg-gradient-to-br from-green-50 to-white',
-	'orange' => 'bg-gradient-to-br from-orange-50 to-white',
-	'red'    => 'bg-gradient-to-br from-red-50 to-white',
-	'blue'   => 'bg-gradient-to-br from-blue-50 to-white',
-);
-$sp_wc_cat_class = array(
-	'teal'   => 'text-teal-600',
-	'purple' => 'text-purple-600',
-	'green'  => 'text-green-600',
-	'orange' => 'text-orange-600',
-	'red'    => 'text-red-600',
-	'blue'   => 'text-blue-600',
-);
-
-/* ---------- Resolve the card's primary category ----------------- */
+/* ---------- Resolve the card's primary category + colour classes */
+// Colour bundle (bg tint, eyebrow text colour) comes from the
+// shared sp_wc_category_colour_classes() helper so the same
+// slug always matches the colour used on category tiles + filters.
 $sp_terms       = get_the_terms( $product->get_id(), 'product_cat' );
 $sp_primary_cat = ( is_array( $sp_terms ) && ! empty( $sp_terms ) ) ? $sp_terms[0] : null;
 $sp_cat_name    = $sp_primary_cat ? $sp_primary_cat->name : '';
 $sp_cat_slug    = $sp_primary_cat ? $sp_primary_cat->slug : '';
-$sp_colour_key  = $sp_wc_cat_colour_map[ $sp_cat_slug ] ?? 'teal';
-$sp_bg          = $sp_wc_bg_class[ $sp_colour_key ];
-$sp_cat_text    = $sp_wc_cat_class[ $sp_colour_key ];
+$sp_colour      = sp_wc_category_colour_classes( $sp_cat_slug );
+$sp_bg          = $sp_colour['bg'];
+$sp_cat_text    = $sp_colour['text'];
 
 /* ---------- Sale-flash badge: "X% Off" -------------------------- */
 $sp_sale_badge = '';

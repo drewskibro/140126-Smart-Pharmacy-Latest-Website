@@ -1,11 +1,19 @@
 <?php
 /**
- * Shop archive (Stage 4a-2 brand override).
+ * Shop archive (Stage 4a-2 base, 4b filters, 4d discovery).
  *
  * Drives /shop/ and /product-category/{slug}/.  Replaces WC's default
- * archive-product.php with a brand layout: gradient page header on
- * top, a filter sidebar on the left (template-parts/shop/filters.php),
- * a 3-col card grid on the right, pagination underneath.
+ * archive-product.php with a brand layout:
+ *
+ *   /shop/ (is_shop() only):
+ *     - Stage 4d hero banner (template-parts/shop/hero.php)
+ *     - Best Sellers carousel (template-parts/shop/bestsellers.php)
+ *     - Shop-by-category tiles (template-parts/shop/categories.php)
+ *     - Filter sidebar + All Products grid + pagination (below)
+ *
+ *   /product-category/ and /product-tag/:
+ *     - Compact gradient page header (sp_wc_page_header)
+ *     - Filter sidebar + product grid + pagination
  *
  * Hooks preserved (intentional):
  *   - woocommerce_before_main_content  → sp_wc_wrapper_open()  - 10
@@ -46,6 +54,23 @@ get_header( 'shop' );
  *                                    shop / cart / checkout / account)
  */
 do_action( 'woocommerce_before_main_content' );
+
+/* -------------------------------------------------------------
+ * Stage 4d discovery sections: hero + bestsellers + categories.
+ * Rendered on /shop/ only so category archives stay focused on
+ * their product grid.
+ * ----------------------------------------------------------- */
+if ( is_shop() && ! is_search() ) {
+	get_template_part( 'template-parts/shop/hero' );
+	get_template_part( 'template-parts/shop/bestsellers' );
+	get_template_part( 'template-parts/shop/categories' );
+	?>
+	<header class="sp-shop-all__header">
+		<h2 class="sp-shop-all__title"><?php esc_html_e( 'All Products', 'smart-pharmacy' ); ?></h2>
+		<p class="sp-shop-all__body"><?php esc_html_e( 'Browse our complete range of treatments and healthcare essentials', 'smart-pharmacy' ); ?></p>
+	</header>
+	<?php
+}
 
 $sp_has_sidebar  = sp_wc_has_shop_sidebar();
 $sp_layout_class = $sp_has_sidebar
