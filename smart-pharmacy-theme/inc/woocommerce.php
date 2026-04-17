@@ -5,7 +5,7 @@
  * Stage 4a foundation. Subsequent stages build on this:
  *   - Stage 4a-2: archive-product.php + content-product.php overrides
  *   - Stage 4a-3: single-product.php override + tabbed product info
- *   - Stage 4a-4: cart + checkout brand pass
+ *   - Stage 4a-4: cart + checkout + my-account brand pass
  *   - Stage 4b:   sidebar filters, search refinement
  *   - Stage 4c:   POM gating (hide Add-to-Cart for prescription products,
  *                 swap in "Start Consultation" routing to the linked
@@ -117,3 +117,137 @@ add_filter(
 		return 12;
 	}
 );
+
+/* ===============================================================
+ * 5. BRANDED PAGE HEADER (Stage 4a-4)
+ *
+ * Every WooCommerce page except the single product renders the
+ * same eyebrow-pill + gradient title + subheading header used on
+ * the shop archive, so cart / checkout / my-account visually sit
+ * inside the same brand frame.
+ *
+ * Hooked onto woocommerce_before_main_content at priority 15 so
+ * it fires immediately after sp_wc_wrapper_open (priority 10) and
+ * before WC's own content.  is_product() is excluded -- the PDP
+ * lays out the product title inside its own two-column summary.
+ * is_order_received_page() is also excluded so the thank-you
+ * screen's "Order received" block stands on its own.
+ * =============================================================== */
+
+/**
+ * Resolve (icon, eyebrow, title, subheading) for the current WC page.
+ *
+ * Returns null when no branded header should render (single product,
+ * order-received, unrecognised contexts).
+ *
+ * @return array{icon:string,eyebrow:string,title:string,subheading:string}|null
+ */
+function sp_wc_page_header_context() {
+	if ( is_product() || is_order_received_page() ) {
+		return null;
+	}
+
+	if ( is_cart() ) {
+		return array(
+			'icon'       => 'check_circle',
+			'eyebrow'    => __( 'Your', 'smart-pharmacy' ),
+			'eyebrow_em' => __( 'Basket', 'smart-pharmacy' ),
+			'title'      => __( 'Shopping Cart', 'smart-pharmacy' ),
+			'subheading' => __( 'Review your items before heading to secure checkout. Free UK delivery on orders over £30.', 'smart-pharmacy' ),
+		);
+	}
+
+	if ( is_checkout() ) {
+		return array(
+			'icon'       => 'lock',
+			'eyebrow'    => __( 'Secure', 'smart-pharmacy' ),
+			'eyebrow_em' => __( 'Checkout', 'smart-pharmacy' ),
+			'title'      => __( 'Checkout', 'smart-pharmacy' ),
+			'subheading' => __( 'Discreet packaging, tracked dispatch, and your payment details encrypted end-to-end.', 'smart-pharmacy' ),
+		);
+	}
+
+	if ( is_account_page() ) {
+		return array(
+			'icon'       => 'person',
+			'eyebrow'    => __( 'Your', 'smart-pharmacy' ),
+			'eyebrow_em' => __( 'Account', 'smart-pharmacy' ),
+			'title'      => is_user_logged_in() ? __( 'My Account', 'smart-pharmacy' ) : __( 'Sign In', 'smart-pharmacy' ),
+			'subheading' => is_user_logged_in()
+				? __( 'Manage your orders, addresses, prescriptions, and consultation history.', 'smart-pharmacy' )
+				: __( 'Sign in to access your orders and consultations, or create a new account in under a minute.', 'smart-pharmacy' ),
+		);
+	}
+
+	if ( is_shop() || is_product_taxonomy() ) {
+		$title    = woocommerce_page_title( false );
+		$subhead  = '';
+		if ( is_product_category() || is_product_tag() ) {
+			$term    = get_queried_object();
+			$subhead = ( $term && ! empty( $term->description ) )
+				? wp_strip_all_tags( $term->description )
+				: '';
+		} elseif ( is_shop() ) {
+			$subhead = __( 'Browse our full pharmacy range. Genuine UK-licensed products, dispatched discreetly with free delivery on orders over £30.', 'smart-pharmacy' );
+		}
+
+		return array(
+			'icon'       => 'truck',
+			'eyebrow'    => __( 'Smart Pharmacy', 'smart-pharmacy' ),
+			'eyebrow_em' => __( 'Shop', 'smart-pharmacy' ),
+			'title'      => $title,
+			'subheading' => $subhead,
+		);
+	}
+
+	return null;
+}
+
+/**
+ * Emit the branded WooCommerce page header.
+ *
+ * Echoes nothing if sp_wc_page_header_context() returns null. The
+ * archive-product.php override also picks up the WC archive
+ * description via the woocommerce_archive_description hook inside
+ * this markup, so category long-form copy still renders on first
+ * page load only (is_paged() guards against duplication).
+ */
+function sp_wc_page_header() {
+	$ctx = sp_wc_page_header_context();
+	if ( null === $ctx ) {
+		return;
+	}
+	?>
+	<header class="box-border break-words text-center mb-12 md:mb-16">
+		<div class="items-center backdrop-blur-sm bg-white/80 shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.1)_0px_10px_15px_-3px,rgba(0,0,0,0.1)_0px_4px_6px_-4px] box-border gap-x-3 inline-flex break-words gap-y-3 border border-gray-100 mb-6 px-6 py-3 rounded-full border-solid">
+			<div class="items-center bg-[linear-gradient(to_right_bottom,rgb(59,155,159),rgb(44,122,126))] box-border flex h-10 justify-center break-words w-10 rounded-full">
+				<?php echo sp_icon( $ctx['icon'], 'w-5 h-5 text-white' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			</div>
+			<span class="text-neutral-900 text-base font-bold box-border block leading-6 break-words">
+				<?php echo esc_html( $ctx['eyebrow'] ); ?>
+				<span class="text-teal-500"> <?php echo esc_html( $ctx['eyebrow_em'] ); ?></span>
+			</span>
+			<div class="bg-teal-500 box-border h-2 break-words w-2 rounded-full"></div>
+		</div>
+
+		<h1 class="text-neutral-900 text-4xl font-black box-border leading-[1.1] break-words mb-4 md:text-6xl">
+			<span class="text-transparent bg-clip-text bg-[linear-gradient(to_right,rgb(59,155,159),rgb(44,122,126))]"><?php echo esc_html( $ctx['title'] ); ?></span>
+		</h1>
+
+		<?php if ( $ctx['subheading'] ) : ?>
+			<p class="text-neutral-600 text-lg box-border leading-[1.6] break-words max-w-3xl mx-auto md:text-xl"><?php echo esc_html( $ctx['subheading'] ); ?></p>
+		<?php endif; ?>
+
+		<?php
+		// Category / tag long-form description (HTML from the term editor).
+		// Kept here so archive taxonomies show it under the branded header.
+		if ( ( is_product_category() || is_product_tag() ) && ! is_paged() ) {
+			echo '<div class="prose mx-auto mt-6 text-neutral-600">';
+			do_action( 'woocommerce_archive_description' );
+			echo '</div>';
+		}
+		?>
+	</header>
+	<?php
+}
+add_action( 'woocommerce_before_main_content', 'sp_wc_page_header', 15 );
