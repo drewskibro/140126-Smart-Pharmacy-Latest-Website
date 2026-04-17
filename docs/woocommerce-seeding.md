@@ -221,10 +221,10 @@ placeholder:
       product photos before launch
 - ⚠️ **Payment gateway** is "Cash on Delivery" placeholder — Stripe /
       PayPal go in once we have the merchant account credentials
-- ⚠️ **POM products (Mounjaro)** currently appear in the shop with
-      "Add to Cart" — Stage 4c adds the consultation gate before launch
-      so prescription products route to the treatment landing page
-      consultation flow instead of the cart
+- ✅ **POM products (Mounjaro)** now surface a teal "Prescription only"
+      pill and swap Add-to-Cart for a **Start Consultation** CTA once
+      linked to a POM-flagged treatment via the E1 relationship (see
+      Step 8b). Direct `?add-to-cart=` URLs are also blocked server-side.
 - ⚠️ **Tax handling** is set to "None" for now — UK VAT logic configured
       pre-launch with the client's accountant
 - ⚠️ **Shipping prices** are placeholder — confirm with client and
@@ -232,6 +232,52 @@ placeholder:
 - 🔜 **Google Merchant Center / Shopping ads** — Stage 4e adds the feed
       so the GSL products (vitamins, OTC meds) can run Shopping ads.
       POM products are excluded by Google's healthcare ads policy.
+
+---
+
+## Step 8b — Link POM products to their treatment (Stage 4c)
+
+Stage 4c gates prescription products behind the consultation flow.
+Mounjaro and any other POM SKUs now need to be linked to a Treatment
+post that's flagged POM in B4, or they'll still show "Add to Cart"
+on the shop.
+
+**1. Ensure a treatment exists and is flagged POM:**
+
+**Treatments → Weight Loss** (create one if it doesn't exist):
+
+- [ ] **B4 Treatment Meta → Legal classification**: `POM`
+- [ ] **B4 Treatment Meta → Requires consultation?**: ticked
+- [ ] **B4 Treatment Meta → Category**: Weight Management
+- [ ] **Publish**
+
+**2. Link the Mounjaro SKUs to that treatment:**
+
+Still on the Weight Loss treatment edit screen:
+
+- [ ] **E1 Related Products**: search and add all four Mounjaro SKUs
+      (2.5mg / 5mg / 7.5mg / 10mg)
+- [ ] **Update** the post
+
+Behind the scenes, saving mirrors the link onto each product as
+`_sp_linked_treatment_id` postmeta so the shop can resolve POM
+status in O(1).
+
+**3. Smoke-test POM gating:**
+
+- [ ] Visit `/shop/` (incognito) — Mounjaro cards show a teal
+      **PRESCRIPTION ONLY** pill instead of the orange Sale pill,
+      and the button reads **Start Consultation** in teal gradient
+- [ ] Click **Start Consultation** — lands on `/treatments/weight-loss/`
+- [ ] Click into a Mounjaro product page — the right column shows a
+      teal-tinted **"Free consultation required"** block with the
+      **Start Consultation** CTA (no quantity input, no Add to Cart)
+- [ ] Try `/?add-to-cart=<mounjaro-id>` directly — WC refuses with
+      its "Sorry, this product cannot be purchased" notice
+
+If any Mounjaro card still shows **Add to Cart**, re-open the treatment
+post and make sure (a) it's published, (b) legal classification is POM,
+(c) the product is in the E1 list, (d) you clicked Update.
 
 ---
 

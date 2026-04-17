@@ -1370,3 +1370,96 @@ input:focus {
   background: transparent;
   border-color: transparent;
 }
+
+/* =====================================================================
+ * POM (PRESCRIPTION-ONLY) GATING (Stage 4c)
+ * ---------------------------------------------------------------------
+ * Prescription products show a branded consultation block instead of
+ * the add-to-cart UI on the PDP, and a pill + CTA swap on archive cards.
+ * Helpers + detection live in inc/woocommerce.php; these rules style
+ * the additional markup that content-product.php and the PDP hook emit.
+ * ===================================================================== */
+
+/* --- PDP consultation block (right column) -------------------------- */
+.sp-pom-pdp-block {
+  background: linear-gradient(135deg, #f0f9fa 0%, #ffffff 100%);
+  border: 1px solid #a7f3d0;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  margin: 1.5rem 0 1.5rem;
+  box-shadow: 0 4px 6px -4px rgba(16, 192, 169, 0.15);
+}
+.sp-pom-pdp-block__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #0f766e; /* teal-700 */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: #ccfbf1; /* teal-100 */
+  border-radius: 9999px;
+  padding: 0.375rem 0.875rem;
+  margin-bottom: 1rem;
+}
+.sp-pom-pdp-block__title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #171717;
+  margin: 0 0 0.5rem;
+  line-height: 1.25;
+}
+.sp-pom-pdp-block__body {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #525252;
+  margin: 0 0 1.25rem;
+}
+.sp-pom-pdp-block__cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(to right, #3b9b9f, #2c7a7e);
+  border-radius: 9999px;
+  text-decoration: none;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.sp-pom-pdp-block__cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.15);
+}
+.sp-pom-pdp-block__assurances {
+  list-style: none;
+  padding: 1.25rem 0 0;
+  margin: 1.25rem 0 0;
+  border-top: 1px solid rgba(16, 192, 169, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+.sp-pom-pdp-block__assurances li {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.875rem;
+  color: #525252;
+}
+
+/* --- Archive card: POM flash pill icon alignment -------------------- */
+.sp-pom-flash {
+  /* inline-flex + gap already set via Tailwind classes on the span.
+   * Nothing to override unless the svg icon needs vertical tweak. */
+}
+
+/* --- Archive card / loop consult CTA: keeps base style but with a
+ *     small left-aligned shield icon slot for future use (empty now
+ *     to avoid bumping card height versus the normal add-to-cart). - */
+.sp-pom-consult-cta {
+  /* Same pill gradient as the add_to_cart_button, applied via Tailwind
+   * utilities on the inline element. Class kept for JS/analytics hooks. */
+}

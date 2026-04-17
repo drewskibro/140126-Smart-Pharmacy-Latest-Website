@@ -89,11 +89,23 @@ $sp_rating  = (float) $product->get_average_rating();
 $sp_reviews = (int) $product->get_review_count();
 $sp_show_rating = ( $sp_rating > 0 || $sp_reviews > 0 );
 
+/* ---------- POM gating ----------------------------------------- */
+// Products linked (via ACF E1) to a treatment flagged POM / requires-
+// consultation in B4 swap their CTA for a "Start Consultation" link
+// that deep-links to the treatment landing page. Also drives the
+// orange "Prescription only" eyebrow that overrides the category
+// eyebrow when set.
+$sp_is_pom           = sp_product_is_pom( $product->get_id() );
+$sp_consultation_url = $sp_is_pom ? sp_product_consultation_url( $product->get_id() ) : '';
+
 /* ---------- Add-to-Cart button data attrs ----------------------- */
 // Match WC's own templates so the AJAX add-to-cart fragment system
 // finds the button. Without these, clicks fall back to a full page
 // reload with ?add-to-cart=ID -- still works, just less smooth.
-$sp_can_ajax = $product->supports( 'ajax_add_to_cart' )
+// POM products never get AJAX add-to-cart because they aren't
+// purchasable (woocommerce_is_purchasable filter returns false).
+$sp_can_ajax = ! $sp_is_pom
+	&& $product->supports( 'ajax_add_to_cart' )
 	&& $product->is_purchasable()
 	&& $product->is_in_stock()
 	&& $product->is_type( 'simple' );
@@ -105,7 +117,14 @@ if ( $sp_can_ajax ) {
 ?>
 <div <?php wc_product_class( 'sp-product-card relative bg-white shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.05)_0px_1px_2px_0px] box-border flex flex-col break-words border border-gray-200 overflow-hidden rounded-2xl border-solid hover:shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.1)_0px_20px_25px_-5px,rgba(0,0,0,0.1)_0px_8px_10px_-6px] hover:border-teal-500/30 group transition-all duration-300', $product ); ?>>
 
-	<?php if ( $sp_sale_badge ) : ?>
+	<?php if ( $sp_is_pom ) : ?>
+		<div class="absolute box-border break-words z-10 left-4 top-4">
+			<span class="sp-pom-flash items-center gap-1.5 text-white text-xs font-bold bg-[linear-gradient(to_right,rgb(59,155,159),rgb(44,122,126))] shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.1)_0px_10px_15px_-3px,rgba(0,0,0,0.1)_0px_4px_6px_-4px] box-border inline-flex leading-4 break-words px-3 py-1.5 rounded-full uppercase tracking-wider">
+				<?php echo sp_icon( 'shield', 'w-3.5 h-3.5' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<?php esc_html_e( 'Prescription only', 'smart-pharmacy' ); ?>
+			</span>
+		</div>
+	<?php elseif ( $sp_sale_badge ) : ?>
 		<div class="absolute box-border break-words z-10 left-4 top-4">
 			<span class="text-white text-xs font-bold bg-orange-500 shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.1)_0px_10px_15px_-3px,rgba(0,0,0,0.1)_0px_4px_6px_-4px] box-border inline-block leading-4 break-words px-3 py-1.5 rounded-full uppercase tracking-wider"><?php echo esc_html( $sp_sale_badge ); ?></span>
 		</div>
@@ -171,16 +190,24 @@ if ( $sp_can_ajax ) {
 				echo $product->get_price_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?>
 			</div>
-			<a href="<?php echo esc_url( $product->add_to_cart_url() ); ?>"
-				data-product_id="<?php echo esc_attr( $product->get_id() ); ?>"
-				data-product_sku="<?php echo esc_attr( $product->get_sku() ); ?>"
-				data-quantity="1"
-				data-product_type="<?php echo esc_attr( $product->get_type() ); ?>"
-				rel="nofollow"
-				class="<?php echo esc_attr( $sp_cta_classes ); ?>"
-				aria-label="<?php echo esc_attr( wp_strip_all_tags( $product->add_to_cart_description() ) ); ?>">
-				<?php echo esc_html( $product->add_to_cart_text() ); ?>
-			</a>
+			<?php if ( $sp_is_pom ) : ?>
+				<a href="<?php echo esc_url( $sp_consultation_url ); ?>"
+					class="sp-pom-consult-cta text-white text-sm font-semibold bg-[linear-gradient(to_right,rgb(59,155,159),rgb(44,122,126))] shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.1)_0px_10px_15px_-3px,rgba(0,0,0,0.1)_0px_4px_6px_-4px] px-6 py-3 rounded-full hover:shadow-lg transition-all inline-block"
+					aria-label="<?php printf( /* translators: %s is the product name. */ esc_attr__( 'Start consultation for %s', 'smart-pharmacy' ), esc_attr( $product->get_name() ) ); ?>">
+					<?php esc_html_e( 'Start Consultation', 'smart-pharmacy' ); ?>
+				</a>
+			<?php else : ?>
+				<a href="<?php echo esc_url( $product->add_to_cart_url() ); ?>"
+					data-product_id="<?php echo esc_attr( $product->get_id() ); ?>"
+					data-product_sku="<?php echo esc_attr( $product->get_sku() ); ?>"
+					data-quantity="1"
+					data-product_type="<?php echo esc_attr( $product->get_type() ); ?>"
+					rel="nofollow"
+					class="<?php echo esc_attr( $sp_cta_classes ); ?>"
+					aria-label="<?php echo esc_attr( wp_strip_all_tags( $product->add_to_cart_description() ) ); ?>">
+					<?php echo esc_html( $product->add_to_cart_text() ); ?>
+				</a>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>

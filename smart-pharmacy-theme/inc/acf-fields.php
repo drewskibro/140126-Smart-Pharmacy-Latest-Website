@@ -26,14 +26,12 @@
  *   C3  Post type (treatment) — Eligibility (Stage 3b stub UI; Stage 5 wires real calculator)
  *   D1  Post type (treatment) — FAQ
  *   D2  Post type (treatment) — Final CTA
+ *   E1  Post type (treatment) — Related WooCommerce products (drives POM gating)
  *   F1  Options — Branding (logo, footer tagline, payment methods)
  *   G1  Options — Navigation (primary menu, footer link columns, search, NHS button)
  *   H1  Options — Contact (trading address, registered address)
  *   I1  Options — Compliance (GPhC number)
  *   J1  Options — Social (platform URLs)
- *
- * Planned:
- *   E1  Post type (treatment) — Related WooCommerce products (Stage 3c stub; Stage 4 wires real relationships)
  *
  * @package SmartPharmacy
  */
@@ -1325,6 +1323,49 @@ function sp_register_acf_field_groups() {
 					'sub_fields'   => array(
 						array( 'key' => 'field_sp_tx_cta_trust_text', 'label' => 'Text', 'name' => 'text', 'type' => 'text' ),
 					),
+				),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * E1 — Treatment → Related WooCommerce Products
+	 *
+	 * Links a treatment landing page to the WooCommerce SKUs it sells.
+	 * The Treatment is the source of truth for medical classification
+	 * (B4: POM / P / GSL + requires-consultation flag); the E1
+	 * relationship makes that classification reachable from the product
+	 * side so the Stage 4c POM gating can swap Add-to-Cart for a
+	 * consultation CTA on prescription products.
+	 *
+	 * The product <-> treatment link is stored once here (treatment side)
+	 * and cached onto each linked product as _sp_linked_treatment_id
+	 * postmeta via the acf/save_post hook in inc/woocommerce.php, so
+	 * runtime product lookups are O(1) rather than scanning every
+	 * treatment's meta on each request.
+	 * ------------------------------------------------------------- */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_sp_e1_treatment_related_products',
+			'title'    => 'E1 — Related Products',
+			'position' => 'acf_after_title',
+			'location' => array(
+				array(
+					array( 'param' => 'post_type', 'operator' => '==', 'value' => 'treatment' ),
+				),
+			),
+			'fields'   => array(
+				array(
+					'key'           => 'field_sp_tx_related_products',
+					'label'         => 'Related WooCommerce products',
+					'name'          => 'tx_related_products',
+					'type'          => 'relationship',
+					'post_type'     => array( 'product' ),
+					'filters'       => array( 'search', 'post_type', 'taxonomy' ),
+					'return_format' => 'id',
+					'min'           => 0,
+					'max'           => 0,
+					'instructions'  => 'Search and pick the WooCommerce products this treatment sells. Drives the related-products block on the treatment page AND the POM gating on the shop -- if the treatment is flagged POM in B4, every linked product routes Add-to-Cart to this treatment\'s consultation flow instead of the basket.',
 				),
 			),
 		)
