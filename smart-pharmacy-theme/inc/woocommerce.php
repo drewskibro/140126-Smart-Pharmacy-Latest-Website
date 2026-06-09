@@ -794,3 +794,72 @@ function sp_wc_category_colour_classes( $slug ) {
 
 	return isset( $bundles[ $colour ] ) ? $bundles[ $colour ] : $bundles['teal'];
 }
+
+/**
+ * Resolve a thumbnail image URL for a product category tile.
+ *
+ * Resolution order:
+ *   1. The category's own thumbnail (WC "Thumbnail" field on the
+ *      term edit screen — `thumbnail_id` term meta).
+ *   2. The featured image of the most recent published product in
+ *      that category — zero admin work, sensible default.
+ *
+ * Returns empty string when nothing is available, in which case the
+ * template renders a neutral placeholder.
+ *
+ * Cached per-term in a request-scoped static so the inner WP_Query
+ * runs at most once per category per page load.
+ *
+ * @param int    $term_id product_cat term ID.
+ * @param string $size    Image size (default 'medium').
+ * @return string URL or empty string.
+ */
+function sp_wc_category_thumb_url( $term_id, $size = 'medium' ) {
+	static $cache = array();
+	$cache_key = $term_id . '|' . $size;
+	if ( isset( $cache[ $cache_key ] ) ) {
+		return $cache[ $cache_key ];
+	}
+
+	$thumb_id = (int) get_term_meta( $term_id, 'thumbnail_id', true );
+	if ( $thumb_id > 0 ) {
+		$url = wp_get_attachment_image_url( $thumb_id, $size );
+		if ( $url ) {
+			return $cache[ $cache_key ] = $url;
+		}
+	}
+
+	$products = get_posts(
+		array(
+			'post_type'      => 'product',
+			'post_status'    => 'publish',
+			'posts_per_page' => 1,
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+			'fields'         => 'ids',
+			'tax_query'      => array(
+				array(
+					'taxonomy'         => 'product_cat',
+					'field'            => 'term_id',
+					'terms'            => (int) $term_id,
+					'include_children' => true,
+				),
+			),
+			'meta_query'     => array(
+				array(
+					'key'     => '_thumbnail_id',
+					'compare' => 'EXISTS',
+				),
+			),
+			'no_found_rows'  => true,
+		)
+	);
+	if ( ! empty( $products ) ) {
+		$url = get_the_post_thumbnail_url( (int) $products[0], $size );
+		if ( $url ) {
+			return $cache[ $cache_key ] = $url;
+		}
+	}
+
+	return $cache[ $cache_key ] = '';
+}
