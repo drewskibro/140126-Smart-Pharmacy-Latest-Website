@@ -27,6 +27,7 @@ require_once SMART_PHARMACY_DIR . '/inc/acf-options.php';
 require_once SMART_PHARMACY_DIR . '/inc/acf-fields.php';
 require_once SMART_PHARMACY_DIR . '/inc/woocommerce.php';
 require_once SMART_PHARMACY_DIR . '/inc/seeders/mens-health.php';
+require_once SMART_PHARMACY_DIR . '/inc/seeders/womens-health.php';
 
 /**
  * Theme setup: supports, menus, textdomain.
