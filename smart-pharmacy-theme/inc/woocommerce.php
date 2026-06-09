@@ -428,14 +428,27 @@ function sp_product_is_pom( $product_id ) {
 /**
  * URL for the "Start Consultation" CTA on a POM product.
  *
- * Resolves to the linked treatment's permalink. Falls back to the
- * treatment archive so the CTA never dead-ends, even if the link
- * was broken after the treatment was deleted.
+ * Resolution order:
+ *   1. The dedicated eligibility-checker page configured in the
+ *      Smart Pharmacy Eligibility plugin (Eligibility -> Settings).
+ *      Goes straight to the consultation form -- shortest funnel.
+ *   2. The linked treatment landing page (legacy fallback for
+ *      products linked to a treatment via the E1 relationship).
+ *   3. The treatment archive so the CTA never dead-ends.
  *
  * @param int $product_id WC product ID.
  * @return string URL.
  */
 function sp_product_consultation_url( $product_id ) {
+	// Prefer the eligibility checker page when the plugin is active
+	// and an admin has filled in the URL field.
+	if ( class_exists( 'SPE_Admin' ) ) {
+		$checker_url = SPE_Admin::get_checker_url();
+		if ( $checker_url && home_url( '/' ) !== $checker_url ) {
+			return $checker_url;
+		}
+	}
+
 	$treatment_id = sp_product_linked_treatment( $product_id );
 	if ( $treatment_id ) {
 		return (string) get_permalink( $treatment_id );
@@ -780,4 +793,73 @@ function sp_wc_category_colour_classes( $slug ) {
 	);
 
 	return isset( $bundles[ $colour ] ) ? $bundles[ $colour ] : $bundles['teal'];
+}
+
+/**
+ * Resolve a thumbnail image URL for a product category tile.
+ *
+ * Resolution order:
+ *   1. The category's own thumbnail (WC "Thumbnail" field on the
+ *      term edit screen — `thumbnail_id` term meta).
+ *   2. The featured image of the most recent published product in
+ *      that category — zero admin work, sensible default.
+ *
+ * Returns empty string when nothing is available, in which case the
+ * template renders a neutral placeholder.
+ *
+ * Cached per-term in a request-scoped static so the inner WP_Query
+ * runs at most once per category per page load.
+ *
+ * @param int    $term_id product_cat term ID.
+ * @param string $size    Image size (default 'medium').
+ * @return string URL or empty string.
+ */
+function sp_wc_category_thumb_url( $term_id, $size = 'medium' ) {
+	static $cache = array();
+	$cache_key = $term_id . '|' . $size;
+	if ( isset( $cache[ $cache_key ] ) ) {
+		return $cache[ $cache_key ];
+	}
+
+	$thumb_id = (int) get_term_meta( $term_id, 'thumbnail_id', true );
+	if ( $thumb_id > 0 ) {
+		$url = wp_get_attachment_image_url( $thumb_id, $size );
+		if ( $url ) {
+			return $cache[ $cache_key ] = $url;
+		}
+	}
+
+	$products = get_posts(
+		array(
+			'post_type'      => 'product',
+			'post_status'    => 'publish',
+			'posts_per_page' => 1,
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+			'fields'         => 'ids',
+			'tax_query'      => array(
+				array(
+					'taxonomy'         => 'product_cat',
+					'field'            => 'term_id',
+					'terms'            => (int) $term_id,
+					'include_children' => true,
+				),
+			),
+			'meta_query'     => array(
+				array(
+					'key'     => '_thumbnail_id',
+					'compare' => 'EXISTS',
+				),
+			),
+			'no_found_rows'  => true,
+		)
+	);
+	if ( ! empty( $products ) ) {
+		$url = get_the_post_thumbnail_url( (int) $products[0], $size );
+		if ( $url ) {
+			return $cache[ $cache_key ] = $url;
+		}
+	}
+
+	return $cache[ $cache_key ] = '';
 }

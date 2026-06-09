@@ -40,9 +40,9 @@ if ( is_wp_error( $sp_cat_terms ) || empty( $sp_cat_terms ) ) {
 				? wp_trim_words( wp_strip_all_tags( $sp_cat_term->description ), 10, '…' )
 				: '';
 
-			// Thumbnail: WC stores a category image meta (`thumbnail_id`).
-			$sp_cat_thumb_id = (int) get_term_meta( $sp_cat_term->term_id, 'thumbnail_id', true );
-			$sp_cat_thumb    = $sp_cat_thumb_id ? wp_get_attachment_image_url( $sp_cat_thumb_id, 'medium' ) : '';
+			// Thumbnail with auto-fallback: explicit category image, then
+			// the most-recent product's featured image, then placeholder.
+			$sp_cat_thumb = sp_wc_category_thumb_url( $sp_cat_term->term_id, 'medium' );
 			?>
 			<a class="sp-shop-cats__tile <?php echo esc_attr( $sp_cat_colour['bg'] . ' ' . $sp_cat_colour['border'] ); ?>" href="<?php echo esc_url( get_term_link( $sp_cat_term ) ); ?>">
 				<div class="sp-shop-cats__thumb">
