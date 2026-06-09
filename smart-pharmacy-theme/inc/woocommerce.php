@@ -428,14 +428,27 @@ function sp_product_is_pom( $product_id ) {
 /**
  * URL for the "Start Consultation" CTA on a POM product.
  *
- * Resolves to the linked treatment's permalink. Falls back to the
- * treatment archive so the CTA never dead-ends, even if the link
- * was broken after the treatment was deleted.
+ * Resolution order:
+ *   1. The dedicated eligibility-checker page configured in the
+ *      Smart Pharmacy Eligibility plugin (Eligibility -> Settings).
+ *      Goes straight to the consultation form -- shortest funnel.
+ *   2. The linked treatment landing page (legacy fallback for
+ *      products linked to a treatment via the E1 relationship).
+ *   3. The treatment archive so the CTA never dead-ends.
  *
  * @param int $product_id WC product ID.
  * @return string URL.
  */
 function sp_product_consultation_url( $product_id ) {
+	// Prefer the eligibility checker page when the plugin is active
+	// and an admin has filled in the URL field.
+	if ( class_exists( 'SPE_Admin' ) ) {
+		$checker_url = SPE_Admin::get_checker_url();
+		if ( $checker_url && home_url( '/' ) !== $checker_url ) {
+			return $checker_url;
+		}
+	}
+
 	$treatment_id = sp_product_linked_treatment( $product_id );
 	if ( $treatment_id ) {
 		return (string) get_permalink( $treatment_id );

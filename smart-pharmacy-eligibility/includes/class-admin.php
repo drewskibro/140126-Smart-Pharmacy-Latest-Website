@@ -66,7 +66,7 @@ class SPE_Admin {
 	}
 
 	/**
-	 * Register the spe_product_map option.
+	 * Register the plugin's options.
 	 */
 	public static function register_settings() {
 		register_setting(
@@ -77,6 +77,34 @@ class SPE_Admin {
 				'default'           => array(),
 			)
 		);
+		register_setting(
+			'spe_settings',
+			'spe_checker_url',
+			array(
+				'sanitize_callback' => 'esc_url_raw',
+				'default'           => '',
+			)
+		);
+	}
+
+	/**
+	 * Resolve the public-facing URL of the eligibility checker page.
+	 *
+	 * The theme's "Start Consultation" CTAs on POM products link to
+	 * this URL so the customer goes straight to the consultation form
+	 * instead of bouncing via the treatment landing page.
+	 *
+	 * Falls back to the homepage if the admin hasn't set it yet --
+	 * better than a broken link.
+	 *
+	 * @return string Absolute URL.
+	 */
+	public static function get_checker_url() {
+		$url = (string) spe_option( 'checker_url', '' );
+		if ( $url ) {
+			return $url;
+		}
+		return home_url( '/' );
 	}
 
 	/**
@@ -217,10 +245,31 @@ class SPE_Admin {
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Eligibility Settings', 'smart-pharmacy-eligibility' ); ?></h1>
-			<p><?php esc_html_e( "Map each treatment + dose to the matching WooCommerce product. The checker uses this map to add the right SKU to the basket once a patient finishes the assessment. If a row is left blank, the plugin falls back to SKU pattern matching (SP-WL-WEG-0.25mg, SP-WL-MOUN-2.5mg) and finally to a product-name search.", 'smart-pharmacy-eligibility' ); ?></p>
 
 			<form method="post" action="options.php">
 				<?php settings_fields( 'spe_settings' ); ?>
+
+				<h2 style="margin-top: 16px;"><?php esc_html_e( 'Checker Page URL', 'smart-pharmacy-eligibility' ); ?></h2>
+				<p><?php esc_html_e( 'Where does the eligibility checker live? This URL is what the "Start Consultation" buttons on prescription products link to. Paste the full URL of the page containing the [smart_pharmacy_eligibility] shortcode.', 'smart-pharmacy-eligibility' ); ?></p>
+				<table class="form-table" role="presentation">
+					<tbody>
+						<tr>
+							<th scope="row"><label for="spe_checker_url"><?php esc_html_e( 'Eligibility checker URL', 'smart-pharmacy-eligibility' ); ?></label></th>
+							<td>
+								<input type="url"
+									id="spe_checker_url"
+									name="spe_checker_url"
+									value="<?php echo esc_attr( spe_option( 'checker_url', '' ) ); ?>"
+									class="regular-text"
+									placeholder="<?php echo esc_attr( home_url( '/start-consultation/' ) ); ?>" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h2 style="margin-top: 32px;"><?php esc_html_e( 'Product Mapping', 'smart-pharmacy-eligibility' ); ?></h2>
+				<p><?php esc_html_e( "Map each treatment + dose to the matching WooCommerce product. The checker uses this map to add the right SKU to the basket once a patient finishes the assessment. If a row is left blank, the plugin falls back to SKU pattern matching (SP-WL-WEG-0.25mg, SP-WL-MOUN-2.5mg) and finally to a product-name search.", 'smart-pharmacy-eligibility' ); ?></p>
+
 
 				<?php foreach ( $treatments as $treatment => $doses ) : ?>
 					<h2 style="margin-top: 32px;"><?php echo esc_html( ucfirst( $treatment ) ); ?></h2>
