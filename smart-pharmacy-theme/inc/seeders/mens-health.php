@@ -30,11 +30,6 @@ function sp_seed_mens_health_treatment() {
 		return;
 	}
 
-	// Run from admin / WP-CLI only -- not on every front-end hit.
-	if ( ! is_admin() && ! ( defined( 'WP_CLI' ) && WP_CLI ) ) {
-		return;
-	}
-
 	// Don't double-create if a post already exists at this slug.
 	$existing = get_page_by_path( 'mens-health', OBJECT, 'treatment' );
 	if ( $existing ) {
@@ -111,4 +106,7 @@ function sp_seed_mens_health_treatment() {
 
 	update_option( '_sp_mens_health_seeded_v1', '1' );
 }
-add_action( 'admin_init', 'sp_seed_mens_health_treatment' );
+// Priority 11 so it runs *after* the Treatment CPT is registered
+// on init priority 10. Runs on every request until the option
+// guard is set; after that bails O(1) at the top of the function.
+add_action( 'init', 'sp_seed_mens_health_treatment', 11 );

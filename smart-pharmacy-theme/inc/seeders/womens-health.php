@@ -24,10 +24,6 @@ function sp_seed_womens_health_treatment() {
 		return;
 	}
 
-	if ( ! is_admin() && ! ( defined( 'WP_CLI' ) && WP_CLI ) ) {
-		return;
-	}
-
 	$existing = get_page_by_path( 'womens-health', OBJECT, 'treatment' );
 	if ( $existing ) {
 		update_option( '_sp_womens_health_seeded_v1', '1' );
@@ -97,4 +93,4 @@ function sp_seed_womens_health_treatment() {
 
 	update_option( '_sp_womens_health_seeded_v1', '1' );
 }
-add_action( 'admin_init', 'sp_seed_womens_health_treatment' );
+add_action( 'init', 'sp_seed_womens_health_treatment', 11 );
