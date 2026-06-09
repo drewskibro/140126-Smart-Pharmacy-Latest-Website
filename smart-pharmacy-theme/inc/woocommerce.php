@@ -493,15 +493,27 @@ add_action( 'acf/save_post', 'sp_wc_mirror_e1_to_products', 20 );
  * Mark POM products as non-purchasable so direct URLs + AJAX get
  * rejected by WC's own validation rather than silently succeeding.
  *
+ * If the Smart Pharmacy Eligibility plugin is active AND the visitor
+ * has completed the assessment for this product, we yield and allow
+ * the purchase -- otherwise the post-assessment add-to-cart would
+ * paradoxically fail because of our own gating filter.
+ *
  * @param bool       $purchasable Current WC state.
  * @param WC_Product $product     Product being tested.
  * @return bool
  */
 function sp_wc_pom_not_purchasable( $purchasable, $product ) {
-	if ( $purchasable && sp_product_is_pom( $product->get_id() ) ) {
-		return false;
+	if ( ! $purchasable || ! sp_product_is_pom( $product->get_id() ) ) {
+		return $purchasable;
 	}
-	return $purchasable;
+
+	// Eligibility-completed customers can purchase POM products.
+	if ( class_exists( 'SPE_WooCommerce_Integration' )
+		&& SPE_WooCommerce_Integration::has_completed_eligibility( $product->get_id() ) ) {
+		return true;
+	}
+
+	return false;
 }
 add_filter( 'woocommerce_is_purchasable', 'sp_wc_pom_not_purchasable', 10, 2 );
 

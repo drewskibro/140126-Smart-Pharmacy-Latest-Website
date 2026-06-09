@@ -24,9 +24,10 @@ defined( 'ABSPATH' ) || exit;
  */
 class SPE_WooCommerce_Integration {
 
-	const CART_META_KEY  = '_spe_assessment_id';
-	const ORDER_META_RAW = '_tc_eligibility_raw';
+	const CART_META_KEY     = '_spe_assessment_id';
+	const ORDER_META_RAW    = '_tc_eligibility_raw';
 	const ORDER_META_PREFIX = '_tc_elig_';
+	const SESSION_KEY       = 'spe_completed_products';
 
 	/**
 	 * Wire the hooks.
@@ -106,18 +107,35 @@ class SPE_WooCommerce_Integration {
 	/**
 	 * Add a product to the cart with the assessment_id attached.
 	 *
+	 * Marks the product as eligibility-completed in the WC session
+	 * BEFORE calling add_to_cart so the theme's POM gating (which
+	 * normally blocks POM products from being purchased directly)
+	 * yields and lets this purchase through.
+	 *
 	 * @param int    $product_id    WC product ID.
 	 * @param string $assessment_id UUID of the assessment.
 	 * @return string|bool          Cart item key on success, false otherwise.
 	 */
 	public static function add_to_cart_with_assessment( $product_id, $assessment_id ) {
-		if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
+		if ( ! function_exists( 'WC' ) ) {
+			return false;
+		}
+
+		// AJAX context may not have the cart bootstrapped yet --
+		// wc_load_cart() handles both cart + session for guests.
+		if ( ! WC()->cart && function_exists( 'wc_load_cart' ) ) {
+			wc_load_cart();
+		}
+		if ( ! WC()->cart ) {
 			return false;
 		}
 
 		// Empty the cart so we don't pile multiple treatments together.
 		// POM products are 1-per-cart in normal use.
 		WC()->cart->empty_cart();
+
+		// Unlock the POM gate for this product before WC validates it.
+		self::mark_eligibility_completed( $product_id, $assessment_id );
 
 		return WC()->cart->add_to_cart(
 			(int) $product_id,
@@ -126,6 +144,56 @@ class SPE_WooCommerce_Integration {
 			array(),
 			array( self::CART_META_KEY => sanitize_text_field( $assessment_id ) )
 		);
+	}
+
+	/**
+	 * Record that the customer has completed eligibility for a product.
+	 *
+	 * Stored on the WC session so the theme's POM gating (or any
+	 * other purchase-restriction filter) can consult it and yield.
+	 * Session persists across requests for the duration of the
+	 * customer's visit.
+	 *
+	 * @param int    $product_id
+	 * @param string $assessment_id UUID for audit linkage.
+	 * @return void
+	 */
+	public static function mark_eligibility_completed( $product_id, $assessment_id ) {
+		if ( ! function_exists( 'WC' ) ) {
+			return;
+		}
+		if ( ! WC()->session && function_exists( 'wc_load_cart' ) ) {
+			wc_load_cart();
+		}
+		if ( ! WC()->session ) {
+			return;
+		}
+		// Force a session cookie for guests so the flag survives the
+		// redirect from /start-consultation/ to /checkout/.
+		if ( ! WC()->session->has_session() ) {
+			WC()->session->set_customer_session_cookie( true );
+		}
+		$completed = (array) WC()->session->get( self::SESSION_KEY, array() );
+		$completed[ (int) $product_id ] = sanitize_text_field( $assessment_id );
+		WC()->session->set( self::SESSION_KEY, $completed );
+	}
+
+	/**
+	 * Has the current visitor completed eligibility for this product?
+	 *
+	 * Theme code (or anyone gating POM purchases) calls this from
+	 * its woocommerce_is_purchasable filter to allow eligibility-
+	 * completed purchases through.
+	 *
+	 * @param int $product_id
+	 * @return bool
+	 */
+	public static function has_completed_eligibility( $product_id ) {
+		if ( ! function_exists( 'WC' ) || ! WC()->session ) {
+			return false;
+		}
+		$completed = (array) WC()->session->get( self::SESSION_KEY, array() );
+		return ! empty( $completed[ (int) $product_id ] );
 	}
 
 	/**
