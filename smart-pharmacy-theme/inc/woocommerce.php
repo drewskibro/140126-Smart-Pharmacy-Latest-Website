@@ -863,3 +863,38 @@ function sp_wc_category_thumb_url( $term_id, $size = 'medium' ) {
 
 	return $cache[ $cache_key ] = '';
 }
+
+/* ===============================================================
+ * 11. BRANDED EMPTY-CART STATE (Stage 4d follow-up)
+ *
+ * WC's block cart auto-renders a "Your basket is currently empty!"
+ * heading + sad-face emoji + "New in store" cross-sell block when
+ * the cart is empty. Functional, but looks generic and doesn't
+ * route the visitor anywhere brand-appropriate.
+ *
+ * We inject a branded panel via the_content on the cart page when
+ * cart is empty, then hide WC's default heading + emoji via CSS in
+ * styles.css. Cross-sells stay -- they're useful for discovery.
+ * =============================================================== */
+
+/**
+ * Prepend the branded empty-cart panel to the cart page content.
+ *
+ * @param string $content Existing page content (the cart block).
+ * @return string
+ */
+function sp_wc_branded_empty_cart( $content ) {
+	if ( ! is_cart() ) {
+		return $content;
+	}
+	if ( ! function_exists( 'WC' ) || ! WC()->cart || ! WC()->cart->is_empty() ) {
+		return $content;
+	}
+
+	ob_start();
+	get_template_part( 'template-parts/shop/empty-cart' );
+	$branded = ob_get_clean();
+
+	return $branded . $content;
+}
+add_filter( 'the_content', 'sp_wc_branded_empty_cart', 5 );
