@@ -1,0 +1,205 @@
+/*
+ * Smart Pharmacy Eligibility Checker styles.
+ *
+ * All rules scoped under .spe-app so they don't bleed into the rest
+ * of the theme. Lifted from the bolt.new prototype with the global
+ * resets removed (the parent theme handles those).
+ */
+
+.spe-app, .spe-app * {
+	box-sizing: border-box;
+}
+.spe-app {
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	color: #374151;
+}
+.spe-main {
+	min-height: 60vh;
+	background-color: #f4f9fa;
+	padding: 32px 0;
+}
+.spe-container {
+	max-width: 672px;
+	margin: 0 auto;
+	padding: 32px 24px;
+}
+
+.spe-app .progress-section { margin-bottom: 32px; }
+.spe-app .progress-bar-container { display: flex; align-items: center; gap: 12px; }
+.spe-app .progress-percentage { color: #171717; font-size: 14px; font-weight: 700; min-width: 35px; }
+.spe-app .progress-bar { flex: 1; height: 4px; background: #e5e7eb; border-radius: 9999px; overflow: hidden; }
+.spe-app .progress-fill { height: 100%; background: #171717; transition: width 0.3s ease; }
+
+.spe-app .screen { display: none; }
+.spe-app .screen.active { display: block; }
+
+.spe-app h1, .spe-app h2 {
+	font-family: 'DM Serif Display', serif;
+	color: #171717;
+	font-weight: 400;
+	line-height: 1.2;
+}
+.spe-app h1 { font-size: 28px; margin: 0 0 32px; }
+.spe-app h2 { font-size: 24px; margin: 0 0 24px; }
+.spe-app h3 { font-size: 18px; font-weight: 600; color: #171717; margin: 0 0 12px; }
+.spe-app p  { font-size: 15px; line-height: 1.6; color: #6b7280; margin: 0 0 24px; }
+
+.spe-app .checkbox-group {
+	background: #fff;
+	border: 2px solid #e5e7eb;
+	border-radius: 12px;
+	padding: 24px;
+	margin-bottom: 32px;
+}
+.spe-app .checkbox-item {
+	display: flex; gap: 12px; margin-bottom: 16px; cursor: pointer;
+}
+.spe-app .checkbox-item:last-child { margin-bottom: 0; }
+.spe-app .checkbox-item input[type="checkbox"] {
+	width: 20px; height: 20px; accent-color: #13b8a7; cursor: pointer; flex-shrink: 0; margin-top: 4px;
+}
+.spe-app .checkbox-item span {
+	flex: 1; font-size: 15px; line-height: 1.6; color: #374151;
+}
+
+.spe-app .button {
+	display: inline-block;
+	padding: 16px 32px;
+	border-radius: 8px;
+	font-size: 16px;
+	font-weight: 600;
+	border: none;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	text-decoration: none;
+	text-align: center;
+	font-family: inherit;
+}
+.spe-app .button-primary {
+	background: #13b8a7; color: #fff; width: 100%;
+}
+.spe-app .button-primary:hover:not(:disabled) { background: #0f9e8f; }
+.spe-app .button-primary:disabled {
+	background: #e5e7eb; color: #9ca3af; cursor: not-allowed;
+}
+.spe-app .button-secondary {
+	background: #fff; color: #374151; border: 2px solid #e5e7eb; width: 100%;
+}
+.spe-app .button-secondary:hover { border-color: #13b8a7; color: #13b8a7; }
+
+.spe-app .button-group { display: flex; gap: 16px; margin-top: 24px; }
+.spe-app .button-group .button-secondary { width: auto; padding: 16px 32px; flex: 0 0 auto; }
+.spe-app .button-group .button-primary { flex: 1; }
+
+.spe-app .radio-group { margin-bottom: 24px; }
+.spe-app .radio-item {
+	display: block; width: 100%; background: #fff;
+	border: 2px solid #e5e7eb; border-radius: 12px;
+	padding: 20px; margin-bottom: 12px; cursor: pointer;
+	transition: border-color 0.2s ease;
+}
+.spe-app .radio-item:hover { border-color: #13b8a7; }
+.spe-app .radio-item input { margin-right: 12px; accent-color: #13b8a7; }
+
+.spe-app .form-group { margin-bottom: 20px; }
+.spe-app .form-label {
+	display: block; color: #374151; font-weight: 600;
+	margin-bottom: 8px; font-size: 14px;
+}
+.spe-app .form-input, .spe-app .form-textarea, .spe-app .form-select {
+	width: 100%; padding: 16px;
+	border: 2px solid #e5e7eb; border-radius: 12px;
+	font-size: 14px; font-family: inherit;
+	transition: border-color 0.2s ease;
+	background: #fff;
+}
+.spe-app .form-input:focus, .spe-app .form-textarea:focus, .spe-app .form-select:focus {
+	outline: none; border-color: #13b8a7;
+}
+.spe-app .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.spe-app .error-message {
+	color: #dc2626; font-size: 14px; margin-bottom: 16px;
+}
+
+.spe-app .info-box {
+	background: #f9fafb; border: 1px solid #e5e7eb;
+	border-radius: 12px; padding: 16px;
+	margin-bottom: 24px; font-size: 14px;
+}
+.spe-app .info-label { color: #6b7280; font-size: 12px; margin-bottom: 4px; }
+.spe-app .info-value { color: #171717; font-weight: 600; margin: 0; }
+
+.spe-app .gender-buttons,
+.spe-app .two-col-buttons,
+.spe-app .radio-button-group {
+	display: grid; grid-template-columns: 1fr 1fr;
+	gap: 16px; margin-bottom: 24px;
+}
+.spe-app .gender-buttons .button { width: 100%; padding: 24px; background: #fff; color: #374151; border: 2px solid #e5e7eb; }
+.spe-app .gender-buttons .button:hover { border-color: #13b8a7; background: #13b8a7; color: #fff; }
+
+.spe-app .two-col-buttons .button { width: 100%; padding: 24px 16px; }
+
+.spe-app .radio-button-label {
+	display: flex; align-items: center; justify-content: center; gap: 12px;
+	border: 2px solid #e5e7eb; border-radius: 12px;
+	padding: 20px; cursor: pointer;
+	transition: all 0.2s ease;
+	font-weight: 600; background: #fff;
+}
+.spe-app .radio-button-label:hover { border-color: #13b8a7; }
+.spe-app .radio-button-label input { margin-right: 8px; accent-color: #13b8a7; }
+.spe-app .radio-button-label.is-active {
+	border-color: #13b8a7; background: #13b8a7; color: #fff;
+}
+
+.spe-app .unit-selector { display: flex; gap: 16px; margin-bottom: 16px; }
+.spe-app .unit-option { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.spe-app .unit-option input { accent-color: #13b8a7; }
+
+.spe-app .grid-input-group { display: flex; gap: 12px; margin-bottom: 16px; }
+.spe-app .grid-input-group > div { flex: 1; }
+
+.spe-app .screening-question { margin-bottom: 32px; }
+
+.spe-app .confirmed-screen, .spe-app .ineligible-screen { text-align: center; }
+.spe-app .success-icon {
+	width: 80px; height: 80px; border-radius: 50%;
+	background: #dcfce7; color: #16a34a;
+	display: flex; align-items: center; justify-content: center;
+	font-size: 40px; margin: 0 auto 24px;
+}
+.spe-app .ineligible-icon {
+	width: 80px; height: 80px; border-radius: 50%;
+	background: #fee2e2; color: #dc2626;
+	display: flex; align-items: center; justify-content: center;
+	font-size: 40px; font-weight: 700; margin: 0 auto 24px;
+}
+
+.spe-app .treatment-card {
+	background: #fff; border: 2px solid #e5e7eb;
+	border-radius: 16px; padding: 24px;
+	text-align: left; cursor: pointer;
+	transition: all 0.2s ease;
+	display: block; width: 100%;
+	margin-bottom: 16px;
+	font-family: inherit;
+}
+.spe-app .treatment-card.selected {
+	border-color: #13b8a7; border-width: 3px;
+	box-shadow: 0 10px 15px -3px rgba(19, 184, 167, 0.1);
+}
+.spe-app .treatment-card:hover { border-color: #d1d5db; }
+.spe-app .treatment-header {
+	display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;
+}
+.spe-app .treatment-title { font-size: 20px; font-weight: 600; color: #171717; }
+.spe-app .treatment-tag {
+	background: #e6f7f5; color: #13b8a7;
+	font-size: 11px; font-weight: 600;
+	padding: 6px 12px; border-radius: 9999px;
+}
+.spe-app .treatment-price { font-size: 28px; font-weight: 700; color: #171717; margin-bottom: 4px; }
+.spe-app .treatment-price-note { font-size: 13px; color: #6b7280; margin-bottom: 24px; }
+.spe-app .treatment-description { color: #6b7280; font-size: 16px; margin-bottom: 16px; line-height: 1.5; }
