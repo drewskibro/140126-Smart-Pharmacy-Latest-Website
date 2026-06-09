@@ -32,6 +32,7 @@ require_once SPE_PLUGIN_DIR . 'includes/class-eligibility-rules.php';
 require_once SPE_PLUGIN_DIR . 'includes/class-shortcode.php';
 require_once SPE_PLUGIN_DIR . 'includes/class-ajax.php';
 require_once SPE_PLUGIN_DIR . 'includes/class-woocommerce-integration.php';
+require_once SPE_PLUGIN_DIR . 'includes/class-treatment-cards.php';
 require_once SPE_PLUGIN_DIR . 'includes/class-admin.php';
 
 // Activation / deactivation.
