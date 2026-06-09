@@ -128,12 +128,27 @@
 			weightKg: parseFloat( state.data.weight || 0 ),
 			heightCm: parseFloat( state.data.height || 0 ),
 			bmi: parseFloat( state.data.bmi || 0 ),
+			diabetes: state.data.diabetes || '',
+			conditions: state.data.conditions || [],
 			bariatricRecent: state.data.bariatricRecent || '',
+			bariatricDetails: state.data.bariatricDetails || '',
+			weightConditions: state.data.weightConditions || [],
+			mentalHealthDetails: state.data.mentalHealthDetails || '',
+			otherConditions: state.data.otherConditions || '',
+			prevMeds: state.data.prevMeds || [],
+			prevWeights: state.data.prevWeights || {},
+			currentMeds: state.data.currentMeds || '',
+			allergies: state.data.allergies || '',
+			goalWeight: state.data.goalWeight || '',
 			addressLine1: state.data.addressLine1 || '',
 			addressLine2: state.data.addressLine2 || '',
 			city: state.data.city || '',
 			postcode: state.data.postcode || '',
 			country: state.data.country || 'United Kingdom',
+			gpName: state.data.gpName || '',
+			gpPostcode: state.data.gpPostcode || '',
+			gpConsentShare: state.data.gpConsentShare ? 1 : 0,
+			gpConsentScr: state.data.gpConsentScr ? 1 : 0,
 			selectedTreatment: state.data.selectedTreatment,
 			selectedDose: state.data.selectedDose,
 		};
@@ -377,11 +392,57 @@
 				'Based on your BMI of ' + state.data.bmi + ', weight loss medication is not clinically appropriate at this time. A BMI of ' + min + ' or above is required' + ( isAsian ? ' (adjusted for South Asian ethnicity)' : '' ) + '.'
 			);
 		}
-		goTo( '10a' );
+		goTo( '9' );
 	} );
 
 	/* -------------------------------------------------------------
-	 * Screen 10a: bariatric in last 6 months (fail) or proceed
+	 * Screen 9: diabetes
+	 * ----------------------------------------------------------- */
+
+	on( 'input[name="diabetes"]', 'change', function ( e ) {
+		state.data.diabetes = e.target.value;
+		goTo( '10' );
+	} );
+
+	/* -------------------------------------------------------------
+	 * Screen 10: contraindicated conditions
+	 *   - "None of these apply" requires no other ticks
+	 *   - Bariatric -> 10a (timing) -> 10b (details) -> 11
+	 *   - Otherwise -> 11
+	 * ----------------------------------------------------------- */
+
+	// "None of these apply" toggles all others off + vice versa.
+	on( 'input[name="conditions"]', 'change', function ( e ) {
+		var none = root.querySelector( 'input[name="conditions"][value="none"]' );
+		var others = root.querySelectorAll( 'input[name="conditions"]:not([value="none"])' );
+		if ( e.target.value === 'none' && e.target.checked ) {
+			others.forEach( function ( c ) { c.checked = false; } );
+		} else if ( e.target.value !== 'none' && e.target.checked && none ) {
+			none.checked = false;
+		}
+	} );
+
+	bind( '#conditions-next', 'click', function () {
+		var checked = root.querySelectorAll( 'input[name="conditions"]:checked' );
+		var err = root.querySelector( '#conditions-error' );
+		if ( checked.length === 0 ) {
+			return showError( err, 'Please select at least one option to continue' );
+		}
+		err.style.display = 'none';
+
+		var values = [];
+		checked.forEach( function ( c ) { values.push( c.value ); } );
+		state.data.conditions = values;
+
+		if ( values.indexOf( 'bariatric' ) !== -1 ) {
+			goTo( '10a' );
+		} else {
+			goTo( '11' );
+		}
+	} );
+
+	/* -------------------------------------------------------------
+	 * Screen 10a: bariatric in last 6 months (fail) or 10b
 	 * ----------------------------------------------------------- */
 
 	root.querySelectorAll( '[data-set-bariatric]' ).forEach( function ( btn ) {
@@ -390,8 +451,210 @@
 			if ( 'yes' === btn.dataset.setBariatric ) {
 				return showIneligible( 'Weight loss medication is not suitable within 6 months of bariatric surgery.' );
 			}
-			goTo( '18' );
+			goTo( '10b' );
 		} );
+	} );
+
+	/* -------------------------------------------------------------
+	 * Screen 10b: bariatric details
+	 * ----------------------------------------------------------- */
+
+	bind( '#bariatric-details-next', 'click', function () {
+		state.data.bariatricDetails = val( '#bariatric-details' );
+		goTo( '11' );
+	} );
+
+	/* -------------------------------------------------------------
+	 * Screen 11: weight-related conditions
+	 *   - mental_health ticked -> 11a; otherwise -> 12
+	 * ----------------------------------------------------------- */
+
+	on( 'input[name="weight-conditions"]', 'change', function ( e ) {
+		var none = root.querySelector( 'input[name="weight-conditions"][value="none"]' );
+		var others = root.querySelectorAll( 'input[name="weight-conditions"]:not([value="none"])' );
+		if ( e.target.value === 'none' && e.target.checked ) {
+			others.forEach( function ( c ) { c.checked = false; } );
+		} else if ( e.target.value !== 'none' && e.target.checked && none ) {
+			none.checked = false;
+		}
+	} );
+
+	bind( '#weight-conditions-next', 'click', function () {
+		var checked = root.querySelectorAll( 'input[name="weight-conditions"]:checked' );
+		var err = root.querySelector( '#weight-conditions-error' );
+		if ( checked.length === 0 ) {
+			return showError( err, 'Please select at least one option to continue' );
+		}
+		err.style.display = 'none';
+
+		var values = [];
+		checked.forEach( function ( c ) { values.push( c.value ); } );
+		state.data.weightConditions = values;
+
+		if ( values.indexOf( 'mental_health' ) !== -1 ) {
+			goTo( '11a' );
+		} else {
+			goTo( '12' );
+		}
+	} );
+
+	/* -------------------------------------------------------------
+	 * Screen 11a: mental health details
+	 * ----------------------------------------------------------- */
+
+	bind( '#mental-health-next', 'click', function () {
+		state.data.mentalHealthDetails = val( '#mental-health-details' );
+		goTo( '12' );
+	} );
+
+	/* -------------------------------------------------------------
+	 * Screen 12: other conditions Y/N
+	 * ----------------------------------------------------------- */
+
+	root.querySelectorAll( '[data-set-other-conditions]' ).forEach( function ( btn ) {
+		btn.addEventListener( 'click', function () {
+			if ( 'yes' === btn.dataset.setOtherConditions ) {
+				goTo( '12a' );
+			} else {
+				state.data.otherConditions = '';
+				goTo( '13' );
+			}
+		} );
+	} );
+
+	bind( '#other-conditions-next', 'click', function () {
+		state.data.otherConditions = val( '#other-conditions' );
+		goTo( '13' );
+	} );
+
+	/* -------------------------------------------------------------
+	 * Screen 13: previous weight-loss meds
+	 *   - "never" alone -> 14
+	 *   - otherwise: iterate each ticked med through 13-weight
+	 * ----------------------------------------------------------- */
+
+	on( 'input[name="prev-meds"]', 'change', function ( e ) {
+		var never = root.querySelector( 'input[name="prev-meds"][value="never"]' );
+		var others = root.querySelectorAll( 'input[name="prev-meds"]:not([value="never"])' );
+		if ( e.target.value === 'never' && e.target.checked ) {
+			others.forEach( function ( c ) { c.checked = false; } );
+		} else if ( e.target.value !== 'never' && e.target.checked && never ) {
+			never.checked = false;
+		}
+	} );
+
+	bind( '#prev-meds-next', 'click', function () {
+		var checked = root.querySelectorAll( 'input[name="prev-meds"]:checked' );
+		var err = root.querySelector( '#prev-meds-error' );
+		if ( checked.length === 0 ) {
+			return showError( err, 'Please select at least one option to continue' );
+		}
+		err.style.display = 'none';
+
+		var values = [];
+		checked.forEach( function ( c ) { values.push( c.value ); } );
+		state.data.prevMeds = values;
+
+		if ( values.length === 1 && values[ 0 ] === 'never' ) {
+			goTo( '14' );
+		} else {
+			state.data.prevMedsToAsk = values.filter( function ( v ) { return v !== 'never' && v !== 'other'; } );
+			state.data.currentMedIndex = 0;
+			state.data.prevWeights = {};
+			showPrevWeightQuestion();
+		}
+	} );
+
+	function showPrevWeightQuestion() {
+		var idx = state.data.currentMedIndex || 0;
+		var queue = state.data.prevMedsToAsk || [];
+		if ( idx >= queue.length ) {
+			goTo( '14' );
+			return;
+		}
+		var medLabel = queue[ idx ].charAt( 0 ).toUpperCase() + queue[ idx ].slice( 1 );
+		var q = root.querySelector( '#prev-weight-question' );
+		if ( q ) {
+			q.textContent = 'What was your weight before starting ' + medLabel + '?';
+		}
+		var input = root.querySelector( '#prev-weight' );
+		if ( input ) { input.value = ''; }
+		goTo( '13-weight' );
+	}
+
+	bind( '#prev-weight-next', 'click', function () {
+		var w = val( '#prev-weight' );
+		var med = ( state.data.prevMedsToAsk || [] )[ state.data.currentMedIndex ];
+		if ( w && med ) {
+			state.data.prevWeights[ med ] = w;
+		}
+		state.data.currentMedIndex = ( state.data.currentMedIndex || 0 ) + 1;
+		showPrevWeightQuestion();
+	} );
+
+	bind( '#prev-weight-skip', 'click', function () {
+		state.data.currentMedIndex = ( state.data.currentMedIndex || 0 ) + 1;
+		showPrevWeightQuestion();
+	} );
+
+	/* -------------------------------------------------------------
+	 * Screen 14: current prescription meds
+	 *   - "other" -> 14a textarea, otherwise -> 15
+	 * ----------------------------------------------------------- */
+
+	on( 'input[name="current-meds"]', 'change', function ( e ) {
+		state.data.currentMedsCategory = e.target.value;
+		if ( 'other' === e.target.value ) {
+			goTo( '14a' );
+		} else {
+			state.data.currentMeds = e.target.value;
+			goTo( '15' );
+		}
+	} );
+
+	bind( '#medication-list-next', 'click', function () {
+		state.data.currentMeds = val( '#medication-list' );
+		goTo( '15' );
+	} );
+
+	/* -------------------------------------------------------------
+	 * Screen 15: allergies Y/N -> 15a or 16
+	 * ----------------------------------------------------------- */
+
+	root.querySelectorAll( '[data-set-allergies]' ).forEach( function ( btn ) {
+		btn.addEventListener( 'click', function () {
+			if ( 'yes' === btn.dataset.setAllergies ) {
+				goTo( '15a' );
+			} else {
+				state.data.allergies = '';
+				goTo( '16' );
+			}
+		} );
+	} );
+
+	bind( '#allergies-next', 'click', function () {
+		state.data.allergies = val( '#allergies' );
+		goTo( '16' );
+	} );
+
+	/* -------------------------------------------------------------
+	 * Screen 16: goal weight Y/N -> 17 or 18
+	 * ----------------------------------------------------------- */
+
+	root.querySelectorAll( '[data-set-goal]' ).forEach( function ( btn ) {
+		btn.addEventListener( 'click', function () {
+			if ( 'yes' === btn.dataset.setGoal ) {
+				goTo( '17' );
+			} else {
+				state.data.goalWeight = '';
+				goTo( '18' );
+			}
+		} );
+	} );
+
+	bind( '#goal-weight-next', 'click', function () {
+		state.data.goalWeight = val( '#goal-weight' );
+		goTo( '18' );
 	} );
 
 	/* -------------------------------------------------------------
@@ -443,17 +706,33 @@
 		state.data.postcode     = pc;
 		state.data.country      = country;
 
+		goTo( '20' );
+	} );
+
+	/* -------------------------------------------------------------
+	 * Screen 20: GP details + consents
+	 * ----------------------------------------------------------- */
+
+	bind( '#gp-next', 'click', function () {
+		state.data.gpName         = val( '#gp-name' );
+		state.data.gpPostcode     = val( '#gp-postcode' ).toUpperCase();
+		state.data.gpConsentShare = root.querySelector( '#gp-consent-share' ).checked;
+		state.data.gpConsentScr   = root.querySelector( '#gp-consent-scr' ).checked;
 		goTo( '21' );
 	} );
 
 	/* -------------------------------------------------------------
 	 * Screen 21: treatment selection + submit
+	 *
+	 * Cards are now rendered server-side by SPE_Treatment_Cards with
+	 * data-select-treatment + data-select-dose attributes so the dose
+	 * comes from the same source of truth as the price label.
 	 * ----------------------------------------------------------- */
 
 	root.querySelectorAll( '[data-select-treatment]' ).forEach( function ( card ) {
 		card.addEventListener( 'click', function () {
 			state.data.selectedTreatment = card.dataset.selectTreatment;
-			state.data.selectedDose = 'wegovy' === card.dataset.selectTreatment ? '0.25mg' : '2.5mg';
+			state.data.selectedDose      = card.dataset.selectDose || ( 'wegovy' === card.dataset.selectTreatment ? '0.25mg' : '2.5mg' );
 			root.querySelectorAll( '[data-select-treatment]' ).forEach( function ( c ) {
 				c.classList.toggle( 'selected', c === card );
 			} );

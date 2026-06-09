@@ -254,6 +254,73 @@ defined( 'ABSPATH' ) || exit;
 				</div>
 			</div>
 
+			<!-- Screen 9: Diabetes -->
+			<div id="screen-9" class="screen">
+				<div class="progress-section">
+					<div class="progress-bar-container">
+						<div class="progress-percentage">50%</div>
+						<div class="progress-bar"><div class="progress-fill" style="width: 50%"></div></div>
+					</div>
+				</div>
+				<h2><?php esc_html_e( 'Have you been diagnosed with diabetes?', 'smart-pharmacy-eligibility' ); ?></h2>
+				<p><?php esc_html_e( 'Diabetes treatments can affect how the weight loss medication works.', 'smart-pharmacy-eligibility' ); ?></p>
+				<div class="radio-group">
+					<?php
+					$diabetes_opts = array(
+						'medication' => __( 'I have diabetes and take medication for it', 'smart-pharmacy-eligibility' ),
+						'diet'       => __( "I have diabetes and it's diet-controlled", 'smart-pharmacy-eligibility' ),
+						'family'     => __( 'No, but there is family history of diabetes', 'smart-pharmacy-eligibility' ),
+						'pre'        => __( 'I have pre-diabetes', 'smart-pharmacy-eligibility' ),
+						'none'       => __( "I don't have diabetes", 'smart-pharmacy-eligibility' ),
+					);
+					foreach ( $diabetes_opts as $v => $label ) : ?>
+						<label class="radio-item"><input type="radio" name="diabetes" value="<?php echo esc_attr( $v ); ?>" /><span><?php echo esc_html( $label ); ?></span></label>
+					<?php endforeach; ?>
+				</div>
+				<button class="button button-secondary" data-action="back"><?php esc_html_e( 'Back', 'smart-pharmacy-eligibility' ); ?></button>
+			</div>
+
+			<!-- Screen 10: Contraindicated conditions -->
+			<div id="screen-10" class="screen">
+				<div class="progress-section">
+					<div class="progress-bar-container">
+						<div class="progress-percentage">55%</div>
+						<div class="progress-bar"><div class="progress-fill" style="width: 55%"></div></div>
+					</div>
+				</div>
+				<h2><?php esc_html_e( 'Do any of the following apply to you?', 'smart-pharmacy-eligibility' ); ?></h2>
+				<p><?php esc_html_e( 'These conditions can lead to serious complications when losing weight or taking weight loss medication.', 'smart-pharmacy-eligibility' ); ?></p>
+				<div class="checkbox-group">
+					<?php
+					$conditions = array(
+						'malabsorption'    => __( 'I have chronic malabsorption syndrome', 'smart-pharmacy-eligibility' ),
+						'cholestasis'      => __( 'I have cholestasis', 'smart-pharmacy-eligibility' ),
+						'cancer'           => __( "I'm currently being treated for cancer", 'smart-pharmacy-eligibility' ),
+						'retinopathy'      => __( 'I have diabetic retinopathy', 'smart-pharmacy-eligibility' ),
+						'heart_failure'    => __( 'I have severe heart failure', 'smart-pharmacy-eligibility' ),
+						'thyroid_cancer'   => __( "I have a family history of thyroid cancer and/or I've had thyroid cancer", 'smart-pharmacy-eligibility' ),
+						'kidney_disease'   => __( 'I have end-stage kidney disease', 'smart-pharmacy-eligibility' ),
+						'men2'             => __( 'I have Multiple endocrine neoplasia type 2 (MEN2)', 'smart-pharmacy-eligibility' ),
+						'pancreatitis'     => __( 'I have a history of pancreatitis', 'smart-pharmacy-eligibility' ),
+						'eating_disorder'  => __( 'I have or have had an eating disorder', 'smart-pharmacy-eligibility' ),
+						'thyroid_surgery'  => __( 'I have had surgery or an operation to my thyroid', 'smart-pharmacy-eligibility' ),
+						'bariatric'        => __( 'I have had a bariatric operation', 'smart-pharmacy-eligibility' ),
+						'none'             => __( 'None of these apply', 'smart-pharmacy-eligibility' ),
+					);
+					foreach ( $conditions as $v => $label ) : ?>
+						<label class="checkbox-item">
+							<input type="checkbox" name="conditions" value="<?php echo esc_attr( $v ); ?>" data-condition="<?php echo esc_attr( $v ); ?>" />
+							<span><?php echo esc_html( $label ); ?></span>
+						</label>
+					<?php endforeach; ?>
+				</div>
+				<div id="conditions-error" class="error-message" style="display: none;"></div>
+				<div class="button-group">
+					<button class="button button-secondary" data-action="back"><?php esc_html_e( 'Back', 'smart-pharmacy-eligibility' ); ?></button>
+					<button class="button button-primary" id="conditions-next"><?php esc_html_e( 'Next →', 'smart-pharmacy-eligibility' ); ?></button>
+				</div>
+			</div>
+
 			<!-- Screen 10a: Bariatric Timing -->
 			<div id="screen-10a" class="screen">
 				<div class="progress-section">
@@ -268,6 +335,275 @@ defined( 'ABSPATH' ) || exit;
 					<button class="button button-secondary" data-set-bariatric="no"><?php esc_html_e( 'No', 'smart-pharmacy-eligibility' ); ?></button>
 				</div>
 				<button class="button button-secondary" data-action="back"><?php esc_html_e( 'Back', 'smart-pharmacy-eligibility' ); ?></button>
+			</div>
+
+			<!-- Screen 10b: Bariatric details -->
+			<div id="screen-10b" class="screen">
+				<div class="progress-section">
+					<div class="progress-bar-container">
+						<div class="progress-percentage">60%</div>
+						<div class="progress-bar"><div class="progress-fill" style="width: 60%"></div></div>
+					</div>
+				</div>
+				<h2><?php esc_html_e( 'Please tell us more about your surgery', 'smart-pharmacy-eligibility' ); ?></h2>
+				<p><?php esc_html_e( 'Type of surgery, when, post-op complications, BMI before surgery, ongoing monitoring.', 'smart-pharmacy-eligibility' ); ?></p>
+				<textarea class="form-textarea" id="bariatric-details" placeholder="<?php esc_attr_e( 'Please provide details...', 'smart-pharmacy-eligibility' ); ?>"></textarea>
+				<div class="button-group">
+					<button class="button button-secondary" data-action="back"><?php esc_html_e( 'Back', 'smart-pharmacy-eligibility' ); ?></button>
+					<button class="button button-primary" id="bariatric-details-next"><?php esc_html_e( 'Next →', 'smart-pharmacy-eligibility' ); ?></button>
+				</div>
+			</div>
+
+			<!-- Screen 11: Weight-related conditions -->
+			<div id="screen-11" class="screen">
+				<div class="progress-section">
+					<div class="progress-bar-container">
+						<div class="progress-percentage">62%</div>
+						<div class="progress-bar"><div class="progress-fill" style="width: 62%"></div></div>
+					</div>
+				</div>
+				<h2><?php esc_html_e( 'Do any of the following apply to you?', 'smart-pharmacy-eligibility' ); ?></h2>
+				<p><?php esc_html_e( 'These conditions are often weight-related and may improve as a result of losing weight.', 'smart-pharmacy-eligibility' ); ?></p>
+				<div class="checkbox-group">
+					<?php
+					$weight_conditions = array(
+						'mental_health'      => __( 'I have a mental health condition such as depression or anxiety', 'smart-pharmacy-eligibility' ),
+						'social_anxiety'     => __( 'My weight makes me anxious in social situations', 'smart-pharmacy-eligibility' ),
+						'joint_pain'         => __( 'I have joint pains and/or aches', 'smart-pharmacy-eligibility' ),
+						'osteoarthritis'     => __( 'I have osteoarthritis', 'smart-pharmacy-eligibility' ),
+						'gord'               => __( 'I have GORD and/or indigestion', 'smart-pharmacy-eligibility' ),
+						'cardiovascular'     => __( 'I have a heart/cardiovascular problem', 'smart-pharmacy-eligibility' ),
+						'high_bp'            => __( "I've been diagnosed with high blood pressure", 'smart-pharmacy-eligibility' ),
+						'high_cholesterol'   => __( "I've been diagnosed with high cholesterol", 'smart-pharmacy-eligibility' ),
+						'fatty_liver'        => __( 'I have fatty liver disease', 'smart-pharmacy-eligibility' ),
+						'sleep_apnoea'       => __( 'I have sleep apnoea', 'smart-pharmacy-eligibility' ),
+						'asthma_copd'        => __( 'I have asthma or COPD', 'smart-pharmacy-eligibility' ),
+						'ed'                 => __( 'I have erectile dysfunction', 'smart-pharmacy-eligibility' ),
+						'low_testosterone'   => __( 'I have low testosterone', 'smart-pharmacy-eligibility' ),
+						'menopausal'         => __( 'I have menopausal symptoms', 'smart-pharmacy-eligibility' ),
+						'pcos'               => __( 'I have polycystic ovary syndrome (PCOS)', 'smart-pharmacy-eligibility' ),
+						'none'               => __( 'None of these apply', 'smart-pharmacy-eligibility' ),
+					);
+					foreach ( $weight_conditions as $v => $label ) : ?>
+						<label class="checkbox-item">
+							<input type="checkbox" name="weight-conditions" value="<?php echo esc_attr( $v ); ?>" />
+							<span><?php echo esc_html( $label ); ?></span>
+						</label>
+					<?php endforeach; ?>
+				</div>
+				<div id="weight-conditions-error" class="error-message" style="display: none;"></div>
+				<div class="button-group">
+					<button class="button button-secondary" data-action="back"><?php esc_html_e( 'Back', 'smart-pharmacy-eligibility' ); ?></button>
+					<button class="button button-primary" id="weight-conditions-next"><?php esc_html_e( 'Next →', 'smart-pharmacy-eligibility' ); ?></button>
+				</div>
+			</div>
+
+			<!-- Screen 11a: Mental health details -->
+			<div id="screen-11a" class="screen">
+				<div class="progress-section">
+					<div class="progress-bar-container">
+						<div class="progress-percentage">65%</div>
+						<div class="progress-bar"><div class="progress-fill" style="width: 65%"></div></div>
+					</div>
+				</div>
+				<h2><?php esc_html_e( 'Tell us about your mental health and how you manage it', 'smart-pharmacy-eligibility' ); ?></h2>
+				<textarea class="form-textarea" id="mental-health-details" placeholder="<?php esc_attr_e( 'Please share condition + treatment...', 'smart-pharmacy-eligibility' ); ?>"></textarea>
+				<div class="button-group">
+					<button class="button button-secondary" data-action="back"><?php esc_html_e( 'Back', 'smart-pharmacy-eligibility' ); ?></button>
+					<button class="button button-primary" id="mental-health-next"><?php esc_html_e( 'Next →', 'smart-pharmacy-eligibility' ); ?></button>
+				</div>
+			</div>
+
+			<!-- Screen 12: Other conditions Y/N -->
+			<div id="screen-12" class="screen">
+				<div class="progress-section">
+					<div class="progress-bar-container">
+						<div class="progress-percentage">68%</div>
+						<div class="progress-bar"><div class="progress-fill" style="width: 68%"></div></div>
+					</div>
+				</div>
+				<h2><?php esc_html_e( 'Do you have any other medical conditions?', 'smart-pharmacy-eligibility' ); ?></h2>
+				<p><?php esc_html_e( 'Our clinicians need your full medical history to keep your treatment safe.', 'smart-pharmacy-eligibility' ); ?></p>
+				<div class="two-col-buttons">
+					<button class="button button-secondary" data-set-other-conditions="yes"><?php esc_html_e( 'Yes', 'smart-pharmacy-eligibility' ); ?></button>
+					<button class="button button-secondary" data-set-other-conditions="no"><?php esc_html_e( 'No', 'smart-pharmacy-eligibility' ); ?></button>
+				</div>
+				<button class="button button-secondary" data-action="back"><?php esc_html_e( 'Back', 'smart-pharmacy-eligibility' ); ?></button>
+			</div>
+
+			<!-- Screen 12a: Other conditions details -->
+			<div id="screen-12a" class="screen">
+				<div class="progress-section">
+					<div class="progress-bar-container">
+						<div class="progress-percentage">70%</div>
+						<div class="progress-bar"><div class="progress-fill" style="width: 70%"></div></div>
+					</div>
+				</div>
+				<h2><?php esc_html_e( 'Please list any other medical conditions you have', 'smart-pharmacy-eligibility' ); ?></h2>
+				<textarea class="form-textarea" id="other-conditions" placeholder="<?php esc_attr_e( 'My health conditions are...', 'smart-pharmacy-eligibility' ); ?>"></textarea>
+				<div class="button-group">
+					<button class="button button-secondary" data-action="back"><?php esc_html_e( 'Back', 'smart-pharmacy-eligibility' ); ?></button>
+					<button class="button button-primary" id="other-conditions-next"><?php esc_html_e( 'Next →', 'smart-pharmacy-eligibility' ); ?></button>
+				</div>
+			</div>
+
+			<!-- Screen 13: Previous weight-loss medications -->
+			<div id="screen-13" class="screen">
+				<div class="progress-section">
+					<div class="progress-bar-container">
+						<div class="progress-percentage">72%</div>
+						<div class="progress-bar"><div class="progress-fill" style="width: 72%"></div></div>
+					</div>
+				</div>
+				<h2><?php esc_html_e( 'Have you ever taken any of these medications to help you lose weight?', 'smart-pharmacy-eligibility' ); ?></h2>
+				<div class="checkbox-group">
+					<?php
+					$prev_meds = array(
+						'wegovy'    => 'Wegovy',
+						'ozempic'   => 'Ozempic',
+						'saxenda'   => 'Saxenda',
+						'rybelsus'  => 'Rybelsus',
+						'mounjaro'  => 'Mounjaro',
+						'alli'      => 'Alli',
+						'mysimba'   => 'Mysimba',
+						'other'     => __( 'Other', 'smart-pharmacy-eligibility' ),
+						'never'     => __( 'I have never taken medication to lose weight', 'smart-pharmacy-eligibility' ),
+					);
+					foreach ( $prev_meds as $v => $label ) : ?>
+						<label class="checkbox-item">
+							<input type="checkbox" name="prev-meds" value="<?php echo esc_attr( $v ); ?>" />
+							<span><?php echo esc_html( $label ); ?></span>
+						</label>
+					<?php endforeach; ?>
+				</div>
+				<div id="prev-meds-error" class="error-message" style="display: none;"></div>
+				<div class="button-group">
+					<button class="button button-secondary" data-action="back"><?php esc_html_e( 'Back', 'smart-pharmacy-eligibility' ); ?></button>
+					<button class="button button-primary" id="prev-meds-next"><?php esc_html_e( 'Next →', 'smart-pharmacy-eligibility' ); ?></button>
+				</div>
+			</div>
+
+			<!-- Screen 13-weight: Weight before each previous med (iterates) -->
+			<div id="screen-13-weight" class="screen">
+				<div class="progress-section">
+					<div class="progress-bar-container">
+						<div class="progress-percentage">74%</div>
+						<div class="progress-bar"><div class="progress-fill" style="width: 74%"></div></div>
+					</div>
+				</div>
+				<h2 id="prev-weight-question"><?php esc_html_e( 'What was your weight before starting this medication?', 'smart-pharmacy-eligibility' ); ?></h2>
+				<input type="number" id="prev-weight" class="form-input" placeholder="<?php esc_attr_e( 'Weight in kg', 'smart-pharmacy-eligibility' ); ?>" step="0.1" />
+				<div class="button-group">
+					<button class="button button-secondary" id="prev-weight-skip"><?php esc_html_e( 'Skip', 'smart-pharmacy-eligibility' ); ?></button>
+					<button class="button button-primary" id="prev-weight-next"><?php esc_html_e( 'Next →', 'smart-pharmacy-eligibility' ); ?></button>
+				</div>
+			</div>
+
+			<!-- Screen 14: Current prescription medications -->
+			<div id="screen-14" class="screen">
+				<div class="progress-section">
+					<div class="progress-bar-container">
+						<div class="progress-percentage">76%</div>
+						<div class="progress-bar"><div class="progress-fill" style="width: 76%"></div></div>
+					</div>
+				</div>
+				<h2><?php esc_html_e( 'Are you currently taking any regular prescription medications?', 'smart-pharmacy-eligibility' ); ?></h2>
+				<p><?php esc_html_e( 'Critical for drug-interaction screening.', 'smart-pharmacy-eligibility' ); ?></p>
+				<div class="radio-group">
+					<?php
+					$current_meds = array(
+						'none'        => __( "No, I don't take any prescription medications", 'smart-pharmacy-eligibility' ),
+						'bp'          => __( 'Blood pressure medication', 'smart-pharmacy-eligibility' ),
+						'cholesterol' => __( 'Cholesterol medication', 'smart-pharmacy-eligibility' ),
+						'diabetes'    => __( 'Diabetes medication', 'smart-pharmacy-eligibility' ),
+						'mental'      => __( 'Mental health medication', 'smart-pharmacy-eligibility' ),
+						'other'       => __( 'Other / I take more than one', 'smart-pharmacy-eligibility' ),
+					);
+					foreach ( $current_meds as $v => $label ) : ?>
+						<label class="radio-item"><input type="radio" name="current-meds" value="<?php echo esc_attr( $v ); ?>" /><span><?php echo esc_html( $label ); ?></span></label>
+					<?php endforeach; ?>
+				</div>
+				<button class="button button-secondary" data-action="back"><?php esc_html_e( 'Back', 'smart-pharmacy-eligibility' ); ?></button>
+			</div>
+
+			<!-- Screen 14a: Full medication list -->
+			<div id="screen-14a" class="screen">
+				<div class="progress-section">
+					<div class="progress-bar-container">
+						<div class="progress-percentage">77%</div>
+						<div class="progress-bar"><div class="progress-fill" style="width: 77%"></div></div>
+					</div>
+				</div>
+				<h2><?php esc_html_e( 'Please include a full list of all medication you currently take', 'smart-pharmacy-eligibility' ); ?></h2>
+				<textarea class="form-textarea" id="medication-list" placeholder="<?php esc_attr_e( 'List all your current medications...', 'smart-pharmacy-eligibility' ); ?>"></textarea>
+				<div class="button-group">
+					<button class="button button-secondary" data-action="back"><?php esc_html_e( 'Back', 'smart-pharmacy-eligibility' ); ?></button>
+					<button class="button button-primary" id="medication-list-next"><?php esc_html_e( 'Next →', 'smart-pharmacy-eligibility' ); ?></button>
+				</div>
+			</div>
+
+			<!-- Screen 15: Allergies Y/N -->
+			<div id="screen-15" class="screen">
+				<div class="progress-section">
+					<div class="progress-bar-container">
+						<div class="progress-percentage">78%</div>
+						<div class="progress-bar"><div class="progress-fill" style="width: 78%"></div></div>
+					</div>
+				</div>
+				<h2><?php esc_html_e( 'Do you have any allergies?', 'smart-pharmacy-eligibility' ); ?></h2>
+				<div class="two-col-buttons">
+					<button class="button button-secondary" data-set-allergies="yes"><?php esc_html_e( 'Yes', 'smart-pharmacy-eligibility' ); ?></button>
+					<button class="button button-secondary" data-set-allergies="no"><?php esc_html_e( 'No', 'smart-pharmacy-eligibility' ); ?></button>
+				</div>
+				<button class="button button-secondary" data-action="back"><?php esc_html_e( 'Back', 'smart-pharmacy-eligibility' ); ?></button>
+			</div>
+
+			<!-- Screen 15a: Allergies details -->
+			<div id="screen-15a" class="screen">
+				<div class="progress-section">
+					<div class="progress-bar-container">
+						<div class="progress-percentage">79%</div>
+						<div class="progress-bar"><div class="progress-fill" style="width: 79%"></div></div>
+					</div>
+				</div>
+				<h2><?php esc_html_e( 'Please list your allergies', 'smart-pharmacy-eligibility' ); ?></h2>
+				<textarea class="form-textarea" id="allergies" placeholder="<?php esc_attr_e( 'My allergies are...', 'smart-pharmacy-eligibility' ); ?>"></textarea>
+				<div class="button-group">
+					<button class="button button-secondary" data-action="back"><?php esc_html_e( 'Back', 'smart-pharmacy-eligibility' ); ?></button>
+					<button class="button button-primary" id="allergies-next"><?php esc_html_e( 'Next →', 'smart-pharmacy-eligibility' ); ?></button>
+				</div>
+			</div>
+
+			<!-- Screen 16: Goal weight Y/N -->
+			<div id="screen-16" class="screen">
+				<div class="progress-section">
+					<div class="progress-bar-container">
+						<div class="progress-percentage">81%</div>
+						<div class="progress-bar"><div class="progress-fill" style="width: 81%"></div></div>
+					</div>
+				</div>
+				<h2><?php esc_html_e( 'Do you have a goal weight you would like to achieve?', 'smart-pharmacy-eligibility' ); ?></h2>
+				<div class="two-col-buttons">
+					<button class="button button-secondary" data-set-goal="yes"><?php esc_html_e( 'Yes', 'smart-pharmacy-eligibility' ); ?></button>
+					<button class="button button-secondary" data-set-goal="no"><?php esc_html_e( 'No', 'smart-pharmacy-eligibility' ); ?></button>
+				</div>
+				<button class="button button-secondary" data-action="back"><?php esc_html_e( 'Back', 'smart-pharmacy-eligibility' ); ?></button>
+			</div>
+
+			<!-- Screen 17: Goal weight input -->
+			<div id="screen-17" class="screen">
+				<div class="progress-section">
+					<div class="progress-bar-container">
+						<div class="progress-percentage">82%</div>
+						<div class="progress-bar"><div class="progress-fill" style="width: 82%"></div></div>
+					</div>
+				</div>
+				<h2><?php esc_html_e( 'What is your goal weight?', 'smart-pharmacy-eligibility' ); ?></h2>
+				<input type="number" id="goal-weight" class="form-input" placeholder="<?php esc_attr_e( 'Goal weight in kg', 'smart-pharmacy-eligibility' ); ?>" step="0.1" />
+				<div class="button-group">
+					<button class="button button-secondary" data-action="back"><?php esc_html_e( 'Back', 'smart-pharmacy-eligibility' ); ?></button>
+					<button class="button button-primary" id="goal-weight-next"><?php esc_html_e( 'Next →', 'smart-pharmacy-eligibility' ); ?></button>
+				</div>
 			</div>
 
 			<!-- Screen 18: Date of Birth -->
@@ -338,6 +674,38 @@ defined( 'ABSPATH' ) || exit;
 				</div>
 			</div>
 
+			<!-- Screen 20: GP details + consents -->
+			<div id="screen-20" class="screen">
+				<div class="progress-section">
+					<div class="progress-bar-container">
+						<div class="progress-percentage">95%</div>
+						<div class="progress-bar"><div class="progress-fill" style="width: 95%"></div></div>
+					</div>
+				</div>
+				<h2><?php esc_html_e( 'Who is your GP?', 'smart-pharmacy-eligibility' ); ?></h2>
+				<p><?php esc_html_e( 'Optional but recommended — lets our prescriber coordinate with your GP for safer care.', 'smart-pharmacy-eligibility' ); ?></p>
+				<div class="form-group">
+					<label class="form-label"><?php esc_html_e( 'GP Surgery Name', 'smart-pharmacy-eligibility' ); ?></label>
+					<input type="text" id="gp-name" class="form-input" placeholder="<?php esc_attr_e( 'Surgery name', 'smart-pharmacy-eligibility' ); ?>" />
+				</div>
+				<div class="form-group">
+					<label class="form-label"><?php esc_html_e( 'GP Surgery Postcode', 'smart-pharmacy-eligibility' ); ?></label>
+					<input type="text" id="gp-postcode" class="form-input" placeholder="SW1A 1AA" />
+				</div>
+				<label class="checkbox-item" style="background: #fff; border: 2px solid #e5e7eb; border-radius: 12px; padding: 16px; margin-bottom: 12px;">
+					<input type="checkbox" id="gp-consent-share" />
+					<span><?php esc_html_e( 'I consent for Smart Pharmacy to share information regarding any treatment prescribed with my GP', 'smart-pharmacy-eligibility' ); ?></span>
+				</label>
+				<label class="checkbox-item" style="background: #fff; border: 2px solid #e5e7eb; border-radius: 12px; padding: 16px; margin-bottom: 24px;">
+					<input type="checkbox" id="gp-consent-scr" />
+					<span><?php esc_html_e( 'I consent to a one-off request from Smart Pharmacy to access my summary care record to verify the information I have provided', 'smart-pharmacy-eligibility' ); ?></span>
+				</label>
+				<div class="button-group">
+					<button class="button button-secondary" data-action="back"><?php esc_html_e( 'Back', 'smart-pharmacy-eligibility' ); ?></button>
+					<button class="button button-primary" id="gp-next"><?php esc_html_e( 'Next →', 'smart-pharmacy-eligibility' ); ?></button>
+				</div>
+			</div>
+
 			<!-- Screen 21: Treatment Selection -->
 			<div id="screen-21" class="screen">
 				<div class="progress-section">
@@ -352,18 +720,31 @@ defined( 'ABSPATH' ) || exit;
 					<p><?php esc_html_e( 'Based on your assessment, you qualify for GLP-1 weight loss treatment.', 'smart-pharmacy-eligibility' ); ?></p>
 				</div>
 				<h2 style="text-align: center;"><?php esc_html_e( 'Choose Your Treatment', 'smart-pharmacy-eligibility' ); ?></h2>
-				<button class="treatment-card" id="wegovy-card" data-select-treatment="wegovy">
-					<div class="treatment-header"><div class="treatment-title">Wegovy</div><span class="treatment-tag"><?php esc_html_e( 'Popular', 'smart-pharmacy-eligibility' ); ?></span></div>
-					<div class="treatment-price">£109<span style="font-size: 14px; color: #6b7280;">/month</span></div>
-					<p class="treatment-price-note"><?php esc_html_e( 'Starting dose (0.25mg)', 'smart-pharmacy-eligibility' ); ?></p>
-					<p class="treatment-description"><?php esc_html_e( 'Clinically proven semaglutide injection for significant weight loss', 'smart-pharmacy-eligibility' ); ?></p>
-				</button>
-				<button class="treatment-card" id="mounjaro-card" data-select-treatment="mounjaro">
-					<div class="treatment-header"><div class="treatment-title">Mounjaro</div><span class="treatment-tag" style="background-color: #dbeafe; color: #1e40af;"><?php esc_html_e( 'Advanced', 'smart-pharmacy-eligibility' ); ?></span></div>
-					<div class="treatment-price">£159<span style="font-size: 14px; color: #6b7280;">/month</span></div>
-					<p class="treatment-price-note"><?php esc_html_e( 'Starting dose (2.5mg)', 'smart-pharmacy-eligibility' ); ?></p>
-					<p class="treatment-description"><?php esc_html_e( 'Dual-action tirzepatide formula for maximum weight loss results', 'smart-pharmacy-eligibility' ); ?></p>
-				</button>
+				<?php
+				// Renders one card per configured treatment, pulling
+				// title + price + image live from WooCommerce. Falls
+				// back to a sensible default if the admin hasn't yet
+				// mapped a product, so the screen never renders empty.
+				foreach ( SPE_Treatment_Cards::starter_cards() as $card ) :
+					?>
+					<button class="treatment-card" data-select-treatment="<?php echo esc_attr( $card['key'] ); ?>" data-select-dose="<?php echo esc_attr( $card['dose'] ); ?>">
+						<div class="treatment-header">
+							<div class="treatment-title"><?php echo esc_html( $card['title'] ); ?></div>
+							<span class="treatment-tag" style="<?php echo esc_attr( $card['tag_style'] ); ?>"><?php echo esc_html( $card['tag'] ); ?></span>
+						</div>
+						<div class="treatment-price">
+							<?php echo wp_kses_post( $card['price_html'] ); ?>
+							<span style="font-size: 14px; color: #6b7280;">/month</span>
+						</div>
+						<p class="treatment-price-note">
+							<?php
+							/* translators: %s is the starting dose label, e.g. "0.25mg" */
+							printf( esc_html__( 'Starting dose (%s)', 'smart-pharmacy-eligibility' ), esc_html( $card['dose'] ) );
+							?>
+						</p>
+						<p class="treatment-description"><?php echo esc_html( $card['description'] ); ?></p>
+					</button>
+				<?php endforeach; ?>
 				<button class="button button-primary" id="submit-button"><?php esc_html_e( 'Submit Assessment', 'smart-pharmacy-eligibility' ); ?></button>
 			</div>
 

@@ -69,16 +69,28 @@ options:
   `.github/workflows/deploy-smart-pharmacy-to-kinsta.yml` that
   SCPs `smart-pharmacy-eligibility/` into `~/public/wp-content/plugins/`.
 
+## Screens (v0.2)
+
+Full clinical funnel: agreement → early capture → age → ethnicity →
+sex → female screening (if female) → weight → height → BMI →
+diabetes → contraindicated conditions (→ bariatric timing + details
+if ticked) → weight-related conditions (→ mental health details if
+ticked) → other conditions (Y/N → free text) → previous weight-loss
+meds (→ prior weight per med, iterative) → current prescription
+meds (→ full list if "other") → allergies (Y/N → free text) →
+goal weight (Y/N → input) → DOB → address → GP + consents →
+treatment selection → submit → WC checkout.
+
+Treatment cards on screen 21 pull title + price live from
+WooCommerce (via the configured product map), so when admins
+update a Wegovy 0.25mg price in WC the checker card reflects it
+automatically. No double-entry.
+
 ## Notes / not yet built
 
-- The optional clinical-history screens (diabetes / conditions /
-  prev meds / current meds / allergies / GP details) are scaffolded
-  in the DB schema but not in the v0.1 template. They'll plug in
-  the same way: add the screen markup to `templates/checker.php`,
-  add the binding in `assets/js/eligibility.js`, and the payload
-  surfaces in admin automatically via the JSON blob.
-- Treatment cards on screen 21 currently default to starter doses.
-  A dose picker per treatment is a v0.2.
 - GDPR: data is stored in the WP database (Kinsta-managed
   encryption at rest). Retention + DSAR tooling is a separate
   workstream before launch.
+- Per-treatment dose picker on screen 21: each card currently
+  represents the starter dose. A dropdown for "increase to higher
+  dose" can be added without changing the schema.
