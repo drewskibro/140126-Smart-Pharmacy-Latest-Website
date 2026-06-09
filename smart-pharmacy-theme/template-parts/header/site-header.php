@@ -21,7 +21,10 @@ $sp_primary_menu = sp_field( 'nav_primary', array() );
 if ( empty( $sp_primary_menu ) || ! is_array( $sp_primary_menu ) ) {
 	$sp_primary_menu = array(
 		array( 'label' => 'Weight Loss', 'url' => '/treatments/weight-loss/', 'has_caret' => false ),
-		array( 'label' => "Men's Health", 'url' => '#', 'has_caret' => true ),
+		// Men's / Women's Health point to the treatment archive until
+		// the client publishes dedicated landing posts; better than
+		// the original '#' which was a dead link.
+		array( 'label' => "Men's Health", 'url' => '/treatments/mens-health/', 'has_caret' => false ),
 		array( 'label' => "Women's Health", 'url' => '/treatments/womens-health/', 'has_caret' => false ),
 		array( 'label' => 'Shop', 'url' => function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : '/shop/', 'has_caret' => true ),
 		array( 'label' => 'About', 'url' => '/about/', 'has_caret' => false ),
