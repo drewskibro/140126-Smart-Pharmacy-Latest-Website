@@ -12,7 +12,7 @@ $sp_mm_primary = sp_field( 'nav_primary', array() );
 if ( empty( $sp_mm_primary ) || ! is_array( $sp_mm_primary ) ) {
 	$sp_mm_primary = array(
 		array( 'label' => 'Weight Loss', 'url' => '/treatments/weight-loss/' ),
-		array( 'label' => "Men's Health", 'url' => '#' ),
+		array( 'label' => "Men's Health", 'url' => '/treatments/mens-health/' ),
 		array( 'label' => "Women's Health", 'url' => '/treatments/womens-health/' ),
 		array( 'label' => 'Shop', 'url' => function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : '/shop/' ),
 		array( 'label' => 'About', 'url' => '/about/' ),

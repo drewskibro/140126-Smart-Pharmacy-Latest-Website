@@ -13,6 +13,36 @@
 	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 	color: #374151;
 }
+.spe-header {
+	background: #fff;
+	border-bottom: 1px solid #e5e7eb;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+	padding: 16px 24px;
+}
+.spe-header__inner {
+	max-width: 1200px;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.spe-header__logo {
+	display: inline-block;
+	line-height: 0;
+}
+.spe-header__logo img {
+	max-height: 56px;
+	width: auto;
+	display: block;
+}
+.spe-header__title {
+	font-family: 'DM Serif Display', serif;
+	font-size: 24px;
+	color: #13b8a7;
+	text-decoration: none;
+	letter-spacing: -0.5px;
+}
+
 .spe-main {
 	min-height: 60vh;
 	background-color: #f4f9fa;

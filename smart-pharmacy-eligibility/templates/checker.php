@@ -13,6 +13,26 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 <div class="spe-app">
+	<header class="spe-header">
+		<div class="spe-header__inner">
+			<?php
+			// Pulls the WP custom logo if the theme supports one
+			// (Customizer -> Site Identity -> Logo). Falls back to
+			// the site name so the header never renders empty.
+			if ( function_exists( 'has_custom_logo' ) && has_custom_logo() ) {
+				$sp_logo_id  = get_theme_mod( 'custom_logo' );
+				$sp_logo_src = wp_get_attachment_image_url( $sp_logo_id, 'medium' );
+				if ( $sp_logo_src ) {
+					echo '<a class="spe-header__logo" href="' . esc_url( home_url( '/' ) ) . '" aria-label="' . esc_attr( get_bloginfo( 'name' ) ) . '">';
+					echo '<img src="' . esc_url( $sp_logo_src ) . '" alt="' . esc_attr( get_bloginfo( 'name' ) ) . '" />';
+					echo '</a>';
+				}
+			} else {
+				echo '<a class="spe-header__title" href="' . esc_url( home_url( '/' ) ) . '">' . esc_html( get_bloginfo( 'name' ) ) . '</a>';
+			}
+			?>
+		</div>
+	</header>
 	<div class="spe-main">
 		<div class="spe-container">
 
