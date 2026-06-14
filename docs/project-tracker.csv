@@ -1,0 +1,60 @@
+ID,Category,Task,Description,Owner,Status,Priority,Dependencies,Notes
+D01,Done,Shop archive brand pass,"Hero, bestsellers carousel, category tiles, filter sidebar, pagination",Drew,Done,High,,Stage 4d shipped
+D02,Done,Branded PDP,Single product page with gallery + tabbed content + brand styling,Drew,Done,High,,Stage 4a-3 shipped
+D03,Done,Cart / Checkout / My Account brand pass,Branded all WC pages including page-header treatment,Drew,Done,High,,Stage 4a-4 shipped
+D04,Done,Branded empty basket,"Branded panel with CTAs replacing WC default sad-face state",Drew,Done,Medium,,
+D05,Done,Filter sidebar (hardcoded),"Category, price, rating, availability filters with shareable URLs",Drew,Done,High,,Stage 4b-revisit shipped
+D06,Done,POM gating,Prescription products auto-route to consultation,Drew,Done,Critical,,Stage 4c shipped
+D07,Done,Eligibility checker plugin v0.3.2,"Full clinical funnel + WC checkout handoff + assessment data stamped onto orders",Drew,Done,Critical,,smart-pharmacy-eligibility/
+D08,Done,Live WC pricing on treatment cards,Eligibility plugin pulls title + price from configured WC products,Drew,Done,Medium,,
+D09,Done,Start Consultation CTA wired to checker,One-click from product card to consultation form,Drew,Done,High,,Saves 2 clicks in funnel
+D10,Done,Men's Health treatment landing page,Auto-seeded on first deploy,Drew,Done,Medium,,inc/seeders/mens-health.php
+D11,Done,Women's Health treatment landing page,Auto-seeded on first deploy,Drew,Done,Medium,,inc/seeders/womens-health.php
+D12,Done,Category thumbnail auto-fallback,"Tile pulls product image when no custom thumbnail set",Drew,Done,Medium,Requires products to have featured images,Pays off after catalogue migration
+D13,Done,Logo on eligibility checker header,Pulls WP Customizer custom logo,Drew,Done,Low,,Falls back to site title if no logo
+D14,Done,Plugin admin: product map + checker URL settings,Maps (treatment+dose) to WC product ID,Drew,Done,High,,WP Admin > Eligibility > Settings
+D15,Done,Hotfix: POM gating handshake with plugin,Eligibility-completed customers can now buy POM products,Drew,Done,Critical,,Commit ee6c8a6
+D16,Done,Hotfix: SPE_Admin method_exists guard,Defensive guard prevents fatal when theme runs ahead of plugin,Drew,Done,Critical,,Commit ee6c8a6
+D17,Done,Header menu URL fix,Men's / Women's Health links no longer dead-end,Drew,Done,Medium,,
+S101,Sprint 1,Stripe gateway live,"Install Stripe for WooCommerce, plug live API keys, disable Cash on Delivery, confirm 3D Secure for UK cards",Oli,Not Started,Critical,Murtaza: Stripe API keys,Cannot take real payments until done
+S102,Sprint 1,UK VAT configured,"WC > Settings > Tax; UK zone; OTC zero-rated where applicable; POM exempt",Oli,Not Started,High,Murtaza: confirm rates with accountant,
+S103,Sprint 1,UK shipping zones,"Royal Mail Tracked 24 under £30; DPD next-day free over £30",Oli,Not Started,High,Murtaza: confirm carrier accounts,
+S104,Sprint 1,Clinician order panel,"Readable metabox on WC order edit screen showing all _tc_elig_* assessment data; print-friendly view",Oli,Not Started,High,,Read-only first pass
+S105,Sprint 1,ID upload page in eligibility checker,"New screen between GP details and treatment selection; encrypted storage; linked to assessment + order; 5-year retention",Oli,Not Started,High,,GPhC compliance for POM dispense
+S201,Sprint 2,Product catalogue migration,Working session with client to swap 10 test SKUs for real product range + photography,Oli + Murtaza,Not Started,Critical,Murtaza: real product catalogue + photography,Schedule working call
+S202,Sprint 2,Branded transactional emails,"Order confirmation, dispatch notification, consultation pending/approved",Oli,Not Started,High,,Brand template (teal/cream + logo)
+S203,Sprint 2,Hair Loss treatment seeder,Same pattern as Men's/Women's Health seeders,Oli,Not Started,Medium,,
+S204,Sprint 2,ED treatment seeder,Same pattern,Oli,Not Started,Medium,,
+S205,Sprint 2,Production deploy + DNS cutover,"Push to production; smoke tests; DNS swap; Kinsta backups + monitoring",Oli + Drew,Not Started,Critical,All Sprint 1 + 2 done; Murtaza sign-off,Drew presses the button
+S206,Sprint 2,Post-launch hotfix buffer,Bugfix from smoke tests; 24h hotfix window for first day of live traffic,Oli,Not Started,High,Production deploy complete,
+C01,Client,Provide Stripe API keys (test + live),Stripe account ready; share test keys first then live,Murtaza,Not Started,Critical,Stripe account approval,Blocks S101
+C02,Client,Confirm UK VAT rates with accountant,"Which SKUs are zero-rated vs standard rate vs exempt",Murtaza,Not Started,High,,Blocks S102
+C03,Client,Confirm carrier accounts (Royal Mail / DPD),Account numbers and rates,Murtaza,Not Started,High,,Blocks S103
+C04,Client,Supply real product catalogue + photography,"Full SKU list with names, prices, descriptions, categories, licensed product photos",Murtaza,Not Started,Critical,,Blocks S201; consider photographer engagement
+C05,Client,Configure Eligibility > Settings on staging,"Set checker URL = /start-consultation/; map Wegovy + Mounjaro doses to product IDs",Murtaza,Not Started,High,Mounjaro/Wegovy WC products created,Quick admin task; can do today
+C06,Client,Upload custom logo to WP Customizer,Appearance > Customize > Site Identity > Logo,Murtaza,Not Started,Low,,Eligibility checker header pulls from this
+C07,Client,Sign off Sprint 1 demo (Friday week 1),Confirm payment / VAT / shipping / clinician panel / ID upload work as expected,Murtaza,Not Started,High,All Sprint 1 tickets,
+C08,Client,Sign off Sprint 2 demo (Friday week 2),Confirm catalogue migration + emails + new treatment pages,Murtaza,Not Started,High,All Sprint 2 tickets,
+C09,Client,Approve production deploy + DNS swap,Final go/no-go for going live,Murtaza,Not Started,Critical,Sprint 2 sign-off,
+C10,Client,Real prescriber profiles + GPhC numbers,"Names, registration numbers, photos for the team",Murtaza,Not Started,Medium,,For order confirmations + footer
+T01,Third-party,Stripe merchant account,Approved account + verified business details,Murtaza,Not Started,Critical,,Sometimes takes 1-2 weeks to approve
+T02,Third-party,Frontend file upload plugin,For ID upload step (WP File Upload Pro or similar),Oli,Not Started,High,,~£79 one-off; Oli to recommend
+T03,Third-party,Klarna Pay-in-3,Optional second payment method,Murtaza,Deferred,Low,,Post-launch
+T04,Third-party,WooCommerce Subscriptions plugin,For monthly Mounjaro/Wegovy billing,Murtaza,Deferred,Medium,,Out of current sprint; ~£199/yr
+T05,Third-party,Trustpilot Business,Reviews flywheel,Murtaza,Deferred,Medium,,Post-launch
+T06,Third-party,Cookie consent plugin (CookieYes),GDPR cookie banner,Murtaza,Deferred,Medium,,Out of current sprint
+T07,Third-party,WP Activity Log Pro,Compliance audit trail,Murtaza,Deferred,Low,,Post-launch
+B01,Blocker,Confirm Stripe vs alternative gateway,"Stripe is the recommendation but client may prefer GoCardless / Worldpay",Murtaza,Open,High,,Blocks S101
+B02,Blocker,Confirm DNS cutover window,When can we point the live domain at Kinsta production,Murtaza,Open,High,,Blocks S205
+B03,Blocker,Kinsta production environment status,Confirm prod env exists and is provisioned,Oli,Open,High,,Check on day 1
+B04,Risk,Photography readiness for Sprint 2,"Catalogue migration is blocked if licensed product photos aren't ready",Murtaza,Open,High,,Start photographer engagement now
+B05,Risk,Stripe account approval timeline,New merchant accounts can take 1-2 weeks to approve,Murtaza,Open,Medium,,Start application now
+DEF01,Deferred,Subscription billing for monthly treatments,Mounjaro/Wegovy as monthly recurring,,Deferred,Medium,,Post-launch phase
+DEF02,Deferred,Compliance footer (GPhC reg + MHRA logo),Per GPhC guidelines for online pharmacies,Murtaza,Deferred,High,,Client owns; required before launch
+DEF03,Deferred,Two-way verification workflow,Per GPhC 2025 rule for high-risk medicines,Murtaza,Deferred,High,,Client's workflow; not a code task
+DEF04,Deferred,Privacy / Terms / Refunds pages,Solicitor-supplied copy,Murtaza,Deferred,High,,Required before launch
+DEF05,Deferred,DPIA document,Data Protection Impact Assessment,Murtaza,Deferred,High,,Required for medical data
+DEF06,Deferred,Google Merchant Centre feed,Shopping ads for GSL products,Oli,Deferred,Medium,,Post-launch growth
+DEF07,Deferred,Schema.org Pharmacy + Product markup audit,SEO,Oli,Deferred,Medium,,Post-launch
+DEF08,Deferred,Health Hub content,Editorial articles,Murtaza,Deferred,Low,,Separate content workstream
+DEF09,Deferred,HRT treatment seeder,Same pattern as other treatment pages,Oli,Deferred,Low,,Post-launch unless requested
