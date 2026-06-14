@@ -30,7 +30,7 @@ defined( 'ABSPATH' ) || exit;
 		</a>
 		<?php
 		// Offer the consultation CTA only when the eligibility plugin is wired up.
-		$sp_ec_checker_url = class_exists( 'SPE_Admin' ) ? SPE_Admin::get_checker_url() : '';
+		$sp_ec_checker_url = ( class_exists( 'SPE_Admin' ) && method_exists( 'SPE_Admin', 'get_checker_url' ) ) ? SPE_Admin::get_checker_url() : '';
 		if ( $sp_ec_checker_url && home_url( '/' ) !== $sp_ec_checker_url ) :
 			?>
 			<a class="sp-empty-cart__cta sp-empty-cart__cta--secondary" href="<?php echo esc_url( $sp_ec_checker_url ); ?>">

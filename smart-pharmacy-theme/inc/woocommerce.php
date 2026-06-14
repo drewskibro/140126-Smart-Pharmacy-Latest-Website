@@ -441,8 +441,10 @@ function sp_product_is_pom( $product_id ) {
  */
 function sp_product_consultation_url( $product_id ) {
 	// Prefer the eligibility checker page when the plugin is active
-	// and an admin has filled in the URL field.
-	if ( class_exists( 'SPE_Admin' ) ) {
+	// and an admin has filled in the URL field. The method_exists
+	// guard prevents fatals when the theme is ahead of the plugin
+	// (e.g. theme deployed but plugin not yet reinstalled).
+	if ( class_exists( 'SPE_Admin' ) && method_exists( 'SPE_Admin', 'get_checker_url' ) ) {
 		$checker_url = SPE_Admin::get_checker_url();
 		if ( $checker_url && home_url( '/' ) !== $checker_url ) {
 			return $checker_url;
