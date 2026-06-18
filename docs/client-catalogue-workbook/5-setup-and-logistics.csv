@@ -1,0 +1,9 @@
+Area,Question,Your answer
+Payments,Happy to use Stripe (cards + Apple / Google Pay)? If not — which processor?,
+Payments,Have you started the Stripe merchant application yet? (approval can take a few days),
+VAT,Which products are zero-rated / standard-rated / exempt? (check with your accountant),
+Delivery,"Free delivery over £30, flat rate below — does that model work?",
+Delivery,Which carrier(s)? (Royal Mail / DPD / both / other),
+Domain,Final web address the site will launch on?,
+Domain,Do you control the DNS for that domain? (Yes / No / Not sure),
+Prescribers,Prescriber names + GPhC registration numbers (can come later),
