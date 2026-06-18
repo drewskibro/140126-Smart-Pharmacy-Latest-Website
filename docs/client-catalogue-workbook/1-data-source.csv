@@ -1,0 +1,13 @@
+Question,Your answer
+Do you already sell these products online anywhere? (Shopify / Wix / WordPress / Amazon / eBay / No),
+If yes — platform name, and can you export a CSV or give us admin access?,
+Do you get products from a third-party / supplier feed? (Yes / No),
+If yes — who provides the feed? (e.g. Alliance, AAH, Phoenix, other),
+Feed format (CSV / XML / Google Shopping / API / Don't know),
+Feed URL or sample file (paste link here, or attach to the email),
+Does the feed include product images? (Yes / No / Don't know),
+Does the feed include live stock levels? (Yes / No / Don't know),
+How often does the feed update? (Real-time / Daily / Weekly / Don't know),
+Do you sell at feed price, or apply a markup? (Feed price / Markup — state %),
+Does your agreement allow using the feed's data + images on your own store? (Yes / No / Need to check),
+Do you have a dispensing or EPOS system you can export products from? (System name / No),
