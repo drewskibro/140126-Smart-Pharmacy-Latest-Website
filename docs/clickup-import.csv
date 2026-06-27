@@ -1,0 +1,42 @@
+Task Name,List,Assignee,Priority,Status,Description
+Clean product CSV,1. Products in the Shop,Oli,Urgent,To Do,"Source: Products.xlsx (9767 SKUs). ~1000 rows have CSV parsing artefacts where names contain commas. Output clean: ean,name,regulation,price,vat."
+Auto-classify products into shop categories,1. Products in the Shop,Oli,Urgent,To Do,"AI pass over names into: Skincare, Hair Care, Oral Care, Beauty, Vitamins, Pain Relief, Cold & Flu, Digestive, First Aid, Weight Management, Men's Health, Women's Health, Sexual Wellness. Spot-check."
+Fetch product images by barcode,1. Products in the Shop,Oli,High,To Do,"Open Food Facts / Open Beauty Facts API, EAN-keyed. ~60-70% auto-resolve. Flag remainder for AI/manual."
+Generate factual product descriptions,1. Products in the Shop,Oli,High,To Do,"AI-generate short factual copy only (size/format/brand). NO medical claims (MHRA/CAP). Murtaza signs off 50-product sample before bulk."
+Staged catalogue import,1. Products in the Shop,Oli,Urgent,To Do,"Import 100-product sample for sign-off, then bulk 9667. Stock = 0 on import (Murtaza activates manually)."
+Update eligibility product map for GLP-1 SKUs,1. Products in the Shop,Oli,High,To Do,"After import, map the new Wegovy/Mounjaro/Saxenda/Mysimba product IDs in Eligibility > Settings."
+Stripe gateway live,2. Can Take Money,Oli,Urgent,To Do,"Install Stripe for WooCommerce, plug live keys, disable Cash on Delivery, confirm 3D Secure UK cards. Needs Murtaza's keys."
+Switch Stripe to manual capture,2. Can Take Money,Oli,Urgent,To Do,"Config change: tick 'Issue authorization on checkout and capture later'. Holds payment until pharmacist approves. NOT a build."
+UK VAT zones,2. Can Take Money,Oli,High,To Do,"WC > Settings > Tax. UK zone; OTC zero-rated where applicable; POM exempt. Needs Murtaza accountant confirmation."
+UK shipping zones,2. Can Take Money,Oli,High,To Do,"Royal Mail Tracked 24 under £30; free over £30. Needs carrier confirmation from Murtaza."
+Build P-med consultation form (editable base questions),3. Consultation & Pharmacist Review,Oli,Urgent,To Do,"Single standard form, 9 questions: DOB, who for, what for, what tried, other meds incl OTC, other conditions, pregnant/breastfeeding, previous use, free-text. Questions editable in admin (not hardcoded)."
+Per-product custom questions,3. Consultation & Pharmacist Review,Oli,Urgent,To Do,"ACF repeater on each WC product: 'Additional consultation questions'. Murtaza adds product-specific questions himself when launching a product. Form renders base + extras + disclaimer."
+Pharmacist disclaimer at end of form,3. Consultation & Pharmacist Review,Oli,Normal,To Do,"'Your answers will be reviewed by a pharmacist who may contact you with further questions before dispatch.'"
+Awaiting Clinical Review order status,3. Consultation & Pharmacist Review,Oli,High,To Do,"Custom WC order status + admin colour + customer email trigger."
+Clinician review panel,3. Consultation & Pharmacist Review,Oli,High,To Do,"Readable metabox on WC order edit screen showing all consultation answers. Print-friendly."
+Pharmacist approve/reject + Stripe capture/void,3. Consultation & Pharmacist Review,Oli,Urgent,To Do,"Approve -> Stripe captures held payment -> order to Processing. Reject -> Stripe voids auth -> customer notified, no charge. Reused for GLP-1 (Phase 1) and P-meds (Phase 2)."
+Customer consultation-status view,3. Consultation & Pharmacist Review,Oli,Normal,To Do,"My Account view: pending / approved / rejected with timestamps. Reduces support load."
+ID upload step,3. Consultation & Pharmacist Review,Oli,High,To Do,"New screen in consultation: photo ID, encrypted storage, linked to order. For POM/P dispense compliance."
+Branded transactional emails,4. Launch Phase 1,Oli,High,To Do,"Order confirmation, dispatch, consultation pending/approved. Brand template + logo."
+Production deploy + DNS cutover,4. Launch Phase 1,Oli + Drew,Urgent,To Do,"Push to production, smoke tests, DNS swap, Kinsta backups + monitoring. Drew approves; Oli deploys."
+Post-launch hotfix buffer,4. Launch Phase 1,Oli,High,To Do,"24h hotfix window for first day of live traffic."
+Build light form variant for P-meds,5. Add the 550 P-meds (Phase 2),Oli,High,To Do,"Reuses the form engine from Milestone 3. Just the base 9 questions; pharmacist review infra already built."
+Wire 550 P-products to consultation form,5. Add the 550 P-meds (Phase 2),Oli,High,To Do,"Per-product form-type flag. Auto-default all P-regulated to the form; GLP-1s stay on the in-depth flow."
+Phase 2 go-live,5. Add the 550 P-meds (Phase 2),Oli + Drew,Urgent,To Do,"Switch on the 550 P-meds once form + review tested at scale."
+Provide Stripe API keys,Client Actions (Murtaza),Murtaza,Urgent,To Do,"Test keys first, then live. Blocks Stripe go-live."
+Start Stripe merchant application,Client Actions (Murtaza),Murtaza,Urgent,To Do,"1-2 week approval lead time. Start now."
+Confirm pharmacist review SLA,Client Actions (Murtaza),Murtaza,Urgent,To Do,"Commit to 24-48h review turnaround. Stripe auths only hold 7 days."
+Confirm pharmacist staffing for reviews,Client Actions (Murtaza),Murtaza,High,To Do,"Who reviews consultations, what hours, weekend cover? Operational, affects launch readiness."
+Confirm UK VAT rates with accountant,Client Actions (Murtaza),Murtaza,High,To Do,"Which products zero-rated / standard / exempt."
+Confirm carrier accounts,Client Actions (Murtaza),Murtaza,High,To Do,"Royal Mail / DPD account numbers + rates."
+Decision: launch with or without P-meds first,Client Actions (Murtaza),Murtaza,Urgent,To Do,"Determines whether Milestone 5 is before or after first launch."
+Sign off catalogue sample,Client Actions (Murtaza),Murtaza,High,To Do,"Review 100-product import sample + 50 description samples before bulk run."
+Real prescriber profiles + GPhC numbers,Client Actions (Murtaza),Murtaza,Normal,To Do,"Names + registration numbers for order confirmations / footer."
+Upload logo to WP Customizer,Client Actions (Murtaza),Murtaza,Low,To Do,"Appearance > Customize > Site Identity. Consultation header pulls from this."
+Klarna Pay-in-3,Later / Backlog,Murtaza,Low,To Do,Optional second payment method. Post-launch.
+WooCommerce Subscriptions for monthly treatments,Later / Backlog,Murtaza,Normal,To Do,"Monthly Mounjaro/Wegovy billing. ~£199/yr. Post-launch."
+Trustpilot Business,Later / Backlog,Murtaza,Normal,To Do,Reviews flywheel. Post-launch.
+Cookie consent (CookieYes),Later / Backlog,Murtaza,Normal,To Do,GDPR cookie banner. Before launch if not already covered.
+Compliance footer (GPhC reg + MHRA logo),Later / Backlog,Murtaza,High,To Do,Client supplies copy; Oli wires into footer.
+Google Merchant Centre feed (GSL only),Later / Backlog,Oli,Normal,To Do,Shopping ads for GSL products. POM/P excluded by Google policy. Post-launch growth.
+Hair Loss + ED treatment seeders,Later / Backlog,Oli,Normal,To Do,Same pattern as Men's/Women's Health pages.
