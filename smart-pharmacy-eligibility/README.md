@@ -184,6 +184,33 @@ The full loop is now wired:
 > actions already treat awaiting-review / on-hold / pending alike so the
 > flow works either way.
 
+### Photo ID upload (GPhC)
+
+Custom, no third-party plugin (`class-id-upload.php`).
+
+- After a consultation order is placed, an **"Upload your ID"** form
+  appears under the order table on the order-received and view-order
+  pages — for guests (authorised by the order key) and logged-in
+  customers (by ownership).
+- File is validated (JPG/PNG/PDF, ≤10 MB, real type-sniffed), stored
+  under an **unguessable 40-char random filename** in
+  `uploads/spe-id-uploads/`, and linked to the order meta
+  `_spe_id_upload` — never added to the media library.
+- The pharmacist sees **ID: uploaded / not uploaded yet** + a **gated
+  "View ID"** link in the review panel, and an **Eligibility → ID
+  Uploads** screen tracks which consultation orders have / haven't
+  uploaded. Files are served only through a `manage_woocommerce`-gated,
+  nonce-checked, path-traversal-guarded download handler — the raw URL
+  is never exposed.
+
+> ⚠️ **Server-level protection needed on Kinsta (Nginx).** The bundled
+> `.htaccess` deny only works on Apache. On Nginx the
+> `uploads/spe-id-uploads/` directory should also be denied direct
+> access at the server level (ask Kinsta). The random filenames mean URLs
+> aren't guessable, but defence-in-depth wants the directory locked too.
+> **ID documents are special-category data** — 5-year retention and a
+> documented deletion process are a pre-launch compliance task.
+
 ### Extension points
 
 - `apply_filters( 'spe_consultation_questions', $questions, $args )` —
@@ -196,8 +223,8 @@ The full loop is now wired:
 - `do_action( 'spe_after_consultation_review', $order, $row )` — render
   point for the pharmacist decision actions on the review panel.
 
-**Deferred to their own ClickUp cards:** final disclaimer wording,
-branded transactional email styling, and the ID-upload step.
+**Deferred to their own ClickUp cards:** final disclaimer wording and
+branded transactional email styling (Milestone 4).
 
 ## Notes / not yet built
 
