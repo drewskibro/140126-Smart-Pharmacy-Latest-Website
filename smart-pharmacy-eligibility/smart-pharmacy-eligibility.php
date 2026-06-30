@@ -48,6 +48,7 @@ require_once SPE_PLUGIN_DIR . 'includes/class-consultation-checkout.php';
 require_once SPE_PLUGIN_DIR . 'includes/class-consultation-review-actions.php';
 require_once SPE_PLUGIN_DIR . 'includes/class-consultation-email.php';
 require_once SPE_PLUGIN_DIR . 'includes/class-consultation-my-account.php';
+require_once SPE_PLUGIN_DIR . 'includes/class-id-upload.php';
 
 // Activation / deactivation.
 register_activation_hook( __FILE__, array( 'SPE_Activator', 'activate' ) );
@@ -72,6 +73,7 @@ function spe_bootstrap() {
 	SPE_Consultation_Review_Actions::register();
 	SPE_Consultation_Email::register();
 	SPE_Consultation_My_Account::register();
+	SPE_ID_Upload::register();
 
 	if ( is_admin() ) {
 		SPE_Admin::register();
