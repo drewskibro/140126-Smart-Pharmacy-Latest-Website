@@ -13,19 +13,48 @@ defined( 'ABSPATH' ) || exit;
 class SPE_Activator {
 
 	/**
-	 * Create / upgrade the assessments table.
+	 * Activation entry point: build tables + seed default options.
 	 *
 	 * Uses dbDelta so subsequent schema changes are migrations rather
-	 * than drop-and-recreates. SPE_DB_VERSION is bumped whenever the
+	 * than drop-and-recreates. SPE_DB_VERSION is bumped whenever a
 	 * schema below changes.
 	 */
 	public static function activate() {
+		self::create_tables();
+		update_option( 'spe_db_version', SPE_DB_VERSION );
+
+		// Seed an empty product map so the admin settings screen has the
+		// expected option key on first load.
+		if ( false === get_option( 'spe_product_map' ) ) {
+			add_option( 'spe_product_map', array() );
+		}
+	}
+
+	/**
+	 * Run the schema migration on a normal request when the stored DB
+	 * version is behind the code's. Deploys SCP the plugin files without
+	 * re-activating, so without this the consultations table would never
+	 * be created on staging / production. Cheap no-op once up to date.
+	 */
+	public static function maybe_upgrade() {
+		if ( (string) get_option( 'spe_db_version' ) === (string) SPE_DB_VERSION ) {
+			return;
+		}
+		self::create_tables();
+		update_option( 'spe_db_version', SPE_DB_VERSION );
+	}
+
+	/**
+	 * Create / upgrade all plugin tables via dbDelta.
+	 */
+	public static function create_tables() {
 		global $wpdb;
 
-		$table   = $wpdb->prefix . 'spe_assessments';
 		$charset = $wpdb->get_charset_collate();
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
-		$sql = "CREATE TABLE {$table} (
+		$assessments = $wpdb->prefix . 'spe_assessments';
+		$sql = "CREATE TABLE {$assessments} (
 			id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
 			assessment_id CHAR(36) NOT NULL,
 			status VARCHAR(20) NOT NULL DEFAULT 'partial',
@@ -79,21 +108,31 @@ class SPE_Activator {
 			KEY created_at (created_at),
 			KEY order_id (order_id)
 		) {$charset};";
-
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
 
-		update_option( 'spe_db_version', SPE_DB_VERSION );
-
-		// Seed an empty product map so the admin settings screen
-		// has the expected option key on first load.
-		if ( false === get_option( 'spe_product_map' ) ) {
-			add_option(
-				'spe_product_map',
-				array(
-					// Filled in by admin: e.g. 'wegovy-0.25mg' => 123 (WC product ID).
-				)
-			);
-		}
+		// P-med consultation submissions. UUID-keyed like assessments so
+		// the same id can bridge the cart and the order in later cards.
+		$consultations = $wpdb->prefix . 'spe_consultations';
+		$sql = "CREATE TABLE {$consultations} (
+			id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+			consultation_id CHAR(36) NOT NULL,
+			status VARCHAR(20) NOT NULL DEFAULT 'submitted',
+			product_id BIGINT(20) UNSIGNED NULL,
+			dob DATE NULL,
+			who_for VARCHAR(60) NULL,
+			answers LONGTEXT NULL,
+			order_id BIGINT(20) UNSIGNED NULL,
+			ip_address VARCHAR(45) NULL,
+			user_agent TEXT NULL,
+			created_at DATETIME NOT NULL,
+			updated_at DATETIME NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY consultation_id (consultation_id),
+			KEY status (status),
+			KEY product_id (product_id),
+			KEY order_id (order_id),
+			KEY created_at (created_at)
+		) {$charset};";
+		dbDelta( $sql );
 	}
 }
