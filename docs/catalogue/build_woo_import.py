@@ -23,8 +23,11 @@ this only assigns each product to the right tax *class*.
 """
 import csv
 import os
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+from classify_categories import classify  # noqa: E402  (same-folder helper)
 SRC = os.path.join(HERE, "products-clean.csv")
 FULL = os.path.join(HERE, "products-woo-import-full.csv")
 SAMPLE = os.path.join(HERE, "products-woo-import-sample.csv")
@@ -65,7 +68,7 @@ def row_out(r):
         "Regular price": (r.get("price") or "").strip(),
         "Tax status": "taxable",
         "Tax class": TAX_CLASS.get(vat, ""),
-        "Categories": "",
+        "Categories": classify((r.get("name") or "").strip(), (r.get("regulation") or "").strip()),
         "Meta: _sp_regulation": (r.get("regulation") or "").strip(),
     }
 
