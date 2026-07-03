@@ -125,6 +125,7 @@ class SPE_Activator {
 			dob DATE NULL,
 			who_for VARCHAR(60) NULL,
 			answers LONGTEXT NULL,
+			notes LONGTEXT NULL,
 			order_id BIGINT(20) UNSIGNED NULL,
 			ip_address VARCHAR(45) NULL,
 			user_agent TEXT NULL,
