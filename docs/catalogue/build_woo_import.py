@@ -28,6 +28,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from classify_categories import classify  # noqa: E402  (same-folder helper)
+from describe_products import describe    # noqa: E402  (same-folder helper)
 SRC = os.path.join(HERE, "products-clean.csv")
 FULL = os.path.join(HERE, "products-woo-import-full.csv")
 SAMPLE = os.path.join(HERE, "products-woo-import-sample.csv")
@@ -44,6 +45,8 @@ HEADERS = [
     "Tax status",
     "Tax class",
     "Categories",
+    "Description",
+    "Images",
     "Meta: _sp_regulation",
 ]
 
@@ -56,20 +59,45 @@ TAX_CLASS = {
 }
 
 
+def load_images():
+    """SKU -> image URL from products-woo-images.csv, if the image fetch
+    has been run. Restricted/in-store barcodes (prefix 2) are skipped —
+    Open Food Facts returns junk matches for dummy codes like 2222222222222."""
+    path = os.path.join(HERE, "products-woo-images.csv")
+    out = {}
+    if os.path.exists(path):
+        with open(path, newline="", encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                sku = (r.get("SKU") or "").strip()
+                url = (r.get("Images") or "").strip()
+                if sku and url and not sku.startswith("2"):
+                    out[sku] = url
+    return out
+
+
+IMAGES = load_images()
+
+
 def row_out(r):
     vat = (r.get("vat") or "").strip()
+    name = (r.get("name") or "").strip()
+    reg = (r.get("regulation") or "").strip()
+    sku = (r.get("ean") or "").strip()
+    cat = classify(name, reg)
     return {
         "Type": "simple",
-        "SKU": (r.get("ean") or "").strip(),
-        "Name": (r.get("name") or "").strip(),
+        "SKU": sku,
+        "Name": name,
         "Published": "0",          # draft
         "In stock?": "0",
         "Stock": "0",
         "Regular price": (r.get("price") or "").strip(),
         "Tax status": "taxable",
         "Tax class": TAX_CLASS.get(vat, ""),
-        "Categories": classify((r.get("name") or "").strip(), (r.get("regulation") or "").strip()),
-        "Meta: _sp_regulation": (r.get("regulation") or "").strip(),
+        "Categories": cat,
+        "Description": describe(name, cat, reg),
+        "Images": IMAGES.get(sku, ""),
+        "Meta: _sp_regulation": reg,
     }
 
 
