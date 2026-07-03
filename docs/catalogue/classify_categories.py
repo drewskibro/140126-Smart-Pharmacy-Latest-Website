@@ -68,7 +68,7 @@ RULES = [
         "tampon", "tampax", "sanitary", "panty liner", "pantyliner",
         "maternity pad", "breast pad", "always ", "bodyform", "cystitis",
         "canesten", "thrush", "vagi", "for women", "women's", "womens",
-        "female", "gyno", "uti",
+        "female", "gyno", " uti ",
     ]),
     ("Men's Health", [
         "finasteride", "propecia", "testosterone", "prostate", "tamsulosin",
@@ -77,7 +77,7 @@ RULES = [
     ("Baby & Child", [
         "baby", "infant", "toddler", "children's", "for children", "teething",
         "colic", "nappy", "nappies", "sudocrem", "calpol", "milk formula",
-        "formula milk", "aptamil", "sma ", "cow & gate", "dummy", "soother",
+        "formula milk", "aptamil", " sma ", "cow & gate", "dummy", "soother",
         "weaning",
     ]),
     ("Eye Care", [
@@ -87,8 +87,8 @@ RULES = [
     ]),
     ("Oral Care", [
         "toothpaste", "toothbrush", "mouthwash", "dental", "floss", "oral-b",
-        "oral b", "oral care", "corsodyl", "listerine", "denture", "sensodyne",
-        "colgate", "gum ", "teeth", "whitening", "aquafresh", "interdental",
+        " oral b", " oral care", "corsodyl", "listerine", "denture", "sensodyne",
+        "colgate", " gum ", "teeth", "whitening", "aquafresh", "interdental",
         "tongue", "mouth ulcer", "bonjela", "wisdom", "toothpick", "tepe",
     ]),
     ("Cold & Flu", [
@@ -110,7 +110,7 @@ RULES = [
         "constipation", "senna", "diarrhoea", "imodium", "buscopan",
         "dulcolax", "fybogel", "probiotic", "acid reflux", "bloating",
         "peptac", "lansoprazole", "omeprazole", "ranitidine", "colpermin",
-        "bowel", "stomach", "nausea", "wind ", "ibs", "anusol", "germoloids",
+        "bowel", "stomach", "nausea", " wind ", " ibs ", "anusol", "germoloids",
         "haemorrhoid", "hemorrhoid", "preparation h", "psyllium", "husk",
     ]),
     ("First Aid", [

@@ -151,7 +151,7 @@ ean,name,regulation,category
 0033984020535,Solgar Double Strength Omega-3 120 Softgels,No regulation,Vitamins
 0658556025284,Planet Paleo Bone Broth Sports Protein Chocolate 480g,No regulation,Vitamins
 5060203792015,Terranova Life Drink (Unflavoured) 454g,No regulation,Vitamins
-0020714297923,Clinique Redness Solutions Daily Relief Cream 50ml,No regulation,Women's Health
+0020714297923,Clinique Redness Solutions Daily Relief Cream 50ml,No regulation,Skincare
 5060334120107,Norgalax 6 Micro-Enemas 10g,P,Prescription Medicines
 0753950002838,Doctor's Best Brain Magnesium with Magtein 50 mg 90 Veggie Capsules,No regulation,Vitamins
 5031013102233,Higher Nature True Food All Man 180 Capsules,No regulation,Vitamins
@@ -175,7 +175,7 @@ ean,name,regulation,category
 0796548445020,Revive Collagen - Menopause Max Collagen Drink 14 sachets,No regulation,Women's Health
 0814784027104,SunWarrior Protein Warrior Blend Berry 750g,No regulation,Vitamins
 5034511006782,Green People Heritage Beauty Trio 3 x 50ml,No regulation,General Health
-0739090023254,Fipnil Plus Spot-On Solution for Extra Large Dogs 3 x 4.02ml,No regulation,Women's Health
+0739090023254,Fipnil Plus Spot-On Solution for Extra Large Dogs 3 x 4.02ml,No regulation,General Health
 5060086610802,Optibac Probiotics for Women 90 Capsules,No regulation,Women's Health
 0658556024522,Planet Paleo Keto C8 MCT Oil 1000ml,No regulation,Skincare
 5060332533688,Lindens Health + Nutrition Glucosamine & Chondroitin 500/400 365 Capsules,No regulation,Vitamins
@@ -318,7 +318,7 @@ ean,name,regulation,category
 0658556024980,Planet Paleo Digestive Collagen 245g,No regulation,Vitamins
 3597133090529,Virbac Effipro 134mg Spot-On for Dogs 10-20kg 4 Pack,No regulation,Pet Care
 0658556024942,Planet Paleo Active Collagen 210g,No regulation,Vitamins
-0739090023247,Fipnil Plus Spot-On Solution for Large Dogs 3 x 2.68ml,No regulation,Women's Health
+0739090023247,Fipnil Plus Spot-On Solution for Large Dogs 3 x 2.68ml,No regulation,General Health
 0658010121026,Garden Of Life Prenatal Once Daily 30 Tabs,No regulation,General Health
 5038227000409,Priligy - Dapoxetine 30mg 6 Tablets,P,Prescription Medicines
 0610370613993,Women's Fertility Support 60 Capsules,No regulation,Supports & Braces
@@ -351,7 +351,7 @@ ean,name,regulation,category
 5031013103025,Higher Nature Visualeyes 90 Capsules,No regulation,Vitamins
 5028392001844,Metagenics Multi Essentials for Men 60 Tablets,No regulation,Men's Health
 0857273008703,Vital Proteins Matcha Collagen 341g,No regulation,Vitamins
-3282779324458,Avène Hydrance Rehydrating Routine Kit,No regulation,Women's Health
+3282779324458,Avène Hydrance Rehydrating Routine Kit,No regulation,General Health
 7391325633336,Nutri Advanced Eskimo-3 Brainsharp Fish Oil 120 Capsules,No regulation,Vitamins
 3282770153170,Avène Hyaluron Activ B3 Cell Renewal Cream 50ml,No regulation,Skincare
 5060259572180,Gold Collagen Scalp Revival Night Serum 100ml,No regulation,Hair Care
@@ -369,7 +369,7 @@ ean,name,regulation,category
 0726754953156,Feel Supreme Altai Shilajit Resin 50g,No regulation,General Health
 0634158532894,Premenstrual Complex 60 Capsules,No regulation,Women's Health
 5056142608005,Protein World Immunity+ Collection Supplements,No regulation,Vitamins
-0017854118416,Baylis & Harding Beauticology Candy 24 Days of Beauty Magic Gift Set,No regulation,Women's Health
+0017854118416,Baylis & Harding Beauticology Candy 24 Days of Beauty Magic Gift Set,No regulation,Beauty
 5055565743775,Vardenafil Accord 10mg 8 Tablets,P,Sexual Wellness
 0033984010017,Solgar Digestive Enzymes 250 Tablets,No regulation,Vitamins
 5425010394041,Biosil Advanced Collagen Generator 60 Liquid Capsules,No regulation,Vitamins
@@ -424,7 +424,7 @@ ean,name,regulation,category
 3661103004615,Frontline Spot On for Dogs 40-60kg 3 Pack,No regulation,Pet Care
 5707390040269,Pharma Nord BioActive Omega 7 Sea Buckthorn Oil 150 Capsules,No regulation,Vitamins
 0083000263705,Nature's Answer UTI Answer D-Mannose & Cranberry Concentrate 120ml,No regulation,Women's Health
-0739090023230,Fipnil Plus Spot-On Solution for Medium Dogs 3 x 1.34ml,No regulation,Women's Health
+0739090023230,Fipnil Plus Spot-On Solution for Medium Dogs 3 x 1.34ml,No regulation,General Health
 5027314502551,Bio-Kult Everyday 120 Capsules,No regulation,Vitamins
 5060203794705,Terranova Green Child Sneaky Greens Super Shake 180g,No regulation,Vitamins
 4007221046837,Advantage Flea Treatment for Dogs 4kg-10kg 4 Pack,No regulation,Pet Care
@@ -522,9 +522,9 @@ ean,name,regulation,category
 7350082941009,Swiss Clinic Rejuvenating Serum X3 (30ml),No regulation,Skincare
 8445290883612,Vital Proteins Beauty Collagen Strawberry Lemon 271g,No regulation,Vitamins
 0016185096653,Neocell Hyaluronic Acid Berry Liquid 473ml,No regulation,General Health
-0739090023223,Fipnil Plus Spot-On Solution for Small Dogs 3 x 0.67ml,No regulation,Women's Health
+0739090023223,Fipnil Plus Spot-On Solution for Small Dogs 3 x 0.67ml,No regulation,General Health
 5060203790110,Terranova Astaxanthin 4mg Complex 100 Capsules,No regulation,Vitamins
-5017007601630,Exorex Lotion 5% Coal Tar Solution 250ml,GSL,Women's Health
+5017007601630,Exorex Lotion 5% Coal Tar Solution 250ml,GSL,Skincare
 5060086610482,Optibac Probiotics for Every Day 90 Capsules,No regulation,Digestive
 0873024003209,Ener-C Electrolyte Sport Tub 154g,No regulation,Vitamins
 5055148410322,Lamberts Co Enzyme Q 10 200mg 60 Capsules,No regulation,Vitamins
@@ -771,7 +771,7 @@ ean,name,regulation,category
 5034511002500,Green People Facial Sun Cream Scent Free SPF30 50ml,No regulation,Skincare
 8806158552581,Sioris Enriched By Nature Cream 50ml,No regulation,Skincare
 8445290821546,Minami VeganDHA 60 Capsules,No regulation,Vitamins
-5034511000926,Green People Day Solution SPF15 50ml,No regulation,Women's Health
+5034511000926,Green People Day Solution SPF15 50ml,No regulation,Skincare
 0658556116906,Mushrooms For Life Organic Myco O2 Powder 60g,No regulation,Vitamins
 5060203792244,"Terranova Beetroot Juice, Cordyceps & Reishi Powder 70g",No regulation,Vitamins
 3380810032901,Clarins Toning Lotion Normal Or Dry Skin with Camomile 400ml,No regulation,Skincare
@@ -834,7 +834,7 @@ ean,name,regulation,category
 5031013104640,Higher Nature Essential Omegas 3:6:7:9 90 Capsules,No regulation,Vitamins
 5017978104758,Probio 7 Advanced Formula 60 Vegcaps,No regulation,Vitamins
 5017978000272,Probio 7 Kidskalm 28 Sachets,No regulation,Vitamins
-7618900711013,Mavala Manicure Cuticle Nipper,No regulation,Women's Health
+7618900711013,Mavala Manicure Cuticle Nipper,No regulation,Skincare
 7618900906709,Mavala Eyelash Curler,No regulation,General Health
 0020714462741,Clinique Clarifying Lotion 4 Oily 400ml,No regulation,Skincare
 8809408730920,Dr. Oracle 21 Stay A-Thera Toner 120ml,No regulation,Skincare
@@ -947,7 +947,7 @@ ean,name,regulation,category
 5031812509257,Coatex Aloe & Oatmeal Shampoo 500ml,No regulation,Hair Care
 5060202182541,Cytoplan Omega Balance Vegan 60 Capsules,No regulation,Vitamins
 5060999811884,Wonderbalm All Purpose Balm 50ml,No regulation,Skincare
-5034511000117,Green People Day Solution Moisturiser 50ml,No regulation,Women's Health
+5034511000117,Green People Day Solution Moisturiser 50ml,No regulation,Skincare
 5055148410674,Lamberts Omega 3 Ultra Pure Fish Oil 1300mg 60 Capsules,No regulation,Vitamins
 5034511000353,Green People Anti-Ageing 24hr Cream 50ml,No regulation,Skincare
 5060089610755,Eropid Sildenafil 50mg 8 Tablets,P,Sexual Wellness
@@ -1053,7 +1053,7 @@ ean,name,regulation,category
 0033984039728,Solgar Milk Thistle 100 Capsules,No regulation,Vitamins
 3411113007324,Douxo S3 Seb Mousse 150ml,No regulation,Hair Care
 5060193642697,Bloom & Blossom Lights Out Sleep Gift Set,No regulation,Beauty
-8009722000239,Clorexyderm Oto Ear Cleansing Solution 150ml,No regulation,Women's Health
+8009722000239,Clorexyderm Oto Ear Cleansing Solution 150ml,No regulation,Skincare
 5060710518696,Panodyne Infrared Thermometer,No regulation,First Aid
 0033984328747,Solgar Whey To Go Protein Powder (Strawberry) 454g Powder,No regulation,Vitamins
 5060193641751,Bloom & Blossom Bust Firming Gel 50ml,No regulation,Skincare
@@ -1139,7 +1139,7 @@ ean,name,regulation,category
 3282779310741,Avène Antirougeurs Fort Relief Concentrate for Chronic Redness 30ml,No regulation,General Health
 5011309580112,Hedrin Liquid 250ml,No regulation,General Health
 5060203790684,Terranova Digestive Enzyme Complex 100 Capsules,No regulation,Vitamins
-8009722003780,Otoact Ear Cleansing Solution 100ml,No regulation,Women's Health
+8009722003780,Otoact Ear Cleansing Solution 100ml,No regulation,Skincare
 5060519144010,Pukka Wholistic Shatavari 60 Capsules,No regulation,Vitamins
 8806158552574,SIORIS My First Essener 100ml,No regulation,General Health
 5707725600304,Nourkrin Serum for Hair Growth 30ml,No regulation,Hair Care
@@ -1187,7 +1187,7 @@ ean,name,regulation,category
 0033984024014,Solgar Vitamin C 1000mg with Rose Hips 250 Tablets,No regulation,Vitamins
 0658556025055,Planet Paleo Keto Collagen 220g,No regulation,Vitamins
 8809514550009,Rated Green Real Shea Butter Nourishing Shampoo 400ml,No regulation,Hair Care
-3282779351225,Avène Tolérance Moisturising & Calming 3-step Routine for Very Sensitive Skin,No regulation,Women's Health
+3282779351225,Avène Tolérance Moisturising & Calming 3-step Routine for Very Sensitive Skin,No regulation,Skincare
 0658556024713,Living Nutrition Organic Fermented Passion Flower 60 Capsules,No regulation,Vitamins
 3830074580996,Manuka Health MGO 100+ Pure Manuka Honey 250g,No regulation,General Health
 3282770388954,Avène Hydrance Booster Serum 30ml,No regulation,Skincare
@@ -1262,7 +1262,7 @@ ean,name,regulation,category
 5060552880005,Neubria Spark Memory Formula 60 Capsules,No regulation,Vitamins
 0978020137962,Period Delay - Primolut-N 5mg 14 Days Treatment,P,Sexual Wellness
 5060410574046,Beauty Kitchen SHP+ Bright Eyes Probiotic Serum 30ml,No regulation,Digestive
-0020714291839,Clinique Anti-Blemish Solutions All-Over Clearing Treatment 50ml,No regulation,Women's Health
+0020714291839,Clinique Anti-Blemish Solutions All-Over Clearing Treatment 50ml,No regulation,General Health
 0033984018464,Solgar Neuro-Nutrients 60 Capsules,No regulation,Vitamins
 3411113007287,Douxo S3 Calm Mousse 150ml,No regulation,Hair Care
 5060099031403,Odylique Hydration Heroes Gift Set,No regulation,Beauty
@@ -1287,7 +1287,7 @@ ean,name,regulation,category
 0773554151053,Infantino Glow In The Dark Cuddly Pal with Teethers Gift Set,No regulation,Baby & Child
 0033984033009,Solgar Vitamin C Crystals 125g,No regulation,Vitamins
 8009722003971,ICF Clorexyderm 4% Shampoo 200ml,No regulation,Hair Care
-8009722003988,Clorexyderm 4% Spray Solution 200ml,No regulation,Women's Health
+8009722003988,Clorexyderm 4% Spray Solution 200ml,No regulation,Beauty
 0054402250433,Australian Gold Moisture Lock 473ml,No regulation,Skincare
 0753950002517,Doctor's Best Benfotiamine 150 + Alpha-Lipoic Acid 300 60 Veggie Capsules,No regulation,Vitamins
 7322541410937,Tena PROskin Flex Medium Super Pants 30 Pack,No regulation,Continence
@@ -1457,7 +1457,7 @@ ean,name,regulation,category
 5060259571688,Collagen Superdose Skin Care 300ml,No regulation,Skincare
 5055148400682,Lamberts Calcium Ascorbate 250g,No regulation,Vitamins
 0658556024836,Living Nutrition Organic Fermented Sibo-Go 60 Capsules,No regulation,Vitamins
-8009722000802,Otodine Ear Cleaning Solution 100ml,No regulation,Women's Health
+8009722000802,Otodine Ear Cleaning Solution 100ml,No regulation,Home & Household
 9332996000216,Grahams Natural Psoriasis Cream 75g,No regulation,Skincare
 3666057145414,Clarins Velvet Cleansing Milk for Normal/Dry Skin 200ml,No regulation,Skincare
 3800219790368,Alteya Organic Rose Otto Night Moisturiser Bio Damascena 50ml,No regulation,Skincare
@@ -1507,7 +1507,7 @@ ean,name,regulation,category
 3282770208795,Avène Hydrance SPF30 Rich 40ml,No regulation,Skincare
 5060099030215,Odylique Creamy Coconut Cleanser 200ml,No regulation,Skincare
 3282770395938,Avène Intense Protect SPF50+ 150ml,No regulation,Skincare
-8009722000925,Before-X Sterile Solution of Trisedta 100ml,No regulation,Women's Health
+8009722000925,Before-X Sterile Solution of Trisedta 100ml,No regulation,First Aid
 8009722001939,Ermidra Rehydrating Shampoo 250ml,No regulation,Hair Care
 8809186283854,Jumiso All Day Vitamin Brightening & Balancing Facial Serum 30ml,No regulation,Skincare
 3282770392999,Avène High Protection SPRAY SPF30+ 200ml,No regulation,Skincare
@@ -1523,7 +1523,7 @@ ean,name,regulation,category
 5711782000014,AllMatters Menstrual Cup Size A,No regulation,Women's Health
 5031013102226,Higher Nature True Food All Man 90 Capsules,No regulation,Vitamins
 3663555004311,Hana 75mg Film Coated Tablets Desogestrel 3 Month Supply,P,Prescription Medicines
-0020714281113,Clinique Anti-Blemish Solutions Clarifying Lotion 200ml,No regulation,Women's Health
+0020714281113,Clinique Anti-Blemish Solutions Clarifying Lotion 200ml,No regulation,Skincare
 8809447251363,Dr.Althea Azulene 147HA Intensive Soothing Cream 50ml,No regulation,Skincare
 0033984041424,Solgar Red Clover Flower & Leaf Extract 60 Capsules,No regulation,Vitamins
 0074312000089,Nature's Bounty Biotic Pro 60 Gummies,No regulation,Vitamins
@@ -1563,7 +1563,7 @@ ean,name,regulation,category
 5038581124537,Yankee Candle Advent Calendar 12x37g,No regulation,Beauty
 5707390040252,Pharma Nord Omega 7 Sea Buckthorn Oil 60 Capsules,No regulation,Vitamins
 0083000261107,Nature's Answer Liquid Vitamin B-12 60ml,No regulation,Vitamins
-0033984024618,Solgar Rutin 500mg 100 Tablets,No regulation,Women's Health
+0033984024618,Solgar Rutin 500mg 100 Tablets,No regulation,Vitamins
 5060193641799,Bloom & Blossom Smooth Moves Stretch Mark Oil 150ml,No regulation,Skincare
 0033984036727,Solgar Whey To Go Protein Powder (Chocolate) 454g Powder,No regulation,Vitamins
 0634158928604,Planet Paleo Pure Gelatine Small 200g,No regulation,Skincare
@@ -1633,7 +1633,7 @@ ean,name,regulation,category
 5709976233201,Pharma Nord Bio-Curcumin 50 Capsules,No regulation,Vitamins
 5060099031427,Odylique Rose Travel Set,No regulation,General Health
 4005900908421,Eucerin Pigment Control Tinted Light SPF50,No regulation,Skincare
-5410765000804,Excilor Solution for Fungal Nail Infection Treatment 3.3ml,GSL,Women's Health
+5410765000804,Excilor Solution for Fungal Nail Infection Treatment 3.3ml,GSL,Beauty
 5060221910675,Symprove Daily Live & Bacteria Supplement Mango & Passion Fruit 500ml,No regulation,Vitamins
 5025970015132,Nivea Feel Rejuvenated Advanced Anti-Age Skincare Set,No regulation,Skincare
 0658556024638,Living Nutrition Your Flora Regenesis 60 Capsules,No regulation,Vitamins
@@ -1700,7 +1700,7 @@ ean,name,regulation,category
 5060503930001,LithoLexal Bone Health Osteoporotic 60 Tablets,No regulation,Vitamins
 5060734420012,Rose & Caramel Velvety Dark Olive Self Tanning Mousse 200ml,No regulation,Hair Care
 5400951990088,Wartner Pro Pen,GSL,Skincare
-0832826002216,ClearZal Antimicrobial Nail Solution 30ml,No regulation,Women's Health
+0832826002216,ClearZal Antimicrobial Nail Solution 30ml,No regulation,Beauty
 5060018511733,KIKI Health Organic Psyllium Husk Powder 275g,No regulation,Digestive
 5060018512778,KIKI Health Organic Slippery Elm Powder 45g,No regulation,Vitamins
 5031013108716,Higher Nature Aeterna Men Hair Complex 60 Capsules,No regulation,Hair Care
@@ -1775,7 +1775,7 @@ ean,name,regulation,category
 5021265223404,Vitabiotics Wellwoman Original 90 Capsules,No regulation,Vitamins
 5391500071337,Cleanmarine Krill Oil High Strength 590 Marine Gelcaps 60 Pack,No regulation,Skincare
 5707637270206,Pharma Nord Bio-Biloba 100mg 60 Tablets,No regulation,Vitamins
-5701170343878,TrizAural Solution 118ml,No regulation,Women's Health
+5701170343878,TrizAural Solution 118ml,No regulation,General Health
 3380810033663,Clarins Toning Lotion with Iris Alcohol Free 200ml,No regulation,Skincare
 5010415230300,Tommee Tippee Bath'n'room Thermometer,No regulation,First Aid
 5021265223398,Vitabiotics Perfectil Plus Tablets & Capsules 28+28 Pack,No regulation,Vitamins
@@ -1823,7 +1823,7 @@ ean,name,regulation,category
 5055148412098,Lamberts Lecithin Granules 250g,No regulation,General Health
 5060623371739,Migraine treatment - Torrent Sumatriptan 100mg 6 Tablets,P,Pain Relief
 4005900552372,Eucerin Anti-Pigment Spot Corrector 5ml,No regulation,General Health
-3605874646483,Sonotix Solution 120ml,No regulation,Women's Health
+3605874646483,Sonotix Solution 120ml,No regulation,General Health
 0739090024787,Imidaflea 40mg Spot-On Solution <4kg 3 x 0.4ml,GSL,Pet Care
 5027314498571,Bio-Kult Mind Advanced 60 Capsules,No regulation,Vitamins
 5034511006409,Green People Organic Babies Silent Night Calming Lavender Gift Set,No regulation,Beauty
@@ -1963,7 +1963,7 @@ ean,name,regulation,category
 3574660446791,Nicorette Icy White Gum 4mg 105 Pack,GSL,Stop Smoking
 5407007651221,Bambaw Metal Safety Razor Rainbow,No regulation,Men's Grooming
 7350087736365,E45 Dermatitis Cream 50ml,No regulation,Skincare
-7618900970014,Mavala Mava-Med Fungal Nail Solution 5ml,No regulation,Women's Health
+7618900970014,Mavala Mava-Med Fungal Nail Solution 5ml,No regulation,Beauty
 5060361080627,Visuxl Eye Drops 10ml,No regulation,Eye Care
 5407007651214,Bambaw Metal Safety Razor Pink,No regulation,Men's Grooming
 5060571721785,UpCircle Cleansing Face Milk - Aloe Vera & Oat Powder 120ml,No regulation,Skincare
@@ -2259,7 +2259,7 @@ ean,name,regulation,category
 3605540496954,Biotherm Deodorant Roll-On Pure Protect 24H 75ml,No regulation,Beauty
 5709976483200,Pharma Nord Bio-Glucan Plus 60 Tablets,No regulation,Vitamins
 5056142605318,Protein World Slender Blend Banana Split Protein Powder 600g,No regulation,Vitamins
-0020714389109,Clinique Deep Comfort Hand & Cuticle Cream 75ml,No regulation,Women's Health
+0020714389109,Clinique Deep Comfort Hand & Cuticle Cream 75ml,No regulation,Skincare
 5060332531202,Lindens Health + Nutrition Potassium 200mg 500 Tablets,No regulation,Vitamins
 5060553605126,BeYou Sleep Pillow Mist 30ml,No regulation,Beauty
 0033984001152,Solgar Antioxidant Nutrients 50 Tablets,No regulation,Vitamins
@@ -2377,7 +2377,7 @@ ean,name,regulation,category
 3614271202697,Biotherm Homme 72H Day Control Antiperspirant Spray 150ml,No regulation,Beauty
 5060258390204,Pro D3 Liquid Drops Orange Flavour 20ml,GSL,Vitamins
 8809566990068,Benton Tea Tree Cleansing Water 200ml,No regulation,Skincare
-5060571720160,UpCircle Coffee Face Scrub Floral Blend 100ml,No regulation,Oral Care
+5060571720160,UpCircle Coffee Face Scrub Floral Blend 100ml,No regulation,Skincare
 5060704340005,Acala Reusable Bamboo Razor + One Blade,No regulation,Men's Grooming
 0033984021709,Solgar Pantothenic Acid 550mg 50 Capsules,No regulation,Vitamins
 5425012530973,Remescar Silicone Scar Stick Treatment SPF15 5.4g,No regulation,Skincare
@@ -2661,7 +2661,7 @@ ean,name,regulation,category
 3337875905602,CeraVe Hydrating Cleanser Refill Pouch 473ml,No regulation,Skincare
 5000158067172,Gaviscon Double Action Mint Oral Suspension 600ml,GSL,Digestive
 5060148520490,BetterYou Magnesium Original Soak 500ml,No regulation,Vitamins
-5017007601647,Exorex Lotion 5% Coal Tar Solution 100ml,GSL,Women's Health
+5017007601647,Exorex Lotion 5% Coal Tar Solution 100ml,GSL,Skincare
 0085805255619,Elizabeth Arden Eight Hour Hand Treatment Cream 200ml,No regulation,Skincare
 5060571821249,The Good Guru Vegan Protein Chocolate 500g,No regulation,Vitamins
 5020465201779,Cetaphil Daily Hydration Moisturiser 88ml,No regulation,Skincare
@@ -2786,7 +2786,7 @@ ean,name,regulation,category
 5060203790271,Terranova Biotin 300Ug Complex 100 Pack,No regulation,Vitamins
 0876198042821,Optixcare Eye Health 20g,No regulation,General Health
 0658556116791,Botanicals For Life Organic Turmeric Extract 50ml,No regulation,Vitamins
-5013011002487,Phenergan Elixir 5mg/5ml Oral Solution 6y+ 100ml,P,Women's Health
+5013011002487,Phenergan Elixir 5mg/5ml Oral Solution 6y+ 100ml,P,Prescription Medicines
 0054402250068,Australian Gold Aloe Freeze Spray Gel 237ml,No regulation,Skincare
 5060571822369,The Good Guru Magnesium Taurate + Vitamin B6 90 Capsules,No regulation,Vitamins
 3760201136300,Lamazuna Menstrual Cup-Size 1 (Pink Pouch) 1 Pack,No regulation,Women's Health
@@ -3149,7 +3149,7 @@ ean,name,regulation,category
 5060519147769,Pukka Wholistic Turmeric 30 Capsules,No regulation,Vitamins
 3282770037678,Avène Cleanance Expert Lotion 40ml,No regulation,Skincare
 5023652440067,Nature's Aid Pro-Cognitiv (10 Bill Bac) 60 Capsules,No regulation,Vitamins
-7618900914018,Mavala Cuticle Cream 15ml,No regulation,Women's Health
+7618900914018,Mavala Cuticle Cream 15ml,No regulation,Skincare
 0658556116883,Botanicals For Life Organic Black Walnut & Wormwood Extract 50ml,No regulation,General Health
 4031626711465,Hycosan Dual 7.5ml,No regulation,Eye Care
 5060571721549,UpCircle Gua Sha,No regulation,General Health
@@ -3186,7 +3186,7 @@ ean,name,regulation,category
 5034511001091,Green People for Men No. 9 Mint & Prebiotics Deodorant 75ml,No regulation,Men's Health
 5031013103384,Higher Nature Premenstrual Complex 60 Capsules,No regulation,Women's Health
 5060203791827,"Terranova Chromium, Cinnamon & Lipoic Acid Complex 50 Pack",No regulation,Vitamins
-7618900915015,Mavala Cuticle Remover 10ml,No regulation,Women's Health
+7618900915015,Mavala Cuticle Remover 10ml,No regulation,Skincare
 0859975002263,Andalou Pumpkin Pack in Honey Glycolic Mask 50g,No regulation,Baby & Child
 5031013100116,Higher Nature Serotone 5HTP 100mg 30 Capsules,No regulation,Vitamins
 0033984036253,Solgar Formula Vm-Prime for Adults 50+ 60 Tablets,No regulation,Vitamins
@@ -3214,7 +3214,7 @@ ean,name,regulation,category
 5060673980004,Dayonix Irofix Drops 30ml,No regulation,Vitamins
 8576201379624,Urban Tonic Beard Balm Spiced Raspberry 60ml,No regulation,Men's Grooming
 5011417567272,Durex Intense Condoms 12 Pack,No regulation,Sexual Wellness
-5060697570014,TestCard Urinary Tract Infection (UTI) Kit,No regulation,Women's Health
+5060697570014,TestCard Urinary Tract Infection (UTI) Kit,No regulation,General Health
 8032779841043,Bazuka Sub-Zero 50ml,GSL,General Health
 7322540574890,Tena Pants Protect+ Super Large 12 Pack,No regulation,Continence
 8700216075459,Gillette Proglide Gift Bag Set,No regulation,General Health
@@ -3231,13 +3231,13 @@ ean,name,regulation,category
 5034268004178,ProVen Probiotics for Pregnancy 30 Capsules,No regulation,Digestive
 5031013101571,Higher Nature Ultratrace 57ml,No regulation,Vitamins
 5060202181216,Cytoplan Glucosamine Hydrochloride 750mg 60 Capsules,No regulation,Vitamins
-7618900917019,Mavala Mavapen Cuticle Oil 4.5ml,No regulation,Women's Health
+7618900917019,Mavala Mavapen Cuticle Oil 4.5ml,No regulation,Skincare
 5031013100864,Higher Nature True Food Gtf Chromium 90 Tablets,No regulation,Vitamins
 3574661748788,Aveeno Calm Restore Oat Gel Moisturiser 50ml,No regulation,Skincare
 5010249025028,FSC Glucosamine 500mg & Chondroitin 400mg 60 Tablets,No regulation,Vitamins
 8711428079425,3M Steri-Strip 3mm x 7.5mm 12 Pack,No regulation,General Health
 9338177000600,Dermalex Repair Eczema 30g,No regulation,Skincare
-3700454505614,Ocryl Cleansing Solution 135ml,No regulation,Women's Health
+3700454505614,Ocryl Cleansing Solution 135ml,No regulation,Skincare
 5036631008691,Vamousse Head Lice Treatment 160ml,No regulation,Hair Care
 5407007651085,Bambaw Shaving Brush Black,No regulation,Men's Grooming
 5060112865138,Fushi Organic Reishi Mushroom 60 Capsules,No regulation,Vitamins
@@ -3267,7 +3267,7 @@ ean,name,regulation,category
 0886284905138,Pet Head Furtastic Shampoo 300ml,No regulation,Pet Care
 5011309049114,Cetraben Lotion 475ml,GSL,Skincare
 7322540630763,Tena Pants Protect + Super XL 12 Pack,No regulation,Continence
-5060214560610,Sterling Lactulose 3.3g/5ml Oral Solution 500ml,P,Women's Health
+5060214560610,Sterling Lactulose 3.3g/5ml Oral Solution 500ml,P,Prescription Medicines
 5060202180974,Cytoplan Immunovite Beta 1-3 1-6 Glucan 250mg 30 Capsules,No regulation,Vitamins
 4005900475220,Nivea Sun Face SPF50 Shine Control 50ml,No regulation,Skincare
 4051895016207,Fresubin Juicy Cherry 4x200ml,No regulation,Vitamins
@@ -3338,7 +3338,7 @@ ean,name,regulation,category
 4006000100272,Eucerin Urea Repair 5% Urea Gentle Shower Gel 400ml,No regulation,Beauty
 5012654201387,Carnation Verruca & Wart Remover Freeze Spray 50ml,No regulation,Skincare
 9326922000753,Australian Bush Flower Essences Fringed Violet 15ml,No regulation,General Health
-5060097930746,Hibiscrub 4% Cutaneous Solution 500ml,No regulation,Women's Health
+5060097930746,Hibiscrub 4% Cutaneous Solution 500ml,No regulation,First Aid
 5060310356155,Indigo Herbs Nutrition Chaga Mushroom Extract 50g,No regulation,Vitamins
 5038483844663,Scholl Softgrip C1 Below The Knee Compression Hosiery Small Open Toe Natural,No regulation,Supports & Braces
 5060571822987,The Good Guru High Strength Berberine 98% HCL 60 Capsules,No regulation,Vitamins
@@ -3378,7 +3378,7 @@ ean,name,regulation,category
 5010249024960,FSC Coq10 30mg 90 Capsules,No regulation,Vitamins
 5060523019885,Ted Baker Men's 30ml Eau de Toilette & 150ml Body Wash Gift Set,No regulation,Beauty
 4005900545701,Nivea Q10 Anti-Wrinkle Firming Eye Cream 15ml,No regulation,Skincare
-0074312008160,Nature's Bounty Beautiful Skin Gummies 60 Pack,No regulation,Women's Health
+0074312008160,Nature's Bounty Beautiful Skin Gummies 60 Pack,No regulation,Skincare
 0859975020021,Andalou 1000 Roses Rosewater Mask 50g,No regulation,Skincare
 3607340846571,Lancaster Sun Control Face Cream SPF50 50ml,No regulation,Skincare
 5000158065581,Gaviscon Original Peppermint 600ml,GSL,Digestive
@@ -3551,7 +3551,7 @@ ean,name,regulation,category
 9350114000078,DermaSukin Daily Intensive Hydrating Cream 500ml,No regulation,Skincare
 3282770204223,Klorane Eye Makeup Remover Lotion with Cornflower 200ml,No regulation,Skincare
 5060069281869,Clearpore Waterproof Adhesive Film Dressing 60 Pack,No regulation,First Aid
-5031013107214,Higher Nature Relax & Unwind 10 Sachets,No regulation,Digestive
+5031013107214,Higher Nature Relax & Unwind 10 Sachets,No regulation,Vitamins
 5038483844601,Scholl Softgrip C1 Below The Knee Compression Hosiery Large Closed Toe Black,No regulation,Supports & Braces
 4001638590020,Weleda Sea Buckthorn Elixir 200ml,No regulation,Vitamins
 5038483844670,Scholl Softgrip C1 Below The Knee Compression Hosiery Medium Natural,No regulation,Supports & Braces
@@ -3627,7 +3627,7 @@ ean,name,regulation,category
 0753950003019,Doctor's Best Biotin 5000mcg 120 Veggie Cap,No regulation,Vitamins
 0886284904421,Pet Head Quick Fix Foam 200ml,No regulation,Pet Care
 5055565710838,Male Hair Loss - Finasteride 1mg 28 Tablets,P,Men's Health
-0085805247959,Elizabeth Arden White Tea Skin Solutions 200ml Toning Lotion,No regulation,Women's Health
+0085805247959,Elizabeth Arden White Tea Skin Solutions 200ml Toning Lotion,No regulation,Skincare
 5060203790462,Terranova Vitamin D3 2000IU Complex 50 Capsules,No regulation,Vitamins
 9780201379624,Osi Magnesium Body Lotion + Melatonin + OptiMSM Lavender 100ml,No regulation,Skincare
 5023652252035,Nature's Aid CO-Q-10 100mg 30 Softgels,No regulation,Vitamins
@@ -3671,7 +3671,7 @@ ean,name,regulation,category
 5000123101047,Atopic Eczema Treatment - Betnovate RD 0.025% Cream 100g,P,Skincare
 96202463,BetterYou Vitamin C Oral Spray 50ml,No regulation,Vitamins
 5055148414986,Lamberts Cogni-Focus 30 Capsules,No regulation,Vitamins
-5016695926612,Viatris Lactulose 3.335g/5ml Oral Solution 500ml,P,Women's Health
+5016695926612,Viatris Lactulose 3.335g/5ml Oral Solution 500ml,P,Prescription Medicines
 4004148339745,Floradix Neuro Balance 250ml,No regulation,General Health
 5060203793234,Terranova Ginger 350mg 50 Pack,No regulation,Vitamins
 5014363000046,Emollin Emollient Spray 240ml,No regulation,Skincare
@@ -3695,7 +3695,7 @@ ean,name,regulation,category
 5011408054392,L'Oréal Age Perfect Rehydrating Day Cream 50ml,No regulation,Skincare
 5060203791384,Terranova Prenatal Multivitamin Complex 50 Capsules,No regulation,Vitamins
 5055148413194,Lamberts Vitamin A 5000iu 120 Capsules,No regulation,Vitamins
-9327693005367,Sukin Oil Balancing+ Charcoal Anti-Pollution Facial Masque 100ml,No regulation,Women's Health
+9327693005367,Sukin Oil Balancing+ Charcoal Anti-Pollution Facial Masque 100ml,No regulation,Skincare
 5013455330047,Weleda Digestive Relief Oral Spray 20ml,No regulation,Vitamins
 5013455020085,Weleda Aknedoron Cleansing Lotion 100ml,No regulation,Skincare
 5000158105591,Nurofen Plus 32 Tablets,P,Pain Relief
@@ -3717,7 +3717,7 @@ ean,name,regulation,category
 5060018513201,KIKI Health Zeolite Powder 120g,No regulation,Vitamins
 5391531760149,Optase Allergy Eye Drops 20 x 0.5ml,GSL,Eye Care
 5060148524245,BetterYou Magnesium Menopause Body Spray 100ml,No regulation,Women's Health
-5016007202106,Optive Solution 10ml,No regulation,Women's Health
+5016007202106,Optive Solution 10ml,No regulation,General Health
 5055148403058,Lamberts Cranberry Complex 100g Powder,No regulation,Vitamins
 5704947016494,O'Keeffe's Hand & Body Lotion 315ml,No regulation,Skincare
 5060480200258,Georganics Oilpulling Mouthwash Spearmint 275ml,No regulation,Oral Care
@@ -3743,7 +3743,7 @@ ean,name,regulation,category
 5060291420203,Nursem Caring Skin Fix 50ml,No regulation,Skincare
 5011309019711,Oilatum Emollient Cream 500ml,GSL,Skincare
 5000309007545,Nexium Control 20mg Gastro-Resistant Tablets 14 Pack,GSL,Vitamins
-5015915832047,Lactulose 3.3g/5ml Oral Solution 500ml,P,Women's Health
+5015915832047,Lactulose 3.3g/5ml Oral Solution 500ml,P,Prescription Medicines
 5065010483019,Fussy Natural Deodorant Wavy Days Starter Pack,No regulation,Beauty
 7610313303557,A.Vogel Echinaforce Echinacea 120 Tablets,No regulation,Vitamins
 0886284902335,Pet Head Mucky Pup Spray 300ml,No regulation,Pet Care
@@ -3863,7 +3863,7 @@ ean,name,regulation,category
 5013455330030,Weleda Stress Relief Oral Spray 20ml,GSL,Vitamins
 6248905679820,Urban Tonic Beard Wash 125ml,No regulation,Men's Grooming
 5060391848099,Dr. Organic Mum Stretch Mark Oil with Calendula 100ml,No regulation,Skincare
-5000283661641,DulcoSoft Powder Oral Solution 20 Sachets,GSL,Women's Health
+5000283661641,DulcoSoft Powder Oral Solution 20 Sachets,GSL,Vitamins
 5055148410957,Lamberts L-Histidine 500mg 30 Capsules,No regulation,Vitamins
 0634158970115,Mushrooms 4 Life Organic Cordyceps Beetroot Latte 10 Sachets,No regulation,Vitamins
 7702018347629,Gillette Venus 5 Extra Smooth Replacement Blades 4 Pack,No regulation,General Health
@@ -4063,7 +4063,7 @@ ean,name,regulation,category
 5051562030603,Voltarol 12hr Joint Pain Relief 50g,P,Pain Relief
 4005900600202,Nivea Sun Kids SPF50+ Sensitive Spray 200ml,No regulation,Skincare
 0033984017504,Solgar Megasorb Vitamin B-Complex 50 Tablets,No regulation,Vitamins
-5000283661948,Dulcolax Twelve Plus Pico Liquid Oral Solution 300ml,P,Women's Health
+5000283661948,Dulcolax Twelve Plus Pico Liquid Oral Solution 300ml,P,Digestive
 7643022210366,Shea Moisture Coconut & Hibiscus Curl Enhancing Smoothie Cream 340g,No regulation,Skincare
 0764302280613,Shea Moisture Extra Moisture Transitioning Milk 236ml,No regulation,Skincare
 5034268006226,ProVen Probiotics Probiotics plus Total Intestinal & Digestive Support 14 Sachets,No regulation,Supports & Braces
@@ -4072,7 +4072,7 @@ ean,name,regulation,category
 5015802278194,Colony Lavender Fields Medium Candle 335g,No regulation,Beauty
 4051895014586,Fresubin Energy Protein Drink Strawberry 4 x 200ml,No regulation,Vitamins
 5060102301912,One Nutrition Gluten Shield 30 Tablets,No regulation,Vitamins
-5012716192004,Neutrogena T-Gel Therapeutic Shampoo 250ml,GSL,Women's Health
+5012716192004,Neutrogena T-Gel Therapeutic Shampoo 250ml,GSL,Hair Care
 5060655500138,Unicare Vinyl Powder Free Examination Gloves large 100 Pack,No regulation,Vitamins
 5060203790226,Terranova Folate (Methylfolate) 400Ug Complex 50 Pack,No regulation,Vitamins
 7322540587531,Tena Pants Protect+ Plus Small 14 Pack,No regulation,Continence
@@ -4127,7 +4127,7 @@ ean,name,regulation,category
 3282770037067,Avène Cleanance MAT Mattifying Lotion 200ml,No regulation,Skincare
 0033984009417,Solgar Cod Liver Oil 250 Softgels,No regulation,Vitamins
 5055148402396,Lamberts Flaxseed Oil 1000mg 90 Capsules,No regulation,Vitamins
-0033984024601,Solgar Rutin 500mg 50 Tablets,No regulation,Women's Health
+0033984024601,Solgar Rutin 500mg 50 Tablets,No regulation,Vitamins
 0033984009318,Solgar Coq-10 30mg 30 Capsules,No regulation,Vitamins
 0033984039032,Solgar Ginger Root 100 Capsules,No regulation,Vitamins
 0033984311701,Solgar Super Cod Liver Oil Complex 60 Softgels,No regulation,Vitamins
@@ -4263,7 +4263,7 @@ ean,name,regulation,category
 0033984037861,Solgar Cayenne 520mg 100 Capsules,No regulation,Vitamins
 4062981021937,Numark Ibuprofen 400mg 96 Coated Tablets,P,Pain Relief
 0033984041189,Solgar Deglycyrrhised Licorice Root Extract 60 Capsules,No regulation,Vitamins
-5055148403553,Lamberts Rutin and Vitamin C 500mg 90 Tablets,No regulation,Women's Health
+5055148403553,Lamberts Rutin and Vitamin C 500mg 90 Tablets,No regulation,Vitamins
 0033984038851,Solgar Fenugreek 100 Capsules,No regulation,Vitamins
 5055144200859,Relonchem Ibuprofen 400mg 84 Tablets,P,Pain Relief
 4004148057076,Floradix Liquid Iron & Vitamin Formula 250ml,No regulation,Vitamins
@@ -4302,7 +4302,7 @@ ean,name,regulation,category
 3282770141917,Klorane Oily Hair Shampoo with Organic Nettle 200ml,No regulation,Hair Care
 5060519147462,Pukka Calm Collection 30 Tea Sachets,No regulation,Vitamins
 93468251,Australian Bush Flower Essences Woman Drops 30ml,No regulation,Vitamins
-3282770144628,Klorane Anti-Pollution Conditioner with Aquatic Mint 150ml,No regulation,Women's Health
+3282770144628,Klorane Anti-Pollution Conditioner with Aquatic Mint 150ml,No regulation,Hair Care
 7702018529179,Venus Extra Smooth Snap Sensitive,No regulation,General Health
 8032668870918,HydraMed Forte 30 Doses,No regulation,General Health
 5010249190276,FSC Head High Pro-Amino 120 Veg Capsules,No regulation,Vitamins
@@ -4498,7 +4498,7 @@ ean,name,regulation,category
 8700216433280,Seven Seas Jointcare Essential Capsules 30 Caps,No regulation,Vitamins
 4028694000256,Vismed Multi Lubricant Eye Drops 10ml,No regulation,Sexual Wellness
 0856175001911,Fake Bake Beyond Bronze Self Tanning Mousse 210ml,No regulation,Hair Care
-0300656144067,Opti-Free Express Multi-Purpose Disinfecting Solution 355ml,No regulation,Women's Health
+0300656144067,Opti-Free Express Multi-Purpose Disinfecting Solution 355ml,No regulation,General Health
 0010181043598,Palmer's Cocoa Butter Formula Skin Therapy Oil Rosehip 150ml,No regulation,Skincare
 5060704340364,Acala Jade Roller,No regulation,General Health
 0033984004252,Solgar Formula Vm-2000 30 Tablets,No regulation,Vitamins
@@ -4576,7 +4576,7 @@ ean,name,regulation,category
 5010249118904,FSC MSM 750mg 120 Tablets,No regulation,Vitamins
 5017978000050,Probio 7 Global Travel 15 Vegcaps,No regulation,Vitamins
 5060176673298,Dr. Organic Skin Expert Leg & Vein Cream with Organic Royal Jelly,No regulation,Skincare
-5011309047110,Polytar Coal Tar Scalp Solution 150ml,GSL,Women's Health
+5011309047110,Polytar Coal Tar Scalp Solution 150ml,GSL,Hair Care
 0672153905954,Woody's Text Web Hair Pomade,No regulation,Hair Care
 5020465201601,Acnecide Face Gel Spot Treatment 5% Benzoyl Peroxide 15g,GSL,Skincare
 4013474107249,Gehwol Med Sensitive 75ml,No regulation,General Health
@@ -4623,10 +4623,10 @@ ean,name,regulation,category
 5060104170578,YES Organic Water Based Personal Lubricant-100ml,No regulation,Sexual Wellness
 5011309692617,Zeroveen Emollient Cream 500g,No regulation,Skincare
 0017854117686,Baylis & Harding Wild Fig & Pomegranate Mini Stack Gift Set,No regulation,Beauty
-5060361080344,Xailin Sterile Eye Wash Solution 20 Doses,No regulation,Women's Health
+5060361080344,Xailin Sterile Eye Wash Solution 20 Doses,No regulation,Eye Care
 7702018544646,Gillette King C Replacement Blades 3 Pack,No regulation,General Health
 5010415364791,Tommee Tippee Kalani Maxi Sensory Teething Toy,No regulation,Baby & Child
-5017007100447,Lactulose Solution Teva 300ml,P,Women's Health
+5017007100447,Lactulose Solution Teva 300ml,P,Prescription Medicines
 3661103045229,Frontline Spot On Dog 1 Pipette,No regulation,Pet Care
 3282770200904,Klorane Non Aerosol Dry Shampoo with Oat Milk 50g,No regulation,Hair Care
 5011417591048,Gaviscon Double Action Mint Oral Suspension 250ml,GSL,Digestive
@@ -4844,7 +4844,7 @@ ean,name,regulation,category
 0074312002663,Nature's Bounty Turmeric 500mg 60 Capsules,No regulation,Vitamins
 0017854117709,Baylis & Harding Wild Fig & Pomegranate Light Up Decanter,No regulation,Beauty
 0654749351673,Avalon Tea Tree Scalp Treatment Conditioner 312g,No regulation,Hair Care
-5038483224410,Full Marks Solution 5 Minute Treatment 100ml,GSL,Women's Health
+5038483224410,Full Marks Solution 5 Minute Treatment 100ml,GSL,General Health
 5023652373037,Nature's Aid Men Health & Vitality 30 Capsules,No regulation,Vitamins
 5013455060623,Weleda Combudoron Ointment 25g,GSL,Vitamins
 8420212035034,Cuderm Moisturising Lotion 500ml,No regulation,Skincare
@@ -4909,7 +4909,7 @@ ean,name,regulation,category
 5014713100303,Tiger Balm Regular White 30g,GSL,Skincare
 5011309120516,Cetraben Moisturising Facial Day Cream 75g,No regulation,Skincare
 5016007205015,Liquifilm Tears Udv 30 x 0.4ml,No regulation,General Health
-7317510000615,Molaxole Powder for Oral Solution 30 Sachets,P,Women's Health
+7317510000615,Molaxole Powder for Oral Solution 30 Sachets,P,Prescription Medicines
 5017402008478,Tisserand Rosemary Organic Essential Oil 9ml,No regulation,Skincare
 5037353004145,Skins Extra Large Condoms 16 Pack,No regulation,Sexual Wellness
 5017402041604,Tisserand Rosemary Hair Oil 100ml,No regulation,Hair Care
@@ -4997,7 +4997,7 @@ ean,name,regulation,category
 0017854117334,Baylis & Harding Sweet Mandarin & Grapefruit Light Up Bath Bubbles,No regulation,Beauty
 5038581105871,Yankee Candle Sleep Diffuser Kit Bronze,No regulation,Beauty
 0716237180537,Giovanni Smooth As Silk Shampoo 250ml,No regulation,Hair Care
-5016379142000,Dermax Therapeutic Shampoo 250ml,P,Women's Health
+5016379142000,Dermax Therapeutic Shampoo 250ml,P,Hair Care
 0724742008277,Alba Hawaiian Green Tea SPF 45 Sunscreen,No regulation,Skincare
 5029053574110,Huggies Pull-Ups Boy 2-4yr Nappies 20 Pack,No regulation,Baby & Child
 5029053574158,Huggies Disney Cars Pull Ups Night-Time Nappies Size 6 18 Pack,No regulation,Baby & Child
@@ -5060,7 +5060,7 @@ ean,name,regulation,category
 5060332536146,Lindens Health + Nutrition Ultra Garlic 120 Capsules,No regulation,Vitamins
 0724742007638,Alba Botanica Acne Deep Clean Astringent 177ml,No regulation,Skincare
 4015600116415,Wella Professional Shampoo Enrich Fine/Normal Hair 250ml,No regulation,Hair Care
-8436583640043,MiiN Routine Headband in Pink Nude,No regulation,Women's Health
+8436583640043,MiiN Routine Headband in Pink Nude,No regulation,General Health
 5021769997139,Technic Man'Stuff Body Care Essentials Basket Gift Set,No regulation,Beauty
 5010249011854,FSC Vitamin B Supreme High Potency 60 Tablets,No regulation,Vitamins
 5023652442030,Nature's Aid Pro-Travel (Pro-30 MAX Vit B1) 15 Day Supply,No regulation,Vitamins
@@ -5177,7 +5177,7 @@ ean,name,regulation,category
 0017854106031,Baylis & Harding Limited Edition Mulberry Fizz Round Tin Gift Set,No regulation,Beauty
 4013162019311,Fenjal Classic Creme Bath Oil 125ml,No regulation,Beauty
 5011309089011,Cetraben 2-In-1 Daily Cleansing Cream 200ml,No regulation,Skincare
-5050474106185,"Blink Total Care Disinfecting, Storing & Wetting Solution 120ml",No regulation,Women's Health
+5050474106185,"Blink Total Care Disinfecting, Storing & Wetting Solution 120ml",No regulation,General Health
 0078522000198,Jason Jojoba Conditioner 454g,No regulation,Hair Care
 0078522070054,Jason Thickening Biotin + Hyaluronic Acid Shampoo 473ml,No regulation,Hair Care
 5060332530342,Lindens Health + Nutrition Oregano Oil 25mg 100 Capsules,No regulation,Vitamins
@@ -5317,7 +5317,7 @@ ean,name,regulation,category
 4013474117255,Gehwol Deodorant Cream 75ml,No regulation,Skincare
 5021265250257,Vitabiotics Wellkid Peppa Pig Omega-3 30 Soft Jellies,No regulation,Vitamins
 5060571721525,UpCircle Eye Roller,No regulation,General Health
-8436583640012,MiiN Routine Headband in White Creme,No regulation,Women's Health
+8436583640012,MiiN Routine Headband in White Creme,No regulation,General Health
 5010249031944,FSC Chromium Picolinate 200Ug 90 Tablets,No regulation,Vitamins
 5021265220038,Vitabiotics Perfectil Original 30 Capsules,No regulation,Vitamins
 0078522000785,Jason Purifying Tea Tree Shampoo 517ml,No regulation,Hair Care
@@ -5325,7 +5325,7 @@ ean,name,regulation,category
 5011417561508,Lanacane Anti Chafing Gel 28g,No regulation,Skincare
 9327693006951,Sukin Oil Balancing Conditioner 500ml,No regulation,Hair Care
 5012131742600,Voltarol Pain Eze Emulgel 50g,P,Pain Relief
-5016379130014,Capasal Therapeutic Shampoo 250ml,P,Women's Health
+5016379130014,Capasal Therapeutic Shampoo 250ml,P,Hair Care
 4011700415403,Tabac Bath & Shower Gel 400ml,No regulation,Beauty
 5026445002879,Blue Stratos 100ml Aftershave & 150ml Body Spray Set,No regulation,Men's Grooming
 5060776980024,DR.VEGAN Vitamin D3 2500iu 30 Capsules,No regulation,Vitamins
@@ -5347,7 +5347,7 @@ ean,name,regulation,category
 5060291420258,Nursem Unfragranced Caring Hand Cream 75ml,No regulation,Skincare
 7322542092118,Tena Silhouette High Waist Underwear Black Large 8 Pack,No regulation,Continence
 4001638096515,Weleda Calendula Shampoo & Body Wash 200ml,No regulation,Hair Care
-5012748613362,Movicol Liquid Orange Concentrate for Oral Solution 500ml,P,Women's Health
+5012748613362,Movicol Liquid Orange Concentrate for Oral Solution 500ml,P,Prescription Medicines
 5060203790264,Terranova Biotin 300Ug Complex 50 Pack,No regulation,Vitamins
 4008666210609,Alpecin Double Effect Shampoo 200ml,No regulation,Hair Care
 5060089610731,Eropid Sildenafil 50mg 2 Tablets,P,Sexual Wellness
@@ -5356,7 +5356,7 @@ ean,name,regulation,category
 0078522000808,Jason Purifying Tea Tree Conditioner 227g,No regulation,Hair Care
 8700216452755,Old Spice Deep Sea 3 in 1 Shower Gel 1000ml,No regulation,Beauty
 5000158065635,Gaviscon Advance Peppermint Suspension - Dispensary sale - 250ml,P,Digestive
-5060133373858,Vizulize Advanced Multi-Purpose Contact Lens Solution 360ml,No regulation,Women's Health
+5060133373858,Vizulize Advanced Multi-Purpose Contact Lens Solution 360ml,No regulation,Eye Care
 5060391847900,Dr. Organic Aloe Vera & Shea Shampoo & Conditioner Bar 75g,No regulation,Hair Care
 5060332536382,Lindens Health + Nutrition Joint Health Formula 60 Capsules,No regulation,Pain Relief
 5054563907820,Otrivine Extra Dual Relief Spray 10ml,P,Prescription Medicines
@@ -6141,7 +6141,7 @@ ean,name,regulation,category
 5060018510354,KIKI Health Organic Nature's Living Superfood 20g,No regulation,Vitamins
 5010249041585,FSC Cantamega 60 Tablets,No regulation,Vitamins
 5054563126672,Centrum Women Daily Multivitamin 30 Tablets,No regulation,Vitamins
-6936983109925,2San Urinary Tract Infections (UTI) Test,No regulation,Women's Health
+6936983109925,2San Urinary Tract Infections (UTI) Test,No regulation,General Health
 3800219794205,Alteya Organic Bulgarian Melissa Water 120ml,No regulation,General Health
 5027097030012,Imodium Classic 2mg 12 Capsules,P,Digestive
 4005900712509,Nivea Q10 Firming Gradual Tan 200ml,No regulation,General Health
@@ -6245,7 +6245,7 @@ ean,name,regulation,category
 3800219794120,Alteya Organic Bulgarian Rose Water Spray 120ml,No regulation,Beauty
 5060332532605,Lindens Health + Nutrition Maca 500mg 100 Tablets,No regulation,Vitamins
 5012583095002,Schwarzkopf Poly Style Foam Perm Dry,No regulation,Hair Care
-4820232640272,Apriori Slim Bubblegum Pink Gold Soft,No regulation,Oral Care
+4820232640272,Apriori Slim Bubblegum Pink Gold Soft,No regulation,General Health
 5029354002695,Aloe Pura Aloe Vera Aftersun Lotion 200ml,No regulation,Skincare
 0017854117242,Baylis & Harding Sweet Mandarin & Grapefruit Duo Bottle Set,No regulation,Beauty
 5055148411558,Lamberts Acidophilus Extra 4 30 Capsules,No regulation,Vitamins
@@ -6253,7 +6253,7 @@ ean,name,regulation,category
 5055148402815,Lamberts Zincatest 100ml Liquid,No regulation,Vitamins
 8700216347358,Olay Anti-Wrinkle Firm Day Cream 50ml,No regulation,Skincare
 4006309024408,Salus Hawthorn Plant Extract 200ml,No regulation,General Health
-5017007100478,Lactulose Solution Teva 500ml,P,Women's Health
+5017007100478,Lactulose Solution Teva 500ml,P,Prescription Medicines
 5054563097743,Sensodyne Repair & Protect Whitening Toothpaste 75ml,No regulation,Oral Care
 6936983109918,2San Male Fertility Rapid Test,No regulation,General Health
 9329401001012,Pure Paw Paw Ointment Set 4x15g,No regulation,Skincare
@@ -6367,7 +6367,7 @@ ean,name,regulation,category
 3282770072815,Avène Cold Cream Hand Cream 50ml,No regulation,Cold & Flu
 5060480200241,Georganics Oilpulling Mouthwash Spearmint 100ml,No regulation,Oral Care
 5060391848242,Dr. Organic Eucalyptus Essential Oil 10ml,No regulation,Skincare
-5011309067019,Care Night Cold & Flu Oral Solution 200ml,P,Women's Health
+5011309067019,Care Night Cold & Flu Oral Solution 200ml,P,Cold & Flu
 5060776980031,DR.VEGAN Gentle Iron & Vitamin C 30 Capsules,No regulation,Vitamins
 8710522603130,TRESemmé Perfect Everyday Hair Set,No regulation,Hair Care
 4013162018512,Fenjal Intensive Body Milk 200ml,No regulation,General Health
@@ -6542,7 +6542,7 @@ ean,name,regulation,category
 0017854108752,"Baylis & Harding Goodness Oud, Cedar & Amber Body Wash 1000ml",No regulation,Beauty
 5060144640024,Bulldog Original Moisturiser 100ml,No regulation,Skincare
 5011309090314,Cetraben Moisture Protect Body Wash 200ml,No regulation,Skincare
-7317510000608,Molaxole Powder for Oral Solution 20 Sachets,P,Women's Health
+7317510000608,Molaxole Powder for Oral Solution 20 Sachets,P,Prescription Medicines
 5011309105513,Flexitol Hell Balm 25% Urea 75g,No regulation,Skincare
 5010123710293,Sinutab Non Drowsy 15 Tablets,P,Prescription Medicines
 5060332536139,Lindens Health + Nutrition Rosehip Max Joint Care Formula 90 Capsules,No regulation,Pain Relief
@@ -6803,7 +6803,7 @@ ean,name,regulation,category
 5025135001215,Malibu Clear Protection Spray SPF20 250ml,No regulation,Skincare
 5060332530847,Lindens Health + Nutrition Acai Berry Body Weight Formula 1000mg 60 Capsules,No regulation,Vitamins
 5010415635143,Tommee Tippee Roll n Go Bib,No regulation,General Health
-5012716191007,Neutrogena T-Gel Therapeutic Shampoo 125ml,GSL,Women's Health
+5012716191007,Neutrogena T-Gel Therapeutic Shampoo 125ml,GSL,Hair Care
 4029125079025,Nitrolingual Spray 200 Dose,P,Prescription Medicines
 0850278004329,Bondi Sands Gradual Tanning Foam Everyday 270ml,No regulation,General Health
 5016379170010,Doublebase Diomed Dry Skin Emollient 100g,No regulation,Skincare
@@ -6835,7 +6835,7 @@ ean,name,regulation,category
 5060332530878,Lindens Health + Nutrition Potassium 200mg 100 Tablets,No regulation,Vitamins
 5010249028456,FSC Evening Primrose Oil 1300mg 30 Capsules,No regulation,Vitamins
 4005808246014,Nivea Body Rich Nourishing Lotion 250ml,No regulation,Skincare
-5024091747281,Zirtek Allergy Solution Once a Day 150ml,P,Women's Health
+5024091747281,Zirtek Allergy Solution Once a Day 150ml,P,Prescription Medicines
 5012616291647,Nytol Original 25mg 20 Tablets,P,Prescription Medicines
 5023652280304,Nature's Aid Vitamin B Complex 50 with Vitamin C 30 Tablets,No regulation,Vitamins
 4005808570638,Nivea Visage Daily Moisturising Rich Day Cream 50ml,No regulation,Skincare
@@ -6847,7 +6847,7 @@ ean,name,regulation,category
 3574660634839,Compeed Blister Extreme 5 Pack,No regulation,First Aid
 0017854110052,"Baylis & Harding Jojoba, Vanilla & Almond Oil Hand Cream Set",No regulation,Skincare
 5031966000297,Dentemp Refill-It 2g,No regulation,General Health
-5015915832030,Lactulose 3.3g/5ml Oral Solution 300ml,P,Women's Health
+5015915832030,Lactulose 3.3g/5ml Oral Solution 300ml,P,Prescription Medicines
 0615908432008,Tigi Bed Head Shampoo Recovery 400ml,No regulation,Hair Care
 5065000941420,Animology Hair Of The Dog Shampoo 250ml,No regulation,Pet Care
 3574660123081,Aveeno Cream 100ml,No regulation,Skincare
@@ -6967,7 +6967,7 @@ ean,name,regulation,category
 3600522496038,L'Oréal Elvive Shampoo Fibrology 250ml,No regulation,Hair Care
 5011501016211,Deep Freeze Cold Patches 4 Patches,No regulation,Cold & Flu
 5011417571149,Gaviscon Double Action Mixed Berries 24 Pack,GSL,Digestive
-5060176672734,Dr. Organic Tea Tree Nail Solution 10ml,No regulation,Women's Health
+5060176672734,Dr. Organic Tea Tree Nail Solution 10ml,No regulation,Beauty
 5060176673113,Dr. Organic Rose Otto Conditioner 265ml,No regulation,Hair Care
 50483488,Optrex Bloodshot Eye Drops 10ml,P,Eye Care
 5016379291876,Ibuleve Max Strength Pain Relief 10% 30g,GSL,Pain Relief
@@ -7002,7 +7002,7 @@ ean,name,regulation,category
 5017371145426,Calypso Once a Day Protection SPF20 200ml,No regulation,Skincare
 0017854109452,Baylis & Harding Royale Garden Luxury Manicure Set,No regulation,Beauty
 5000347061837,Beechams All in One Syrup 160ml,GSL,Cold & Flu
-0017854118485,Baylis & Harding Beauticology Fragranced Bath Salts Gift Set,No regulation,Women's Health
+0017854118485,Baylis & Harding Beauticology Fragranced Bath Salts Gift Set,No regulation,Beauty
 5000158068742,Gaviscon Double Action Liquid Sachets 12 x 10ml Sachets,GSL,Digestive
 9327693009112,Sukin for Men 3-In-1 Wash Sport 500ml,No regulation,Men's Health
 8001090222848,Herbal Essences Bio:Renew Shampoo Argan Oil 400ml,No regulation,Hair Care
@@ -7028,7 +7028,7 @@ ean,name,regulation,category
 5010415334008,Tommee Tippee Night Time Orthodontic Dummy 18-36m,No regulation,Baby & Child
 5060337729499,Healthpoint Fungal Nail Treatment 5ml,No regulation,Beauty
 5021265247370,Vitabiotics Wellwoman Energy 10 Effervescent Tablets,No regulation,Vitamins
-5015664500815,Intrapharm Lactulose 10g/15ml Oral Solution 10 Sachets,P,Women's Health
+5015664500815,Intrapharm Lactulose 10g/15ml Oral Solution 10 Sachets,P,Prescription Medicines
 9314839020780,QV Skin Lotion for Dry Skin Conditions 250ml,No regulation,Skincare
 0087614029139,Swanson Lithium Orotate 5mg 60 Veggie Capsules,No regulation,Vitamins
 5055443663379,The Luxury Bathing Company Velvet Rose & Raspberry Gift Set,No regulation,Beauty
@@ -7091,7 +7091,7 @@ ean,name,regulation,category
 8710522909423,Lynx Black Duo Gift Set,No regulation,Beauty
 5704947005443,O'Keeffe's Working Hands Hand Cream 58ml,No regulation,Skincare
 9327693006814,Sukin for Men Facial Cleanser 225ml,No regulation,Men's Health
-5010441013205,Numark Night Cold & Flu Oral Solution 200ml,P,Women's Health
+5010441013205,Numark Night Cold & Flu Oral Solution 200ml,P,Cold & Flu
 5000283657682,Maalox Plus Suspension 250ml,GSL,General Health
 3574661181400,Piz Buin Instant Glow Sun Spray SPF15 150ml,No regulation,Skincare
 5023652238091,Nature's Aid Sage Leaf 500mg 90 Tablets,No regulation,Vitamins
@@ -7218,7 +7218,7 @@ ean,name,regulation,category
 5060480200104,Georganics Mineral-Rich Toothpaste Activated Charcoal 60ml,No regulation,Oral Care
 3574661491776,Listerine Advanced White 500ml,No regulation,Oral Care
 5060372800047,Dr. PawPaw Lip Balm Tinted Peach Pink 25ml,No regulation,Skincare
-5010441011379,Numark Antihistamine & Allergy Relief 2mg/5ml Oral Solution 150ml,P,Women's Health
+5010441011379,Numark Antihistamine & Allergy Relief 2mg/5ml Oral Solution 150ml,P,Prescription Medicines
 3574661621999,Ogx 5 in 1 Frizz Free + Keratin Soothing oil Spray 200ml,No regulation,Hair Care
 5065010483347,Fussy Natural Deodorant Refill Coconut Milk Tropical 40g,No regulation,Beauty
 5060176670990,Dr. Organic Vitamin E Shampoo 265ml,No regulation,Hair Care
@@ -7333,7 +7333,7 @@ ean,name,regulation,category
 0017854114951,"Baylis & Harding Goodness Oud, Cedar & Amber Hand Wash 1L Refill",No regulation,Beauty
 5060102170006,Earol Olive Oil Spray 10ml,No regulation,Skincare
 3574661091020,Listerine Advanced Defence Gum Therapy 500ml,No regulation,Oral Care
-3574660576467,Benadryl Allergy 2+ Children's 1mg/ml Oral Solution 100ml,P,Women's Health
+3574660576467,Benadryl Allergy 2+ Children's 1mg/ml Oral Solution 100ml,P,Baby & Child
 9335955004812,MooGoo Fresh Cream Deodorant - Sensitive 60ml,No regulation,Skincare
 5060636882338,ecoLiving Mouthwash Tablets Chewable Fluoride 125 Tablets,No regulation,Oral Care
 3574661368566,Calpol Saline Nasal Spray 15ml,GSL,Baby & Child
@@ -7349,7 +7349,7 @@ ean,name,regulation,category
 5025135114427,"Malibu SPF15, Aftersun & SPF20 Travel Kit 3 x 100ml",No regulation,Skincare
 0022600020417,Trojan Double Ecstasy Condoms 10 Pack,No regulation,Sexual Wellness
 9314839020766,QV Cream 100g,No regulation,Skincare
-5010415635303,Tommee Tippee Closer to Nature Milk Feeding Bibs 2 Pack,No regulation,Digestive
+5010415635303,Tommee Tippee Closer to Nature Milk Feeding Bibs 2 Pack,No regulation,General Health
 4005808572199,Nivea Refreshing Day Cream SPF15 Normal Skin 50ml,No regulation,Skincare
 5000347033476,Panadol Actifast Soluble 24 Tablets,GSL,Pain Relief
 5000158062139,Bonjela Adult 15g,GSL,Oral Care
@@ -7536,7 +7536,7 @@ ean,name,regulation,category
 5029354015060,Aloe Pura Aloe Vera Face Mask 150ml,No regulation,Skincare
 5010441015285,Numark Synthetic Wax Ear Plugs 6 Pairs,No regulation,General Health
 8001090698346,Pampers Splashers Size 3-4 Nappies 12 Pack,No regulation,Baby & Child
-7332551437299,Hibiscrub 4% Cutaneous Solution 125ml,No regulation,Women's Health
+7332551437299,Hibiscrub 4% Cutaneous Solution 125ml,No regulation,First Aid
 5060144641977,Bulldog Original Aftershave Balm 100ml,No regulation,Men's Grooming
 0087614019574,Swanson Full Spectrum Ashwagandha 450mg 100 Capsules,No regulation,Vitamins
 4029125079001,Nitrolingual Spray 180 Dose,P,Prescription Medicines
@@ -7586,7 +7586,7 @@ ean,name,regulation,category
 8710522428122,Vaseline Limited Edition Selection Tin Gift Set,No regulation,Beauty
 9421034852426,d3 Athletic Sports Tape 13.7m,No regulation,General Health
 5060018880105,Ultra Chloraseptic Blackcurrant 15ml,GSL,General Health
-7391899814285,Bausch + Lomb Sensitive Eyes Plus Saline Contact Lens Solution 500ml,No regulation,Women's Health
+7391899814285,Bausch + Lomb Sensitive Eyes Plus Saline Contact Lens Solution 500ml,No regulation,Eye Care
 0615908428612,Tigi Rockaholic Groupie Hard Hold Hairspray 385ml,No regulation,Hair Care
 5407007650194,Bambaw Reusable Sanitary Pads Carrying Pouch,No regulation,Women's Health
 0859999907056,Woody's Grooming Brickhead 118ml,No regulation,Men's Grooming
@@ -7800,7 +7800,7 @@ ean,name,regulation,category
 8809844993118,Dr.Jart+ Ceramidin Skin Barrier Moisturising Mask 22g,No regulation,Skincare
 5000158104334,Nurofen Day & Night Cold & Flu 200mg/5 mg 16 Tablets,GSL,Cold & Flu
 8710522938287,Dove Men Daily Care Duo Gift Set,No regulation,Beauty
-5017123171987,Allerief 2mg/5ml Oral Solution 150ml,P,Women's Health
+5017123171987,Allerief 2mg/5ml Oral Solution 150ml,P,Prescription Medicines
 5021769917045,Technic Man'Stuff Closer Shave Trio Gift Set,No regulation,Men's Grooming
 5060025370033,Orajel Extra Strength Dental Gel 5.3g,P,Oral Care
 0010181040313,Palmer's Cocoa Butter Formula Massage Lotion for Stretch Marks 250ml,No regulation,Skincare
@@ -7811,7 +7811,7 @@ ean,name,regulation,category
 0708002400322,Faith In Nature Coconut Conditioner 400ml,No regulation,Hair Care
 3614228130448,Opi Infinite Shine 2.0 Nail Polish Boys Be Thistle-Ing At Me 15ml,No regulation,Beauty
 8716900572432,Fortini 1.0 Multi Fibre Banana 200ml,No regulation,General Health
-5099151015297,Duphalac Lactulose Oral Solution 500ml,P,Women's Health
+5099151015297,Duphalac Lactulose Oral Solution 500ml,P,Prescription Medicines
 5060519143235,Pukka Cacao Maca Magic Latte 90g,No regulation,Vitamins
 5029354000271,Aloe Pura Aloe Vera Gel 200ml,No regulation,Skincare
 5012617001658,Accord Paracetamol 500mg 24 Effervescent Tablets,GSL,Pain Relief
@@ -7849,7 +7849,7 @@ ean,name,regulation,category
 5000158063938,Lemsip Max Cold & Flu Lemon 10 Sachets,GSL,Cold & Flu
 5021265249282,Vitabiotics Osteocare Original 30 Tablets,No regulation,Vitamins
 5000347034091,Sensodyne Pronamel Gentle Whitening Toothpaste 75ml,No regulation,Oral Care
-5060057402894,Almus Lactulose Oral Solution 500ml,P,Women's Health
+5060057402894,Almus Lactulose Oral Solution 500ml,P,Prescription Medicines
 5027097372426,Daktarin 2% Miconazole Nitrate Cream 15g,P,Skincare
 0745114095688,GO2 Focus Inhaler Stick 1ml,No regulation,General Health
 8720181192067,Lynx Epic Fresh Body Spray 200ml,No regulation,Beauty
@@ -7974,7 +7974,7 @@ ean,name,regulation,category
 5011309107517,Savlon Bites & Stings Gel Pain Relief 20g,GSL,Pain Relief
 5038581159195,Yankee Candle Home Inspiration Frosted Pine 200g,No regulation,Beauty
 0708002406126,Faith In Nature Blueberry Conditioner 400ml,No regulation,Hair Care
-8809642712232,Dr.Jart+ Dermask Soothing Hydra Solution Mask 25g,No regulation,Women's Health
+8809642712232,Dr.Jart+ Dermask Soothing Hydra Solution Mask 25g,No regulation,Skincare
 96183458,Anbesol Liquid 10ml,P,Prescription Medicines
 5391513951718,Anthisan Bite & Sting Cream 20g,GSL,First Aid
 5029354008741,Australian Tea Tree Purifying Body Wash 250ml,No regulation,Beauty
@@ -8434,7 +8434,7 @@ ean,name,regulation,category
 5000488105247,Nelsons Teetha Teething Gel 15g,No regulation,Baby & Child
 8006540346785,Pantene Hair Spray Ultra Strong 250ml,No regulation,Hair Care
 0708002404672,Faith In Nature Blue Cedar Body Wash 400ml,No regulation,Beauty
-5055193545055,The Kind Edit Co. Bubble Boutique Handcare Gift Set,No regulation,Women's Health
+5055193545055,The Kind Edit Co. Bubble Boutique Handcare Gift Set,No regulation,Beauty
 5021986000032,Vocalzone Throat Pastilles Honey & Lemon 24 Pack,No regulation,Cold & Flu
 0748378001112,Eco Style Olive Oil Styling Gel Max Hold 473ml,No regulation,Hair Care
 5060447949053,Childs Farm Baby Bubble Bath 250ml,No regulation,Baby & Child
@@ -8513,7 +8513,7 @@ ean,name,regulation,category
 0708002400230,Faith In Nature Seaweed & Citrus Body Wash 400ml,No regulation,Beauty
 5060332531110,Lindens Health + Nutrition Vitamin D3 3000IU 120 Capsules,No regulation,Vitamins
 5060447948872,Childs Farm Hair & Body Wash Sweet Orange 250ml,No regulation,Hair Care
-9317129040376,Flexitol Cuticle & Nail Cream 15g,No regulation,Women's Health
+9317129040376,Flexitol Cuticle & Nail Cream 15g,No regulation,Skincare
 5034445001099,The Eye Doctor Biodegradable Lid Wipes 20 Pack,No regulation,Beauty
 5000488104356,Nelsons Arnicare Cooling Gel 30g,No regulation,Skincare
 4008976682172,Complan Shake Chocolate Flavour 4 x 57g,No regulation,Vitamins
@@ -8587,7 +8587,7 @@ ean,name,regulation,category
 5010605401855,Rennie Sugar Free 36 Tablets,GSL,Digestive
 5060040641712,BeautyPro SQUALANE Nourishing Sheet Mask,No regulation,Skincare
 5025903022909,Careway Hay Fever Relief 100 Metered Sprays,GSL,Beauty
-5099151015280,Duphalac Lactulose Oral Solution 300ml,P,Women's Health
+5099151015280,Duphalac Lactulose Oral Solution 300ml,P,Prescription Medicines
 3361370619177,Milton Mini Sterilising 50 Tablets,No regulation,Vitamins
 5037808010295,Ever Ready Footfile,No regulation,General Health
 5010605640407,Canesten Athlete's Foot Dual Action 1% W/W Cream 15gm,GSL,Women's Health
@@ -8628,7 +8628,7 @@ ean,name,regulation,category
 5011309018813,Tixylix Toddler Syrup 100ml,GSL,Baby & Child
 5026445002558,Harmony Conditioning Temporary Hair Colour Cherry 100ml,No regulation,Hair Care
 5010249013193,FSC High Potency Cod Liver Oil 1000mg 60 Capsules,No regulation,Vitamins
-5011309047318,Warts Treatment - Duofilm Cutaneous Solution 15ml,P,Women's Health
+5011309047318,Warts Treatment - Duofilm Cutaneous Solution 15ml,P,Skincare
 8809646190159,Pack-age Monthly New Feet 25g,No regulation,General Health
 5025135112331,Malibu Lotion Spray SPF30 200ml,No regulation,Skincare
 5031013104381,Higher Nature Omega 3 Fish Oil 30 Capsules,No regulation,Vitamins
@@ -8788,7 +8788,7 @@ ean,name,regulation,category
 5010724544853,Batiste Night Light Cleanse 200ml,No regulation,Hair Care
 3574661498478,Neutrogena Blackhead Eliminating Facial Scrub 150ml,No regulation,Skincare
 5060704340272,Acala Sisal Soap Bag with Drawstring,No regulation,Beauty
-5010441014257,Numark Allergy Relief for Children 5mg/5ml Cetirizine Dihydrochloride Oral Solution 70ml,GSL,Women's Health
+5010441014257,Numark Allergy Relief for Children 5mg/5ml Cetirizine Dihydrochloride Oral Solution 70ml,GSL,Baby & Child
 5010605829024,Germolene Antiseptic Dual Action 55g,GSL,First Aid
 5035559014807,Brulidine Antiseptic & Antibacterial Cream 25g,GSL,First Aid
 50398683,Vo5 Matt Clay Extra Hold 75ml,No regulation,General Health
@@ -8809,7 +8809,7 @@ ean,name,regulation,category
 5060193640846,Bloom & Blossom The BFG Bubble Bath 200ml,No regulation,Beauty
 5012617023582,Period Pain - Naproxen 250mg 28 Tablets,P,Women's Health
 5060018880204,Murine Irritation & Redness Eye Drops 10ml,P,Eye Care
-5016695926605,Viatris Lactulose 3.1-3.7 g/5ml oral solution 300ml,P,Women's Health
+5016695926605,Viatris Lactulose 3.1-3.7 g/5ml oral solution 300ml,P,Prescription Medicines
 9335955000081,MooGoo Lip Balm - Vanilla Dream 5g,No regulation,Skincare
 9335955000913,MooGoo Lip Balm - Tingling Honey 5g,No regulation,Skincare
 3600542050531,Garnier SkinActive Aloe Refreshing Toner 100ml,No regulation,Skincare
@@ -8900,7 +8900,7 @@ ean,name,regulation,category
 5010415364500,Tommee Tippee Teethe & Soothe Easy Reach Baby Teethers 2 Pack,No regulation,Baby & Child
 5021769936145,Body Collection Relax Gift Set,No regulation,Beauty
 5026445002534,Harmony Conditioning Temporary Hair Colour Sandy 100ml,No regulation,Hair Care
-5017848250226,Bell's Healthcare Codeine Linctus 15mg/5ml Oral Solution 200ml,P,Women's Health
+5017848250226,Bell's Healthcare Codeine Linctus 15mg/5ml Oral Solution 200ml,P,Pain Relief
 5055144200293,Lipsore 5% Aciclovir Cream 2g,GSL,Skincare
 5010797005367,Selsun Dandruff Treatment Shampoo 2.5% 100ml,P,Hair Care
 8714789710020,Colgate Total Toothpaste 125ml,No regulation,Oral Care
@@ -8997,7 +8997,7 @@ ean,name,regulation,category
 5010123722630,Calpol Infant Suspension Strawberry 100ml,GSL,Baby & Child
 7317400026664,TePe Interdental Brushes 0.45mm 6 Pack,No regulation,Oral Care
 5013692263139,Baby Shark Bath Set 3pc,No regulation,Baby & Child
-5017848254484,Bell's Children's Cough Relief 31.25mg/5ml Oral Solution 200ml,GSL,Women's Health
+5017848254484,Bell's Children's Cough Relief 31.25mg/5ml Oral Solution 200ml,GSL,Baby & Child
 3574660698169,Nicorette Cools Mint 2mg 20 Lozenges,GSL,Stop Smoking
 5017371150543,Calypso Dry Oil Clear Protection SPF15 200ml,No regulation,Skincare
 8006540349328,Pantene Mousse Smooth Waves 200ml,No regulation,Hair Care
@@ -9231,7 +9231,7 @@ ean,name,regulation,category
 5060062990287,Earth Friendly Baby Organic Shampoo & Bodywash Chamomile 250ml,No regulation,Baby & Child
 8712561611145,Dove Shower Gel Go Fresh Cucumber & Green Tea 500ml,No regulation,Beauty
 8001090210906,Aussie Stop The Break Conditioner 400ml,No regulation,Hair Care
-5099151007988,Duphalac Lactulose Oral Solution 200ml,P,Women's Health
+5099151007988,Duphalac Lactulose Oral Solution 200ml,P,Prescription Medicines
 8001090303059,Pantene Pro-V Smooth & Sleek Conditioner 180ml,No regulation,Hair Care
 8809463991014,8mm Brightening Sheet Mask 27g,No regulation,Skincare
 8718951645165,Sanex Expert Bath & Shower Therapy Oil 450ml,No regulation,Beauty
@@ -9333,10 +9333,10 @@ ean,name,regulation,category
 5027599000094,Delph After Sun Lotion 150ml,No regulation,Skincare
 5011321365353,Vicks Vaporub 50g,GSL,Cold & Flu
 9327693000560,Sukin Hydrating Mist Toner 50ml,No regulation,Skincare
-0017854115019,Baylis & Harding Beauticology Sparkle & Shine Bubble Bath 500ml,No regulation,Women's Health
+0017854115019,Baylis & Harding Beauticology Sparkle & Shine Bubble Bath 500ml,No regulation,Beauty
 5055586607032,Eight Triple Eight Lavender Shampoo 1000ml,No regulation,Hair Care
 7322541500898,Tena Men Active Fit Absorbent Protector Level 1 24 Pack,No regulation,Continence
-8809211652549,Berrisom Face Wrapping Mask Hyaluronic Solution 80 27g,No regulation,Women's Health
+8809211652549,Berrisom Face Wrapping Mask Hyaluronic Solution 80 27g,No regulation,Skincare
 8720181347153,Dove Original Antiperspirant Spray 200ml,No regulation,Beauty
 5010605295416,Rennie Sugar Free 24 Chewable Tablets,GSL,Digestive
 5060991070609,Anovia Epibase Daily Cream 450ml,No regulation,Skincare
@@ -9354,7 +9354,7 @@ ean,name,regulation,category
 8711600786257,Dove Go Fresh Pomegranate Antiperspirant Deodorant Aerosol 250ml,No regulation,Beauty
 5010249152502,The Food Supplement Company Ginger 500mg 30 Capsules,No regulation,Vitamins
 8718951647930,Sanex Baby Zero% Fragence Free Wash 450ml,No regulation,Baby & Child
-0017854115002,Baylis & Harding Beauticology Shimmer & Shine Bubble Bath 500ml,No regulation,Women's Health
+0017854115002,Baylis & Harding Beauticology Shimmer & Shine Bubble Bath 500ml,No regulation,Beauty
 5060546080404,&SISTERS Organic Cotton Pads with Wings Light 10 Pack,No regulation,Beauty
 5060427352712,St. Moriz Self Tan Mousse Darker Than Dark 200ml,No regulation,Hair Care
 5055565706459,Accord Sildenafil 50mg 4 Tablets,P,Sexual Wellness
@@ -9371,7 +9371,7 @@ ean,name,regulation,category
 5011309055719,Care+ Clotrimazole 1% w/w Cream 20g,P,Skincare
 4008976682158,Complan Shake Vanilla Flavour 4 x 57g,No regulation,Vitamins
 0309976623610,Revlon Colorsilk Permanent Hair Colour 61 Dark Blonde,No regulation,Hair Care
-5010415635259,Tommee Tippee On The Go 20 Disposable Bibs,No regulation,Digestive
+5010415635259,Tommee Tippee On The Go 20 Disposable Bibs,No regulation,General Health
 3574660149807,Clean & Clear Blackhead Clearing Daily Scrub 150ml,No regulation,Beauty
 8720181477270,TRESemmé Rich Moisture + Vitamin E Conditioner 500ml,No regulation,Hair Care
 5012008570602,Soft & Gentle Delicate Bloom Lavender & Patchouli Deodorant 150ml,No regulation,Beauty
@@ -9558,7 +9558,7 @@ ean,name,regulation,category
 5000158100510,Strepsils Honey & Lemon 16 Lozenges,GSL,Cold & Flu
 4005800230721,Elastoplast Finger Strips 16 Pack,No regulation,First Aid
 5011784004325,Snufflebabe Vapour Rub,GSL,General Health
-5010441044452,Numark Contact Lens Solution 360ml,No regulation,Women's Health
+5010441044452,Numark Contact Lens Solution 360ml,No regulation,Eye Care
 5029354013738,Optima Activated Charcoal Face Scrub 125ml,No regulation,Skincare
 5060209732404,Epimax Excetra Cream 100g,No regulation,Skincare
 5060427350169,St. Moriz Professional Self Tanning Lotion Medium 250ml,No regulation,Skincare
@@ -9666,7 +9666,7 @@ ean,name,regulation,category
 3600522352334,L'Oréal Elvive Full Restore-5 Conditioner 400ml,No regulation,Hair Care
 8720181287855,Dove Women Fresh Antiperspirant Deodorant 200ml,No regulation,Beauty
 0017854112537,Baylis & Harding Goodness Men's Shower Gel - Sandalwood & Rich Vanilla 500ml,No regulation,Beauty
-5010441014288,Numark Triple Action Cough Oral Solution 200ml,No regulation,Women's Health
+5010441014288,Numark Triple Action Cough Oral Solution 200ml,No regulation,Cold & Flu
 5038581132112,Yankee Candle Sakura Blossom Festival 121g,No regulation,Beauty
 5013692245678,Despicable Me Talking Hand Wash 250ml,No regulation,Beauty
 5000158063907,Lemsip Cold & Flu Lemon 5 Sachets,GSL,Cold & Flu
@@ -10004,7 +10004,7 @@ ean,name,regulation,category
 4005800030611,Elastoplast Extra Tough Waterproof 12 Plasters,No regulation,First Aid
 8006540358672,Fixodent Neutral Complete Denture Adhesive Cream 40g,No regulation,Oral Care
 5011408063882,L'Oréal Kids Very Berry Strawberry Shampoo 250ml,No regulation,Hair Care
-5012008561402,Cuticura Original Anti Bacterial Hand Gel 250ml,No regulation,Women's Health
+5012008561402,Cuticura Original Anti Bacterial Hand Gel 250ml,No regulation,Skincare
 5038581160399,Yankee Candle Home Inspiration Summer Day Dream Wax Melts 75g,No regulation,Beauty
 0309978695202,Revlon Colorsilk Permanent Hair Colour 20 Brown Black,No regulation,Hair Care
 8718951684119,Colgate Total Original Toothpaste 75ml,No regulation,Oral Care
@@ -10068,7 +10068,7 @@ ean,name,regulation,category
 50612710,Bells Eucalyptus Oil 25ml,No regulation,Skincare
 5012617015853,Accord Paracetamol Capsules 500mg 32 Pack,P,Pain Relief
 8901030599682,Pears Soap Bar 2 Pack,No regulation,Beauty
-0017854113343,Baylis & Harding Beauticology Let's Be Mermaids Hand Wash 500ml,No regulation,Women's Health
+0017854113343,Baylis & Harding Beauticology Let's Be Mermaids Hand Wash 500ml,No regulation,Beauty
 0309978695547,Revlon Colorsilk Permanent Hair Colour 54 Light Golden Brown,No regulation,Hair Care
 4011700740314,4711 Original Body Spray 100ml,No regulation,Beauty
 8001841196015,Tampax Compak Super Tampons 26 Pack,No regulation,Women's Health
@@ -10092,7 +10092,7 @@ ean,name,regulation,category
 7322540853377,Tena Discreet Ultra Mini Thin Pads 20 Pack,No regulation,Continence
 4005800044427,Elastoplast Waterproof Fabric 18 Plasters,No regulation,First Aid
 5010724533765,Nair Body Wax Strips with Japanese Cherry Blossom 20 Strips,No regulation,General Health
-5010441013298,Numark Mucus Cough Oral Solution 200ml,GSL,Women's Health
+5010441013298,Numark Mucus Cough Oral Solution 200ml,GSL,Cold & Flu
 8714789798196,Colgate Max White One Mouthwash 500ml,No regulation,Oral Care
 8710847950230,Radox Feel Blissful Bath Soak 500ml,No regulation,Beauty
 5016379265006,Exterol 5% Ear Wax Removal Drops 8ml,P,Prescription Medicines
@@ -10101,7 +10101,7 @@ ean,name,regulation,category
 5060601936974,Barber Pro Warming Eye Mask Single,No regulation,Eye Care
 3600541126022,Garnier Body 7 Day Shea Hand Milk 100ml,No regulation,General Health
 5060421930367,Aproderm Emollient Cream 50g,No regulation,Skincare
-0017854113312,Baylis & Harding Beauticology Chasing Rainbows Body Wash 500ml,No regulation,Women's Health
+0017854113312,Baylis & Harding Beauticology Chasing Rainbows Body Wash 500ml,No regulation,Beauty
 0309978695462,Revlon Colorsilk Permanent Hair Colour 46 Medium Golden Chestnut Brown,No regulation,Hair Care
 5011309028218,Care+ Witch Hazel 200ml,GSL,General Health
 5037154000148,Vizulize Dry Eye Drops 10ml,No regulation,Eye Care
@@ -10225,7 +10225,7 @@ ean,name,regulation,category
 50158072,Dettol Liquid Antiseptic Disinfectant 250ml,No regulation,First Aid
 5017371150505,Calypso Dry Oil Clear Protection SPF6 200ml,No regulation,Skincare
 4015400629368,Always Discreet Pads Small Plus 16 Pack,No regulation,Continence
-8809211652518,Berrisom Face Wrapping Mask Collagen Solution 80 27g,No regulation,Women's Health
+8809211652518,Berrisom Face Wrapping Mask Collagen Solution 80 27g,No regulation,Skincare
 40060682,Nivea Hand Cream Soothing Care Aloe Vera 75ml,No regulation,Skincare
 4015400219712,Tampax Compak Super Applicator Tampons 18 Pack,No regulation,Women's Health
 5055586605311,Eight Triple Eight Coconut Shampoo 1000ml,No regulation,Hair Care
@@ -10259,7 +10259,7 @@ ean,name,regulation,category
 8001090705600,Tampax Compak Regular Tampons 18's,No regulation,Women's Health
 8720182513946,Tresemme Cleanse & Replenish Conditioner 300ml,No regulation,Hair Care
 7350075690396,The Humble Co. Brush Adult White Medium 1 Pack,No regulation,General Health
-5010441013281,Numark Chesty Cough Oral Solution 200ml,No regulation,Women's Health
+5010441013281,Numark Chesty Cough Oral Solution 200ml,No regulation,Cold & Flu
 5057881620211,Vitaplus Adhesive Assorted Wound Dressings 6 Pack,No regulation,First Aid
 8001090065988,Always Discreet Pads Long 10 Pack,No regulation,Continence
 3574669908528,Johnson's Baby Bath 500ml,No regulation,Baby & Child
@@ -10392,7 +10392,7 @@ ean,name,regulation,category
 8414606537808,The Skin Lounge Firming Lift Mask 25g,No regulation,Skincare
 3574661352817,Listerine Smart Rinse Mint 250ml,No regulation,Oral Care
 5037808075805,Ever Ready Corn Plane Replacement Blades 10,No regulation,Skincare
-5017848253975,Bell's Healthcare Triple Action Cough Oral Solution 200ml,GSL,Women's Health
+5017848253975,Bell's Healthcare Triple Action Cough Oral Solution 200ml,GSL,Cold & Flu
 8006540584200,Always Ultra Day & Night Sanitary Pads 9 Pack,No regulation,Women's Health
 3600523167616,L'Oréal Studio/Pro Curve It Curl Mousse 200ml,No regulation,Hair Care
 5060704340098,Acala Bamboo Cotton Buds 100 Pack,No regulation,General Health
@@ -10419,7 +10419,7 @@ ean,name,regulation,category
 0672935109662,Firefly Lightup Timer Toothbrush Soft (3+ Years) 1 Pack,No regulation,Oral Care
 0017854012677,Baylis & Harding Funky Farm Bath & Shower Gel 1L,No regulation,Beauty
 0017854120792,Baylis & Harding Sweet Mandarin & Grapefruit Hand Cream 50ml,No regulation,Skincare
-5060133372295,Vizulize Multi-Purpose Contact Lens Solution 100ml,No regulation,Women's Health
+5060133372295,Vizulize Multi-Purpose Contact Lens Solution 100ml,No regulation,Eye Care
 8001841283944,Old Spice Deep Sea Deodorant Stick 50ml,No regulation,Beauty
 8717163758823,Toni & Guy 2-In-1 Cleansing Face & Beard Wash 150ml,No regulation,Hair Care
 7332531024648,Schwarzkopf Gliss Hair Repair Color Protect & Shine Shampoo 400ml,No regulation,Hair Care
@@ -10435,7 +10435,7 @@ ean,name,regulation,category
 8886467049477,Brut Attraction Totale All-In-One Hair & Body Shower Gel 500ml,No regulation,Hair Care
 7332531063388,Schwarzkopf Got2B Fresh It Up Texture Dry Shampoo 200ml,No regulation,Hair Care
 5014697033703,Vosene for Kids 3 In 1 Shampoo 250ml,No regulation,Hair Care
-0017854113305,Baylis & Harding Beauticology Make a Splash Bath Bomb,No regulation,Women's Health
+0017854113305,Baylis & Harding Beauticology Make a Splash Bath Bomb,No regulation,Beauty
 5011784030126,MEDIJEL Gel 15g,GSL,Skincare
 4084500694293,Max Factor Masterpiece High Precision Liquid Eyeliner Velvet Black 01,No regulation,Beauty
 8006540583982,Always Ultra Normal 15 Pack,No regulation,Women's Health
@@ -10462,7 +10462,7 @@ ean,name,regulation,category
 8710447205877,Radox Feel Vivacious Apple Blossom & Cranberry Shower Mousse 200ml,No regulation,Hair Care
 5000101513824,Imperial Leather Original Soap 90g 4 Pack,No regulation,Beauty
 4005900036483,Nivea Men Black & White Original Antiperspirant Deodorant Spray 150ml,No regulation,Beauty
-5060133370482,Vizulize Contact Lens Saline Solution 360ml,No regulation,Women's Health
+5060133370482,Vizulize Contact Lens Saline Solution 360ml,No regulation,Eye Care
 5012008748407,Inecto Naturals Deeply Nourishing Avocado Conditioner 500ml,No regulation,Hair Care
 8712561479806,Vaseline Essential Healing Body Lotion 200ml,No regulation,Skincare
 5010724529645,Nair Hair Remover Moisturising with Baby Oil 80ml,No regulation,Baby & Child
@@ -10478,7 +10478,7 @@ ean,name,regulation,category
 4005808131013,Nivea Rich Moisture Soft Caring Hand Wash 250ml,No regulation,Skincare
 7702018980833,Gillette Protection Men's Shaving Gel 200ml,No regulation,Men's Grooming
 5000288302266,Scholl Corn Foam Cushions 9 Pack,No regulation,Supports & Braces
-5010441014684,Numark Childrens Tickly Cough 0.75/5ml Oral Solution Lemon & Honey 200ml,GSL,Women's Health
+5010441014684,Numark Childrens Tickly Cough 0.75/5ml Oral Solution Lemon & Honey 200ml,GSL,Cold & Flu
 3600541367838,Garnier Ultimate Blends The Silky Smoother Shampoo with Vanilla Milk & Papaya 400ml,No regulation,Hair Care
 5026445002770,Harmony Gold Styling Mousse Defined Curl 200ml,No regulation,Hair Care
 3614223736485,Adidas Adipure Deodorant 200ml,No regulation,Beauty
@@ -10487,7 +10487,7 @@ ean,name,regulation,category
 5025135117664,Malibu Face Cream SPF30 40ml,No regulation,Skincare
 0083078421144,Carmex Original Lip Balm Tube 10g,No regulation,Skincare
 6281006485303,Pears Handwash Mint 250ml,No regulation,Beauty
-0017854113336,Baylis & Harding Beauticology Believe in Yourself Hand Wash 500ml,No regulation,Women's Health
+0017854113336,Baylis & Harding Beauticology Believe in Yourself Hand Wash 500ml,No regulation,Beauty
 8717163653500,Dove Silver Care Shampoo 250ml,No regulation,Hair Care
 8886467049460,Brut Sport Style All in one Hair & Body Shower Gel 500ml,No regulation,Hair Care
 5010622017947,Oral-B Satin Dental Floss 25m,No regulation,Oral Care
@@ -10944,7 +10944,7 @@ ean,name,regulation,category
 8809663752354,Mizon Joyful Time Essence Mask Vitamin 23g,No regulation,Skincare
 5012251013598,Beauty Formulas Shampoo Biotin & Collagen 250ml,No regulation,Hair Care
 8717163643884,VO5 Invisible Flexible Hold 2 100ml,No regulation,General Health
-5017848250295,Bell's Cough Linctus Oral Solution 200ml,GSL,Women's Health
+5017848250295,Bell's Cough Linctus Oral Solution 200ml,GSL,Cold & Flu
 8717163762004,Dove Body Wash Softening Silk 225ml,No regulation,Beauty
 8886467061745,Baby Dove Sensitive Skin Care Moisturising Wipes 50 Pack,No regulation,Baby & Child
 5029053573731,Kleenex Allergy Comfort 50 Tissues,No regulation,General Health
@@ -11014,7 +11014,7 @@ ean,name,regulation,category
 4005808730315,Nivea Men Cool Kick 48H Anti-Perspirant 150ml,No regulation,Beauty
 5024874015354,Valupak Multi Vitamin & Minerals 25 Tablets,No regulation,Vitamins
 4015400731627,Always Sensitive Long Plus 12 Pack,No regulation,Women's Health
-5012008718509,Cuticura Mildly Medicated Bar Soap 100g,No regulation,Women's Health
+5012008718509,Cuticura Mildly Medicated Bar Soap 100g,No regulation,Beauty
 5010441020753,Numark Lens Wipes 50 Pack,No regulation,Beauty
 5025135113734,Malibu Lotion Spray SPF15 100ml,No regulation,Skincare
 5012254062678,Vo5 Mega Hold Gel 50ml,No regulation,Skincare
@@ -11119,7 +11119,7 @@ ean,name,regulation,category
 8710447473849,Simple Daily Skin Detox Clear & Matte Cleansing Wipes 25 Pieces,No regulation,Skincare
 8809451339187,A by Bom Ultra Serum Leaf Mask,No regulation,Skincare
 5025971208205,Lil-Lets Baby Cotton Wool 50 Oval Pads,No regulation,Baby & Child
-5017848249916,Bells Chesty Cough Oral Solution 200ml,GSL,Women's Health
+5017848249916,Bells Chesty Cough Oral Solution 200ml,GSL,Cold & Flu
 5060156070147,Clinitas Hydrate Carbomer Eye Gel 10g,No regulation,Eye Care
 59095361,Dove Roll On Deodorant Classic 50ml,No regulation,Beauty
 5000158101364,Strepsils Strawberry Sugar Free 36 Lozenges,GSL,Cold & Flu
@@ -11266,7 +11266,7 @@ ean,name,regulation,category
 8718951431942,Sanex Dermo Clean & Fresh 24hr Anti-Perspirant,No regulation,Beauty
 5000101510359,Imperial Leather Invigorating Body Wash 250ml,No regulation,Beauty
 87342819,Dove Invisible Deodorant Stick 40ml,No regulation,Beauty
-5000101138331,Carex Hand Wash Bubblegum 250ml,No regulation,Oral Care
+5000101138331,Carex Hand Wash Bubblegum 250ml,No regulation,Beauty
 5011451105966,Simple Clear Skin Oil Balancing Facial Scrub 75ml,No regulation,Skincare
 0010181032479,Palmer's Coconut Oil Hydrating Facial Mask 60g,No regulation,Skincare
 3600542118583,Garnier Ultimate Blends Argan Oil & Almond Cream Shampoo 250ml,No regulation,Hair Care
@@ -11305,7 +11305,7 @@ ean,name,regulation,category
 5025903022626,Careway High Strength Effervescent Vit C 1000mg 20 Tablets,No regulation,Vitamins
 5055028387607,Enliven Fruits Shamp Refresh Melon 350ml,No regulation,General Health
 5010441013175,Numark Max Cold & Flu Day & Night 16 Capsules,GSL,Cold & Flu
-5024071280012,Aspar Paracetamol 650mg Powder for Oral Solution 10 Sachets,GSL,Women's Health
+5024071280012,Aspar Paracetamol 650mg Powder for Oral Solution 10 Sachets,GSL,Pain Relief
 5012251010443,Beauty Formulas Active Mouthwash 6 in 1 Multi Action 500ml,No regulation,Oral Care
 5012008722001,Soft & Gentle Orchid Desire Anti-perspirant 150ml,No regulation,Beauty
 5055028387645,Enliven Fruits Shampoo Soft Coconut 350ml,No regulation,Hair Care
@@ -11345,7 +11345,7 @@ ean,name,regulation,category
 8901030005176,Pears Oil Clear Soap 125g,No regulation,Beauty
 3616301283522,Max Factor Nailfinity Gel Nail Polish Red Carpet 310,No regulation,Beauty
 3086126691862,Bic 3 Sensitive Disposable Razors 4 Pack,No regulation,Men's Grooming
-8718951130302,Sanex Zero% Anti-Pollution Face & Body Cleansing Gel 250ml,No regulation,Women's Health
+8718951130302,Sanex Zero% Anti-Pollution Face & Body Cleansing Gel 250ml,No regulation,Skincare
 5011309440812,Covonia Double Impact Drops Berry Blast 51g,No regulation,Cold & Flu
 5012334002716,Insette Normal Hold Hairspray 350ml,No regulation,Hair Care
 4003455004001,Sula Pear Drops Sugar Free Sweets 42g,No regulation,Vitamins
@@ -11380,7 +11380,7 @@ ean,name,regulation,category
 5010058044777,Fast Aid Cushioned Plasters 20 Pack,No regulation,First Aid
 5011417566343,Steradent Pro White 30 Tablets,No regulation,Vitamins
 8720181368974,Simple Kids Hair & Body Wash 225ml,No regulation,Hair Care
-5012008692007,Cuticura Hand Gel Passion Flower 100ml,No regulation,Women's Health
+5012008692007,Cuticura Hand Gel Passion Flower 100ml,No regulation,Skincare
 5010441011140,Numark Waxed Dental Floss Mint Flavour 50m,No regulation,Oral Care
 5056067803035,Sharpsguard Bin Yellow 1L,No regulation,General Health
 3574661684291,Listerine Flavours Mild & Minty 250ml,No regulation,Oral Care
@@ -11430,7 +11430,7 @@ ean,name,regulation,category
 5024874015071,Valupak Vitamin E 100iu 30 Capsules,No regulation,Vitamins
 5011309066012,Care+ Senna Laxative 20 Tablets,No regulation,Digestive
 8717163545324,Sure Women Cotton Dry Antiperspirant Deodorant 125ml,No regulation,Beauty
-0050051235388,Disney Lip Smacker Lip Balm Daisy Cutie Pie 4g,No regulation,Women's Health
+0050051235388,Disney Lip Smacker Lip Balm Daisy Cutie Pie 4g,No regulation,Skincare
 5060148524313,BetterYou Magnesium Water Hydrate 250ml,No regulation,Vitamins
 8809408730821,Dr. Oracle 21 Stay A-Thera Peeling Stick,No regulation,General Health
 0017854054257,"Baylis & Harding Jojoba, Vanilla & Almond Oil Hand Wash 500ml",No regulation,Beauty
@@ -11469,7 +11469,7 @@ ean,name,regulation,category
 5060148524290,BetterYou Magnesium Water Energy 250ml,No regulation,Vitamins
 5012583203285,Right Guard Invisible Xtreme 72hr Anti-perspirant 150ml,No regulation,Beauty
 5029053504834,Kotex Ultra Thin 12 pads,No regulation,General Health
-5012008561105,Cuticura Original Anti Bacterial Hand Gel 50ml,No regulation,Women's Health
+5012008561105,Cuticura Original Anti Bacterial Hand Gel 50ml,No regulation,Skincare
 5010058011236,Robinson Soft & Pure Round Cosmetic Pads 100 Pack,No regulation,Beauty
 5013692238144,Minions Bubble Bath 350ml,No regulation,Beauty
 5010441016053,Numark Paracetamol 500mg 32 Capsules,P,Pain Relief
@@ -11519,7 +11519,7 @@ ean,name,regulation,category
 5010441013441,Numark Vitamin B Complex 60 Tablets,No regulation,Vitamins
 9329401000169,The Goat Skincare Soap Bar with Lemon Myrtle 100g,No regulation,Skincare
 8710847924453,Lynx Bodywash Unity 250ml,No regulation,Beauty
-5017848251933,Bell's Mucus Cough Solution 100ml,GSL,Women's Health
+5017848251933,Bell's Mucus Cough Solution 100ml,GSL,Cold & Flu
 8720182036070,Alberto Balsam Juicy Apple Shampoo Bar 75g,No regulation,Hair Care
 8001841432250,Head&Shoulders Conditioner Coconut 220ml,No regulation,Hair Care
 5016973991363,Lift Zesty Lemon & Lime Fast Acting Glucose Shot 60ml,No regulation,General Health
@@ -11554,7 +11554,7 @@ ean,name,regulation,category
 8714789101279,Colgate Icy Blast Whitening 2-In-1 Toothpaste & Mouthwash 100ml,No regulation,Oral Care
 5010441015261,Numark 7 Day Pill Reminder,No regulation,General Health
 5000101514265,Carex Peony & Blossom Body Wash 500ml,No regulation,Beauty
-5012008734004,Cuticura Repair Intense Hydration Hand & Nail Cream 75ml,No regulation,Women's Health
+5012008734004,Cuticura Repair Intense Hydration Hand & Nail Cream 75ml,No regulation,Skincare
 0672935000020,Absolute Bamboo Kids Toothbrush 1 Pack,No regulation,Oral Care
 3574661684284,Listerine Mouthwash Spearmint 250ml,No regulation,Oral Care
 5000101510373,Imperial Leather Pampering Bodywash 250ml,No regulation,Beauty
@@ -11591,7 +11591,7 @@ ean,name,regulation,category
 8001090735300,Pantene Conditioner Smooth & Sleek 90ml,No regulation,Hair Care
 5038581029382,Yankee Candle Home Inspiration Exotic Fruit 49g,No regulation,Beauty
 8710908829949,Sure Men Invisible 48H Antiperspirant 150ml,No regulation,Beauty
-5012008561303,Cuticura Anti Bacterial Hand Gel 100ml,No regulation,Women's Health
+5012008561303,Cuticura Anti Bacterial Hand Gel 100ml,No regulation,Skincare
 5054805045167,Cidal Pink Grapefruit Antibacterial Liquid Handwash 250ml,No regulation,Beauty
 5025135113918,Malibu After Sun Lotion Spray 100ml,No regulation,Skincare
 5010724527399,Batiste Blush Dry Shampoo 50ml,No regulation,Hair Care
@@ -11733,7 +11733,7 @@ ean,name,regulation,category
 5000101799556,Carex Sensitive 2H Protection Antibacterial Handwash 250ml,No regulation,Beauty
 80823438,Mentos Bubble Fresh Gum 40 pieces,No regulation,Oral Care
 8001841479804,Always Cotton Protection Pads Wings Normal 12's,No regulation,Women's Health
-8710447229613,Simple Pollution Protect Sheet Mask,No regulation,Women's Health
+8710447229613,Simple Pollution Protect Sheet Mask,No regulation,Skincare
 5012008740203,Inecto Body Lotion Grapefruit 500ml,No regulation,Skincare
 5060228453434,Peppa Pig Bath & Shower Gel 400ml,No regulation,Beauty
 5012583009665,Schwarzkopf Gliss Total Repair Shampoo 250ml,No regulation,Hair Care
@@ -11820,7 +11820,7 @@ ean,name,regulation,category
 50097548,Vaseline Active Fresh Roll-On 50ml,No regulation,Beauty
 8712561848152,VO5 Conditioner Give Me Volume 400ml,No regulation,Hair Care
 8710908705632,Alberto Balsam Strawberries & Cream Shampoo 350ml,No regulation,Hair Care
-5011309049718,Care+ Hydrogen Peroxide Solution 9% 30 Vols 200ml,GSL,Women's Health
+5011309049718,Care+ Hydrogen Peroxide Solution 9% 30 Vols 200ml,GSL,General Health
 8712561848060,VO5 Give Me Moisture Conditioner 400ml,No regulation,Hair Care
 6291105153270,Vaseline Lip Care Stick Rosy 4.8g,No regulation,General Health
 8720181336164,Radox Feel Ready Shower Gel Pomegranate & Apple Scent 225ml,No regulation,Beauty
@@ -11896,7 +11896,7 @@ ean,name,regulation,category
 8716900559280,Cow & Gate 2 Follow-On Milk From 6-12 Months 200ml,No regulation,Baby & Child
 8717163020524,Impulse Tease Body Fragrance 75ml,No regulation,Beauty
 5013692261104,Baby Shark Hand Wash 250ml,No regulation,Baby & Child
-5011597092779,Coral Bath Sponges 3 Pack,No regulation,Oral Care
+5011597092779,Coral Bath Sponges 3 Pack,No regulation,Beauty
 5010441014486,Numark Large Cosmetic Pads 50 Pack,No regulation,Beauty
 7322542028056,Bodyform Ultra Goodnight 8 Pack,No regulation,Women's Health
 3014260287030,Gillette G2 Disposable Razor 5 Pack,No regulation,Men's Grooming
@@ -12120,7 +12120,7 @@ ean,name,regulation,category
 8714789843674,Sanex Handwash Hygiene Moisturising 300ml,No regulation,Skincare
 5000101100468,Original Source Coconut & Shea Butter 250ml,No regulation,Beauty
 5012008663007,Soft & Gentle Flower Fever Body Spray 75ml,No regulation,Beauty
-5011309049411,Care+ Hydrogen Peroxide Solution 6% 20 Vols 200ml,GSL,Women's Health
+5011309049411,Care+ Hydrogen Peroxide Solution 6% 20 Vols 200ml,GSL,General Health
 5000101845208,Original Source Shower Gel Mint & Tea Tree 250ml,No regulation,Beauty
 8001841559179,Aussie Sos Repair Treatment Shot 25ml,No regulation,General Health
 5000101845116,Original Source Lemon & Tea Tree Shower 250ml,No regulation,Beauty
@@ -12184,7 +12184,7 @@ ean,name,regulation,category
 5013965953354,Oral-B Fresh Protect Cool Mint Toothpaste 100ml,No regulation,Oral Care
 5025971208274,Lil-Lets 200 Cotton Wool Buds,No regulation,First Aid
 5000101189333,Original Source Lime & Coconut Milk Shower Gel 250ml,No regulation,Beauty
-5012008581202,Cuticura Normal Skin Oil Free Facial Moisturiser 100ml,No regulation,Women's Health
+5012008581202,Cuticura Normal Skin Oil Free Facial Moisturiser 100ml,No regulation,Skincare
 5019091500561,Revitale Absorbent Nose Strips 5 Pack,No regulation,General Health
 5028763002371,Wisdom Toothbrush Regular Fresh Med 2 Pack,No regulation,Oral Care
 8710908181160,Alberto Balsam Anti-Oxidant Blueberry Conditioner 350ml,No regulation,Hair Care
@@ -12240,7 +12240,7 @@ ean,name,regulation,category
 7625657155328,3 Ply Surgical Masks 10 Pack,No regulation,Skincare
 0038785101018,Aussie 3 Minute Miracle Sachets 20ml,No regulation,Vitamins
 5012251013512,Beauty Formulas Brightening Vitamin C Make-Up Remover Wipes 30 Pack,No regulation,Vitamins
-5011309049213,Care+ Hydrogen Peroxide Solution 3% 10 Vols 200ml,GSL,Women's Health
+5011309049213,Care+ Hydrogen Peroxide Solution 3% 10 Vols 200ml,GSL,General Health
 5060060212480,Astonish Concentrated Disinfectant Garden Bouquet 300ml,No regulation,Home & Household
 5022545125739,LOL Surprise! Cleansing Hand Gel 50ml,No regulation,Skincare
 50309443,ChapStick Classic Original SPF10,No regulation,Skincare
@@ -12353,7 +12353,7 @@ ean,name,regulation,category
 5010441073162,Numark Clear Plasters 24 Pack,No regulation,First Aid
 5031413903294,Pretty Cosmetic Pads 80 Pack,No regulation,Beauty
 5050895067362,All About Home Spray Bottle,No regulation,Beauty
-3574660709599,Johnson's Body Care Soft & Fresh Unwind 250ml,No regulation,Digestive
+3574660709599,Johnson's Body Care Soft & Fresh Unwind 250ml,No regulation,General Health
 5014749160395,CS Beauty Shampoo & Scalp Massage Brush,No regulation,Hair Care
 5060120162144,Xpel Mosquito & Insect Repellent Bands 2 Pack,No regulation,Home & Household
 5012334001160,Insette Body Spray Ocean 150ml,No regulation,Beauty
@@ -12486,7 +12486,7 @@ ean,name,regulation,category
 0079181910620,Revlon Volumize Lashes 91062,No regulation,General Health
 3086125705027,Bic 1 Disposable Razors 5 Pack,No regulation,Men's Grooming
 7622210412539,Halls Soothers Honey & Lemon 45g,No regulation,Baby & Child
-5012008734202,Cuticura 2in1 Anti Bac Hand & Nail Cream 75ml,No regulation,Women's Health
+5012008734202,Cuticura 2in1 Anti Bac Hand & Nail Cream 75ml,No regulation,Skincare
 8714789700052,Palmolive Bar Soap Almond Milk 90g,No regulation,Beauty
 5017289002545,Softy Allergy Wipes 40 sheets,No regulation,Beauty
 5038581126616,Yankee Candle Wax Melt Tree Farm Festival 22g,No regulation,Beauty
@@ -12509,7 +12509,7 @@ ean,name,regulation,category
 50985098,Halls Extra Strong 33.5g,No regulation,General Health
 5011597001634,Coral Baby Sponge,No regulation,Baby & Child
 5034660508038,Halls Soothers Strawberry 45g,No regulation,Baby & Child
-5011597001627,Coral Bath Sponge,No regulation,Oral Care
+5011597001627,Coral Bath Sponge,No regulation,Beauty
 0309973103061,Revlon Kiss Lip Creme Blush,No regulation,Beauty
 5050895239479,Zazie Nail Clippers,No regulation,Beauty
 50658053,Halls Sugar Free Cherry Menthol Action 32g,No regulation,General Health
@@ -12725,7 +12725,7 @@ ean,name,regulation,category
 4717237020270,I-M Neoprene Padded Knee Support NS-702 X-Large,No regulation,Supports & Braces
 4717237011407,I-M Compression Knee Support with Stays Dynamic SS-709 Large,No regulation,Supports & Braces
 5011417583210,Nuromol 12 Tablets,GSL,Vitamins
-5012008404600,CUTICURA BAR SOAP 100G,No regulation,Women's Health
+5012008404600,CUTICURA BAR SOAP 100G,No regulation,Beauty
 5900998000349,Carex Handwash 250ml Sensitive,No regulation,Beauty
 5060070320069,Nebuliser Paed Face Mask Set Ao3,No regulation,Skincare
 5011842112184,Bassetts Adult Multivitamins 30 Gummies,No regulation,Vitamins
@@ -12807,7 +12807,7 @@ ean,name,regulation,category
 5026445002190,Rapport Sport 100ml Edt & 150ml Body Spray Twin Set,No regulation,Beauty
 5017353502568,Galpharm Ibuprofen 400mg 48 Caplets,P,Pain Relief
 4005808663798,Nivea Deo Spray 150ml Men Sensitive Protect,No regulation,Beauty
-96195796,Beauty Kitchen TS Sensitive Solutions SOS Skin Shield+ 50ml,No regulation,Women's Health
+96195796,Beauty Kitchen TS Sensitive Solutions SOS Skin Shield+ 50ml,No regulation,Skincare
 8718951528208,Palmolive Shower Gel 250ml Kids Almond,No regulation,Beauty
 8006540153895,Pantene Shampoo Menopause 250ml,No regulation,Women's Health
 8700216116619,Always Discreet Pants Normal/Large 7,No regulation,Continence
@@ -12816,7 +12816,7 @@ ean,name,regulation,category
 5060342240569,GLUCORX SAFETY LANCETS 23G 2.2MM (100),No regulation,Testing & Monitoring
 4001638530095,StretchMarkBodyButter,No regulation,Beauty
 0782126003546,Natracare Dry & Light Inco Plus Pads 16pc,No regulation,General Health
-0017854118454,Baylis & Harding Beauticology Candy Unicorn Beauty Bag Gift Set,No regulation,Women's Health
+0017854118454,Baylis & Harding Beauticology Candy Unicorn Beauty Bag Gift Set,No regulation,Skincare
 7927340000428,KELO-COTE SILICONE GEL SPRAY KCS100GB (100ML),No regulation,Skincare
 5015802278224,MEDIUM CANDLE JAR SPA MOMENTS,No regulation,Beauty
 5060259571602,Gold Collagen Multidose Hairlift,No regulation,Hair Care
@@ -12830,7 +12830,7 @@ ean,name,regulation,category
 5029219000736,Shelley 200ml Dry Shampoo Blush,No regulation,Hair Care
 5038483844564,SCHOLL SOFTGRIP C2 KNEE O/TOE NAT (LGE),No regulation,Supports & Braces
 0733739001061,NOW Foods 5-HTP 100mg - 120 vcaps,No regulation,General Health
-0017854113299,Baylis & Harding Beauticology Rainbow Kisses Bath Bomb,No regulation,Women's Health
+0017854113299,Baylis & Harding Beauticology Rainbow Kisses Bath Bomb,No regulation,Beauty
 5060320560528,SUNVIT-D3 4000 IU (28),No regulation,General Health
 50093212,Care+ Magnesium Sulphate Paste 50g,GSL,Vitamins
 8001090989932,Oral-B Pro Expert Fresh Breath Toothpaste 75ml,No regulation,Oral Care
@@ -12976,7 +12976,7 @@ ean,name,regulation,category
 7613036912549,SMA Advanced First Infant Milk 800g,No regulation,Baby & Child
 93499606,Medihoney Wound Gel 10g,GSL,First Aid
 8809416471396,COSRX - Master Patch Clear Fit - Masking Eczema Patches - 18pcs,No regulation,Skincare
-0017854113329,Baylis & Harding Beauticology Let's Be Mermaids Body Wash,No regulation,Women's Health
+0017854113329,Baylis & Harding Beauticology Let's Be Mermaids Body Wash,No regulation,Beauty
 3574661385495,CALPROFEN (200ML),No regulation,General Health
 5060259570520,Gold Collagen RX,No regulation,Vitamins
 8809447254388,Dr. Althea - Vitamin C Boosting Serum - Vitamin C Face Serum - 30ml,No regulation,First Aid
@@ -13581,7 +13581,7 @@ ean,name,regulation,category
 0708002401121,Faith In Nature Hemp & Meadowfoam Conditioner 400ml,No regulation,Hair Care
 5060342241658,GLUCORX Q BLOOD METER (1),No regulation,Testing & Monitoring
 5038581091280,Yankee Candle Sunny Large Jar 623g,No regulation,Beauty
-5017353505828,Galpharm 6+ Paracetamol Solution 250mg/5ml 80ml,GSL,Women's Health
+5017353505828,Galpharm 6+ Paracetamol Solution 250mg/5ml 80ml,GSL,Pain Relief
 0782126200112,Natracare Organic Baby Wipes 50pc,No regulation,Baby & Child
 60023841,Garnier Roll On 50ml For Women Invisible (8x6),No regulation,Women's Health
 0894147000418,Sliquid Naturals Sassy Anal Lubricant-255ml,No regulation,Sexual Wellness
@@ -13832,7 +13832,7 @@ ean,name,regulation,category
 5060361080382,Xailin Intense 0.3% Ha Pf Eye Drops 10ml,No regulation,Eye Care
 4001638500234,SOSSpotTreatment,No regulation,General Health
 5011842110708,Bassetts 7-11 Years Multivitamins 30 Gummies,No regulation,Vitamins
-0085805242886,ELIZABETH ARDEN WHITE TEA SKIN SOLUTIONS 50ML MICRO GEL CREAM,No regulation,Women's Health
+0085805242886,ELIZABETH ARDEN WHITE TEA SKIN SOLUTIONS 50ML MICRO GEL CREAM,No regulation,Skincare
 ,"FUSSY Coconut Milk Refillable Natural Deodorant, Starter Pack, 40g",No regulation,Beauty
 0071409542460,Mane 'n Tail Curls Day - Enhancing Smoothie 6.5oz,No regulation,General Health
 7610700626344,RICOLA LIQUORICE S/F BOX WITH STEVIA (45GM),No regulation,General Health
