@@ -119,7 +119,10 @@ class SPE_Admin {
 		}
 		$clean = array();
 		foreach ( $input as $key => $value ) {
-			$key   = sanitize_key( $key );
+			// NOT sanitize_key() — that strips the "." from decimal doses
+			// (mounjaro-2.5mg -> mounjaro-25mg), so those never round-trip.
+			// Keep lowercase letters, digits, dot, underscore and hyphen.
+			$key   = preg_replace( '/[^a-z0-9._-]/', '', strtolower( (string) $key ) );
 			$value = (int) $value;
 			if ( $key && $value > 0 ) {
 				$clean[ $key ] = $value;
