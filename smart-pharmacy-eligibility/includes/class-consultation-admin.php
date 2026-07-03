@@ -35,6 +35,16 @@ class SPE_Consultation_Admin {
 	 * Add the submenu under the existing "Eligibility" top-level menu.
 	 */
 	public static function register_menu() {
+		// The submissions list — where P-med consultation submissions land
+		// (distinct from GLP-1 "Assessments").
+		add_submenu_page(
+			'spe-assessments',
+			__( 'Consultations', 'smart-pharmacy-eligibility' ),
+			__( 'Consultations', 'smart-pharmacy-eligibility' ),
+			self::CAPABILITY,
+			'spe-consultations',
+			array( __CLASS__, 'render_list' )
+		);
 		add_submenu_page(
 			'spe-assessments',
 			__( 'Consultation Form', 'smart-pharmacy-eligibility' ),
@@ -43,6 +53,111 @@ class SPE_Consultation_Admin {
 			'spe-consultation-form',
 			array( __CLASS__, 'render' )
 		);
+	}
+
+	/**
+	 * The consultation submissions list (and single-submission detail
+	 * when ?consultation=<uuid> is present).
+	 */
+	public static function render_list() {
+		if ( ! current_user_can( self::CAPABILITY ) ) {
+			wp_die( esc_html__( 'You do not have permission to view this page.', 'smart-pharmacy-eligibility' ) );
+		}
+
+		$uuid = isset( $_GET['consultation'] ) ? sanitize_text_field( wp_unslash( $_GET['consultation'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( $uuid ) {
+			self::render_detail( $uuid );
+			return;
+		}
+
+		$rows = class_exists( 'SPE_Consultation_Repo' ) ? SPE_Consultation_Repo::list_recent( array( 'limit' => 100 ) ) : array();
+		?>
+		<div class="wrap">
+			<h1><?php esc_html_e( 'Consultations', 'smart-pharmacy-eligibility' ); ?></h1>
+			<p><?php esc_html_e( 'P-medicine consultation form submissions. (The GLP-1 weight-loss checker is under "Assessments".)', 'smart-pharmacy-eligibility' ); ?></p>
+			<table class="wp-list-table widefat fixed striped">
+				<thead><tr>
+					<th><?php esc_html_e( 'Submitted', 'smart-pharmacy-eligibility' ); ?></th>
+					<th><?php esc_html_e( 'For', 'smart-pharmacy-eligibility' ); ?></th>
+					<th><?php esc_html_e( 'Date of birth', 'smart-pharmacy-eligibility' ); ?></th>
+					<th><?php esc_html_e( 'Product', 'smart-pharmacy-eligibility' ); ?></th>
+					<th><?php esc_html_e( 'Order', 'smart-pharmacy-eligibility' ); ?></th>
+					<th></th>
+				</tr></thead>
+				<tbody>
+				<?php if ( empty( $rows ) ) : ?>
+					<tr><td colspan="6"><?php esc_html_e( 'No consultation submissions yet.', 'smart-pharmacy-eligibility' ); ?></td></tr>
+				<?php else : ?>
+					<?php foreach ( $rows as $row ) : ?>
+						<tr>
+							<td><?php echo esc_html( mysql2date( 'Y-m-d H:i', $row->created_at ) ); ?></td>
+							<td><?php echo esc_html( $row->who_for ); ?></td>
+							<td><?php echo esc_html( $row->dob ); ?></td>
+							<td>
+								<?php
+								if ( $row->product_id ) {
+									echo esc_html( get_the_title( (int) $row->product_id ) );
+								} else {
+									echo '&mdash;';
+								}
+								?>
+							</td>
+							<td>
+								<?php if ( $row->order_id ) : ?>
+									<a href="<?php echo esc_url( get_edit_post_link( (int) $row->order_id ) ?: admin_url( 'post.php?post=' . (int) $row->order_id . '&action=edit' ) ); ?>">#<?php echo (int) $row->order_id; ?></a>
+								<?php else : ?>
+									&mdash;
+								<?php endif; ?>
+							</td>
+							<td><a href="<?php echo esc_url( add_query_arg( array( 'page' => 'spe-consultations', 'consultation' => $row->consultation_id ), admin_url( 'admin.php' ) ) ); ?>"><?php esc_html_e( 'View answers', 'smart-pharmacy-eligibility' ); ?></a></td>
+						</tr>
+					<?php endforeach; ?>
+				<?php endif; ?>
+				</tbody>
+			</table>
+			<p style="margin-top:12px;color:#6b7280;"><?php esc_html_e( 'Showing the 100 most recent. Once payment is wired, these also attach to their order and show in the Clinical Review panel there.', 'smart-pharmacy-eligibility' ); ?></p>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Single submission: all answers, labelled.
+	 *
+	 * @param string $uuid
+	 */
+	protected static function render_detail( $uuid ) {
+		$row = class_exists( 'SPE_Consultation_Repo' ) ? SPE_Consultation_Repo::find( $uuid ) : null;
+		$back = add_query_arg( array( 'page' => 'spe-consultations' ), admin_url( 'admin.php' ) );
+		?>
+		<div class="wrap">
+			<h1><?php esc_html_e( 'Consultation', 'smart-pharmacy-eligibility' ); ?></h1>
+			<p><a href="<?php echo esc_url( $back ); ?>">&larr; <?php esc_html_e( 'Back to all consultations', 'smart-pharmacy-eligibility' ); ?></a></p>
+			<?php if ( ! $row ) : ?>
+				<p><?php esc_html_e( 'Consultation not found.', 'smart-pharmacy-eligibility' ); ?></p>
+			<?php else : ?>
+				<?php
+				$answers = SPE_Consultation_Repo::answers( $row );
+				$labels  = array();
+				$questions = SPE_Consultation_Questions::get_questions( array( 'include_disabled' => true, 'product_id' => (int) $row->product_id ) );
+				foreach ( $questions as $q ) {
+					$labels[ $q['key'] ] = $q['label'];
+				}
+				?>
+				<table class="widefat striped" style="max-width:800px;">
+					<tbody>
+						<tr><th style="width:220px;"><?php esc_html_e( 'Submitted', 'smart-pharmacy-eligibility' ); ?></th><td><?php echo esc_html( mysql2date( 'Y-m-d H:i', $row->created_at ) ); ?></td></tr>
+						<?php if ( $row->product_id ) : ?><tr><th><?php esc_html_e( 'Product', 'smart-pharmacy-eligibility' ); ?></th><td><?php echo esc_html( get_the_title( (int) $row->product_id ) ); ?></td></tr><?php endif; ?>
+						<?php foreach ( $answers as $key => $value ) : ?>
+							<tr>
+								<th style="text-align:left;"><?php echo esc_html( isset( $labels[ $key ] ) ? $labels[ $key ] : $key ); ?></th>
+								<td><?php echo esc_html( is_array( $value ) ? implode( ', ', $value ) : (string) $value ); ?></td>
+							</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+			<?php endif; ?>
+		</div>
+		<?php
 	}
 
 	/**
