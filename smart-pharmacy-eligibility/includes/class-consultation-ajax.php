@@ -45,6 +45,28 @@ class SPE_Consultation_Ajax {
 		$clean  = array();
 		$errors = array();
 
+		// Contact details (fixed fields, always required so a pharmacist
+		// can identify and reach the patient).
+		$raw_contact = isset( $payload['contact'] ) && is_array( $payload['contact'] ) ? $payload['contact'] : array();
+		$contact     = array(
+			'first_name' => isset( $raw_contact['first_name'] ) ? sanitize_text_field( $raw_contact['first_name'] ) : '',
+			'last_name'  => isset( $raw_contact['last_name'] ) ? sanitize_text_field( $raw_contact['last_name'] ) : '',
+			'email'      => isset( $raw_contact['email'] ) ? sanitize_email( $raw_contact['email'] ) : '',
+			'phone'      => isset( $raw_contact['phone'] ) ? sanitize_text_field( $raw_contact['phone'] ) : '',
+		);
+		if ( '' === $contact['first_name'] ) {
+			$errors['first_name'] = __( 'Please enter your first name.', 'smart-pharmacy-eligibility' );
+		}
+		if ( '' === $contact['last_name'] ) {
+			$errors['last_name'] = __( 'Please enter your last name.', 'smart-pharmacy-eligibility' );
+		}
+		if ( ! is_email( $contact['email'] ) ) {
+			$errors['email'] = __( 'Please enter a valid email address.', 'smart-pharmacy-eligibility' );
+		}
+		if ( '' === $contact['phone'] ) {
+			$errors['phone'] = __( 'Please enter a contact phone number.', 'smart-pharmacy-eligibility' );
+		}
+
 		foreach ( $questions as $q ) {
 			$key   = $q['key'];
 			$value = isset( $raw[ $key ] ) ? $raw[ $key ] : '';
@@ -88,6 +110,7 @@ class SPE_Consultation_Ajax {
 		$consultation_id = SPE_Consultation_Repo::create(
 			array(
 				'product_id' => $product_id,
+				'contact'    => $contact,
 				'dob'        => isset( $clean['dob'] ) ? $clean['dob'] : '',
 				'who_for'    => isset( $clean['who_for'] ) ? $clean['who_for'] : '',
 				'answers'    => $clean,

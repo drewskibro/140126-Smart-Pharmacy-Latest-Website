@@ -51,12 +51,21 @@ class SPE_Consultation_Repo {
 
 		$answers = isset( $data['answers'] ) && is_array( $data['answers'] ) ? $data['answers'] : array();
 
+		$contact = isset( $data['contact'] ) && is_array( $data['contact'] ) ? $data['contact'] : array();
+		$get     = function ( $k, $len ) use ( $contact ) {
+			return isset( $contact[ $k ] ) ? substr( sanitize_text_field( $contact[ $k ] ), 0, $len ) : '';
+		};
+
 		$ok = $wpdb->insert( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			self::table(),
 			array(
 				'consultation_id' => $uuid,
 				'status'          => 'submitted',
 				'product_id'      => isset( $data['product_id'] ) ? (int) $data['product_id'] : 0,
+				'first_name'      => $get( 'first_name', 100 ),
+				'last_name'       => $get( 'last_name', 100 ),
+				'email'           => isset( $contact['email'] ) ? substr( sanitize_email( $contact['email'] ), 0, 190 ) : '',
+				'phone'           => $get( 'phone', 40 ),
 				'dob'             => self::normalise_date( isset( $data['dob'] ) ? $data['dob'] : '' ),
 				'who_for'         => isset( $data['who_for'] ) ? substr( sanitize_text_field( $data['who_for'] ), 0, 60 ) : '',
 				'answers'         => wp_json_encode( $answers ),
@@ -66,7 +75,7 @@ class SPE_Consultation_Repo {
 				'created_at'      => $now,
 				'updated_at'      => $now,
 			),
-			array( '%s', '%s', '%d', '%s', '%s', '%s', '%d', '%s', '%s', '%s', '%s' )
+			array( '%s', '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s', '%s', '%s' )
 		);
 
 		return $ok ? $uuid : '';

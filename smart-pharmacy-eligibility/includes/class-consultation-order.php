@@ -208,6 +208,15 @@ class SPE_Consultation_Order {
 			<table class="widefat striped" style="margin-bottom:12px;">
 				<tbody>
 					<tr><th style="width:200px;"><?php esc_html_e( 'Submitted', 'smart-pharmacy-eligibility' ); ?></th><td><?php echo esc_html( mysql2date( 'Y-m-d H:i', $row->created_at ) ); ?></td></tr>
+					<?php if ( '' !== trim( $row->first_name . $row->last_name ) ) : ?>
+						<tr><th><?php esc_html_e( 'Name', 'smart-pharmacy-eligibility' ); ?></th><td><?php echo esc_html( trim( $row->first_name . ' ' . $row->last_name ) ); ?></td></tr>
+					<?php endif; ?>
+					<?php if ( ! empty( $row->email ) ) : ?>
+						<tr><th><?php esc_html_e( 'Email', 'smart-pharmacy-eligibility' ); ?></th><td><?php echo esc_html( $row->email ); ?></td></tr>
+					<?php endif; ?>
+					<?php if ( ! empty( $row->phone ) ) : ?>
+						<tr><th><?php esc_html_e( 'Phone', 'smart-pharmacy-eligibility' ); ?></th><td><?php echo esc_html( $row->phone ); ?></td></tr>
+					<?php endif; ?>
 					<?php if ( ! empty( $row->who_for ) ) : ?>
 						<tr><th><?php esc_html_e( 'Consultation for', 'smart-pharmacy-eligibility' ); ?></th><td><?php echo esc_html( $row->who_for ); ?></td></tr>
 					<?php endif; ?>
