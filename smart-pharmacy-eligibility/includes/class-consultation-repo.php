@@ -109,6 +109,21 @@ class SPE_Consultation_Repo {
 	}
 
 	/**
+	 * Most recent consultations for the admin list.
+	 *
+	 * @param array $args { @type int $limit } Optional.
+	 * @return object[] Row objects, newest first.
+	 */
+	public static function list_recent( $args = array() ) {
+		global $wpdb;
+		$limit = isset( $args['limit'] ) ? (int) $args['limit'] : 100;
+		$table = self::table();
+		return $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$wpdb->prepare( "SELECT * FROM {$table} ORDER BY created_at DESC LIMIT %d", $limit )
+		);
+	}
+
+	/**
 	 * Decode the stored answers JSON for a row.
 	 *
 	 * @param object $row Row from find().
