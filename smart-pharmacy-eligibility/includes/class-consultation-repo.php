@@ -133,6 +133,81 @@ class SPE_Consultation_Repo {
 	}
 
 	/**
+	 * Count consultations in a given status (for the menu badge).
+	 *
+	 * @param string $status
+	 * @return int
+	 */
+	public static function count_by_status( $status ) {
+		global $wpdb;
+		$table = self::table();
+		return (int) $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$wpdb->prepare( "SELECT COUNT(*) FROM {$table} WHERE status = %s", $status )
+		);
+	}
+
+	/**
+	 * Set the workflow status.
+	 *
+	 * @param string $consultation_id UUID.
+	 * @param string $status
+	 * @return void
+	 */
+	public static function update_status( $consultation_id, $status ) {
+		global $wpdb;
+		$wpdb->update( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			self::table(),
+			array( 'status' => $status, 'updated_at' => current_time( 'mysql' ) ),
+			array( 'consultation_id' => $consultation_id ),
+			array( '%s', '%s' ),
+			array( '%s' )
+		);
+	}
+
+	/**
+	 * Append a staff note to the consultation's note log.
+	 *
+	 * @param string $consultation_id UUID.
+	 * @param string $text            Note body.
+	 * @param int    $user_id         Author.
+	 * @return void
+	 */
+	public static function add_note( $consultation_id, $text, $user_id ) {
+		$row = self::find( $consultation_id );
+		if ( ! $row ) {
+			return;
+		}
+		$log   = self::notes_log( $row );
+		$log[] = array(
+			'time' => current_time( 'mysql' ),
+			'user' => (int) $user_id,
+			'text' => $text,
+		);
+		global $wpdb;
+		$wpdb->update( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			self::table(),
+			array( 'notes' => wp_json_encode( $log ), 'updated_at' => current_time( 'mysql' ) ),
+			array( 'consultation_id' => $consultation_id ),
+			array( '%s', '%s' ),
+			array( '%s' )
+		);
+	}
+
+	/**
+	 * Decode the note log for a row.
+	 *
+	 * @param object $row
+	 * @return array[]
+	 */
+	public static function notes_log( $row ) {
+		if ( ! $row || empty( $row->notes ) ) {
+			return array();
+		}
+		$decoded = json_decode( $row->notes, true );
+		return is_array( $decoded ) ? $decoded : array();
+	}
+
+	/**
 	 * Decode the stored answers JSON for a row.
 	 *
 	 * @param object $row Row from find().

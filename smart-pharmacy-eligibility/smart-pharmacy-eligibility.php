@@ -3,7 +3,7 @@
  * Plugin Name:       Smart Pharmacy Eligibility Checker
  * Plugin URI:        https://github.com/drewskibro/140126-Smart-Pharmacy-Latest-Website
  * Description:       Multi-step medical eligibility checker for GLP-1 weight loss treatments (Wegovy / Mounjaro). Captures patient assessment, applies UK clinical eligibility rules, and hands the chosen treatment off to WooCommerce checkout.
- * Version:           0.5.0
+ * Version:           0.6.0
  * Requires at least: 6.2
  * Requires PHP:      7.4
  * Author:            Smart Pharmacy
@@ -19,11 +19,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SPE_VERSION', '0.5.0' );
+define( 'SPE_VERSION', '0.6.0' );
 define( 'SPE_PLUGIN_FILE', __FILE__ );
 define( 'SPE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SPE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-define( 'SPE_DB_VERSION', '3' );
+define( 'SPE_DB_VERSION', '4' );
 
 require_once SPE_PLUGIN_DIR . 'includes/helpers.php';
 require_once SPE_PLUGIN_DIR . 'includes/class-activator.php';

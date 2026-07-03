@@ -29,18 +29,75 @@ class SPE_Consultation_Admin {
 	public static function register() {
 		add_action( 'admin_menu', array( __CLASS__, 'register_menu' ), 20 );
 		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
+		add_action( 'admin_init', array( __CLASS__, 'maybe_handle_detail_post' ) );
+	}
+
+	/**
+	 * Handle status / note / order-link actions from a consultation
+	 * detail page (on admin_init so we can redirect-after-POST).
+	 */
+	public static function maybe_handle_detail_post() {
+		if ( empty( $_POST['spe_action'] ) || empty( $_POST['spe_consultation_uuid'] ) ) {
+			return;
+		}
+		$uuid = sanitize_text_field( wp_unslash( $_POST['spe_consultation_uuid'] ) );
+		check_admin_referer( 'spe_consultation_detail_' . $uuid );
+		if ( ! current_user_can( self::CAPABILITY ) || ! class_exists( 'SPE_Consultation_Repo' ) ) {
+			return;
+		}
+
+		$action = sanitize_key( wp_unslash( $_POST['spe_action'] ) );
+
+		if ( 'status' === $action ) {
+			$status = isset( $_POST['status'] ) ? sanitize_key( wp_unslash( $_POST['status'] ) ) : '';
+			if ( isset( self::STATUSES[ $status ] ) ) {
+				SPE_Consultation_Repo::update_status( $uuid, $status );
+			}
+		} elseif ( 'note' === $action ) {
+			$note = isset( $_POST['note'] ) ? sanitize_textarea_field( wp_unslash( $_POST['note'] ) ) : '';
+			if ( '' !== trim( $note ) ) {
+				SPE_Consultation_Repo::add_note( $uuid, $note, get_current_user_id() );
+			}
+		} elseif ( 'order' === $action ) {
+			$order_id = isset( $_POST['order_id'] ) ? absint( $_POST['order_id'] ) : 0;
+			if ( $order_id && function_exists( 'wc_get_order' ) ) {
+				$order = wc_get_order( $order_id );
+				if ( $order ) {
+					SPE_Consultation_Repo::set_order_id( $uuid, $order_id );
+					$order->update_meta_data( '_spe_consultation_id', $uuid );
+					$order->save();
+				}
+			}
+		}
+
+		wp_safe_redirect( add_query_arg( array( 'page' => 'spe-consultations', 'consultation' => $uuid, 'spe_done' => $action ), admin_url( 'admin.php' ) ) );
+		exit;
 	}
 
 	/**
 	 * Add the submenu under the existing "Eligibility" top-level menu.
 	 */
+	/** Workflow statuses: slug => label. */
+	const STATUSES = array(
+		'submitted' => 'New',
+		'in_review' => 'In review',
+		'approved'  => 'Approved',
+		'rejected'  => 'Denied',
+	);
+
 	public static function register_menu() {
 		// The submissions list — where P-med consultation submissions land
-		// (distinct from GLP-1 "Assessments").
+		// (distinct from GLP-1 "Assessments"). A count bubble shows the
+		// number of new (unreviewed) submissions.
+		$new_count = class_exists( 'SPE_Consultation_Repo' ) ? SPE_Consultation_Repo::count_by_status( 'submitted' ) : 0;
+		$menu_title = __( 'Consultations', 'smart-pharmacy-eligibility' );
+		if ( $new_count > 0 ) {
+			$menu_title .= ' <span class="awaiting-mod"><span class="pending-count">' . (int) $new_count . '</span></span>';
+		}
 		add_submenu_page(
 			'spe-assessments',
 			__( 'Consultations', 'smart-pharmacy-eligibility' ),
-			__( 'Consultations', 'smart-pharmacy-eligibility' ),
+			$menu_title,
 			self::CAPABILITY,
 			'spe-consultations',
 			array( __CLASS__, 'render_list' )
@@ -78,6 +135,7 @@ class SPE_Consultation_Admin {
 			<table class="wp-list-table widefat fixed striped">
 				<thead><tr>
 					<th><?php esc_html_e( 'Submitted', 'smart-pharmacy-eligibility' ); ?></th>
+					<th><?php esc_html_e( 'Status', 'smart-pharmacy-eligibility' ); ?></th>
 					<th><?php esc_html_e( 'Name', 'smart-pharmacy-eligibility' ); ?></th>
 					<th><?php esc_html_e( 'Email', 'smart-pharmacy-eligibility' ); ?></th>
 					<th><?php esc_html_e( 'Phone', 'smart-pharmacy-eligibility' ); ?></th>
@@ -87,11 +145,12 @@ class SPE_Consultation_Admin {
 				</tr></thead>
 				<tbody>
 				<?php if ( empty( $rows ) ) : ?>
-					<tr><td colspan="7"><?php esc_html_e( 'No consultation submissions yet.', 'smart-pharmacy-eligibility' ); ?></td></tr>
+					<tr><td colspan="8"><?php esc_html_e( 'No consultation submissions yet.', 'smart-pharmacy-eligibility' ); ?></td></tr>
 				<?php else : ?>
 					<?php foreach ( $rows as $row ) : ?>
 						<tr>
 							<td><?php echo esc_html( mysql2date( 'Y-m-d H:i', $row->created_at ) ); ?></td>
+							<td><?php $sl = isset( self::STATUSES[ $row->status ] ) ? $row->status : 'submitted'; $sc = array( 'submitted' => '#fef3c7;color:#92400e', 'in_review' => '#dbeafe;color:#1e40af', 'approved' => '#dcfce7;color:#166534', 'rejected' => '#fee2e2;color:#991b1b' ); echo '<span style="display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;background:' . esc_attr( $sc[ $sl ] ) . ';">' . esc_html( self::STATUSES[ $sl ] ) . '</span>'; ?></td>
 							<td><?php echo esc_html( trim( $row->first_name . ' ' . $row->last_name ) ); ?></td>
 							<td><?php echo esc_html( $row->email ); ?></td>
 							<td><?php echo esc_html( $row->phone ); ?></td>
@@ -134,6 +193,9 @@ class SPE_Consultation_Admin {
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Consultation', 'smart-pharmacy-eligibility' ); ?></h1>
 			<p><a href="<?php echo esc_url( $back ); ?>">&larr; <?php esc_html_e( 'Back to all consultations', 'smart-pharmacy-eligibility' ); ?></a></p>
+			<?php if ( isset( $_GET['spe_done'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
+				<div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'Saved.', 'smart-pharmacy-eligibility' ); ?></p></div>
+			<?php endif; ?>
 			<?php if ( ! $row ) : ?>
 				<p><?php esc_html_e( 'Consultation not found.', 'smart-pharmacy-eligibility' ); ?></p>
 			<?php else : ?>
@@ -160,6 +222,65 @@ class SPE_Consultation_Admin {
 						<?php endforeach; ?>
 					</tbody>
 				</table>
+
+				<?php $nonce_action = 'spe_consultation_detail_' . $row->consultation_id; ?>
+
+				<div style="display:flex;gap:32px;flex-wrap:wrap;margin-top:24px;max-width:800px;">
+					<div>
+						<h2><?php esc_html_e( 'Status', 'smart-pharmacy-eligibility' ); ?></h2>
+						<form method="post">
+							<?php wp_nonce_field( $nonce_action ); ?>
+							<input type="hidden" name="spe_consultation_uuid" value="<?php echo esc_attr( $row->consultation_id ); ?>" />
+							<input type="hidden" name="spe_action" value="status" />
+							<select name="status">
+								<?php foreach ( self::STATUSES as $slug => $label ) : ?>
+									<option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $row->status, $slug ); ?>><?php echo esc_html( $label ); ?></option>
+								<?php endforeach; ?>
+							</select>
+							<button class="button button-primary"><?php esc_html_e( 'Update', 'smart-pharmacy-eligibility' ); ?></button>
+						</form>
+					</div>
+					<div>
+						<h2><?php esc_html_e( 'Linked order', 'smart-pharmacy-eligibility' ); ?></h2>
+						<?php if ( $row->order_id ) : ?>
+							<p><?php printf( /* translators: %d: order id. */ esc_html__( 'Linked to order #%d.', 'smart-pharmacy-eligibility' ), (int) $row->order_id ); ?>
+								<a href="<?php echo esc_url( admin_url( 'post.php?post=' . (int) $row->order_id . '&action=edit' ) ); ?>"><?php esc_html_e( 'View', 'smart-pharmacy-eligibility' ); ?></a></p>
+						<?php endif; ?>
+						<form method="post">
+							<?php wp_nonce_field( $nonce_action ); ?>
+							<input type="hidden" name="spe_consultation_uuid" value="<?php echo esc_attr( $row->consultation_id ); ?>" />
+							<input type="hidden" name="spe_action" value="order" />
+							<input type="number" name="order_id" min="1" placeholder="<?php esc_attr_e( 'Order ID', 'smart-pharmacy-eligibility' ); ?>" class="small-text" />
+							<button class="button"><?php esc_html_e( 'Link order', 'smart-pharmacy-eligibility' ); ?></button>
+						</form>
+					</div>
+				</div>
+
+				<h2 style="margin-top:24px;"><?php esc_html_e( 'Notes', 'smart-pharmacy-eligibility' ); ?></h2>
+				<div style="max-width:800px;">
+					<?php $log = SPE_Consultation_Repo::notes_log( $row ); ?>
+					<?php if ( empty( $log ) ) : ?>
+						<p style="color:#6b7280;"><?php esc_html_e( 'No notes yet.', 'smart-pharmacy-eligibility' ); ?></p>
+					<?php else : ?>
+						<?php foreach ( array_reverse( $log ) as $note ) : ?>
+							<?php $author = ! empty( $note['user'] ) ? get_userdata( (int) $note['user'] ) : null; ?>
+							<div style="background:#fff;border:1px solid #dcdcde;border-radius:6px;padding:10px 12px;margin-bottom:8px;">
+								<p style="margin:0 0 4px;color:#646970;font-size:12px;">
+									<?php echo esc_html( isset( $note['time'] ) ? mysql2date( 'Y-m-d H:i', $note['time'] ) : '' ); ?>
+									<?php echo $author ? ' &middot; ' . esc_html( $author->display_name ) : ''; ?>
+								</p>
+								<p style="margin:0;white-space:pre-wrap;"><?php echo esc_html( isset( $note['text'] ) ? $note['text'] : '' ); ?></p>
+							</div>
+						<?php endforeach; ?>
+					<?php endif; ?>
+					<form method="post" style="margin-top:8px;">
+						<?php wp_nonce_field( $nonce_action ); ?>
+						<input type="hidden" name="spe_consultation_uuid" value="<?php echo esc_attr( $row->consultation_id ); ?>" />
+						<input type="hidden" name="spe_action" value="note" />
+						<textarea name="note" rows="2" class="large-text" placeholder="<?php esc_attr_e( 'Add a note…', 'smart-pharmacy-eligibility' ); ?>"></textarea>
+						<p><button class="button"><?php esc_html_e( 'Add note', 'smart-pharmacy-eligibility' ); ?></button></p>
+					</form>
+				</div>
 			<?php endif; ?>
 		</div>
 		<?php
