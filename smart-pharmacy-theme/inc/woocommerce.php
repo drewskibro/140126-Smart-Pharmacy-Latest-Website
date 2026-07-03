@@ -409,6 +409,13 @@ function sp_product_is_pom( $product_id ) {
 		return $cache[ $product_id ];
 	}
 
+	// Product-level regulation from the catalogue import: any product
+	// flagged "P" is prescription-only and must go through a consultation,
+	// regardless of whether it's linked to a Treatment landing page.
+	if ( 'P' === get_post_meta( $product_id, '_sp_regulation', true ) ) {
+		return $cache[ $product_id ] = true;
+	}
+
 	$treatment_id = sp_product_linked_treatment( $product_id );
 	if ( ! $treatment_id ) {
 		return $cache[ $product_id ] = false;
@@ -440,18 +447,35 @@ function sp_product_is_pom( $product_id ) {
  * @return string URL.
  */
 function sp_product_consultation_url( $product_id ) {
-	// Prefer the eligibility checker page when the plugin is active
-	// and an admin has filled in the URL field. The method_exists
-	// guard prevents fatals when the theme is ahead of the plugin
-	// (e.g. theme deployed but plugin not yet reinstalled).
-	if ( class_exists( 'SPE_Admin' ) && method_exists( 'SPE_Admin', 'get_checker_url' ) ) {
-		$checker_url = SPE_Admin::get_checker_url();
-		if ( $checker_url && home_url( '/' ) !== $checker_url ) {
-			return $checker_url;
+	$product_id   = (int) $product_id;
+	$treatment_id = sp_product_linked_treatment( $product_id );
+
+	// Weight-loss / GLP-1 products (linked to a treatment, or in the
+	// Weight Management category) go to the in-depth BMI assessment.
+	$is_weight_loss = $treatment_id || has_term( 'Weight Management', 'product_cat', $product_id );
+	if ( $is_weight_loss ) {
+		if ( class_exists( 'SPE_Admin' ) && method_exists( 'SPE_Admin', 'get_checker_url' ) ) {
+			$checker_url = SPE_Admin::get_checker_url();
+			if ( $checker_url && home_url( '/' ) !== $checker_url ) {
+				return $checker_url;
+			}
+		}
+		if ( $treatment_id ) {
+			return (string) get_permalink( $treatment_id );
 		}
 	}
 
-	$treatment_id = sp_product_linked_treatment( $product_id );
+	// All other prescription products go to the lighter consultation
+	// form, carrying the product id so it can show any per-product
+	// questions and link the submission to the right product.
+	if ( class_exists( 'SPE_Admin' ) && method_exists( 'SPE_Admin', 'get_consultation_url' ) ) {
+		$consult_url = SPE_Admin::get_consultation_url();
+		if ( $consult_url ) {
+			return add_query_arg( 'product', $product_id, $consult_url );
+		}
+	}
+
+	// Last-resort fallbacks so the CTA never dead-ends.
 	if ( $treatment_id ) {
 		return (string) get_permalink( $treatment_id );
 	}

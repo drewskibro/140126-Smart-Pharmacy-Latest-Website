@@ -85,6 +85,26 @@ class SPE_Admin {
 				'default'           => '',
 			)
 		);
+		register_setting(
+			'spe_settings',
+			'spe_consultation_url',
+			array(
+				'sanitize_callback' => 'esc_url_raw',
+				'default'           => '',
+			)
+		);
+	}
+
+	/**
+	 * URL of the P-med consultation form page (the lighter form, for the
+	 * wider prescription range). The theme routes general P-medicines
+	 * here (with the product id), while GLP-1 / weight-loss products go
+	 * to the in-depth checker instead. Empty if not configured.
+	 *
+	 * @return string
+	 */
+	public static function get_consultation_url() {
+		return (string) spe_option( 'consultation_url', '' );
 	}
 
 	/**
@@ -252,19 +272,32 @@ class SPE_Admin {
 			<form method="post" action="options.php">
 				<?php settings_fields( 'spe_settings' ); ?>
 
-				<h2 style="margin-top: 16px;"><?php esc_html_e( 'Checker Page URL', 'smart-pharmacy-eligibility' ); ?></h2>
-				<p><?php esc_html_e( 'Where does the eligibility checker live? This URL is what the "Start Consultation" buttons on prescription products link to. Paste the full URL of the page containing the [smart_pharmacy_eligibility] shortcode.', 'smart-pharmacy-eligibility' ); ?></p>
+				<h2 style="margin-top: 16px;"><?php esc_html_e( 'Consultation Page URLs', 'smart-pharmacy-eligibility' ); ?></h2>
+				<p><?php esc_html_e( 'Two pages drive the "Start Consultation" buttons. Weight-loss products (linked treatment / Weight Management) go to the BMI assessment; all other prescription products go to the lighter consultation form (with the product id attached).', 'smart-pharmacy-eligibility' ); ?></p>
 				<table class="form-table" role="presentation">
 					<tbody>
 						<tr>
-							<th scope="row"><label for="spe_checker_url"><?php esc_html_e( 'Eligibility checker URL', 'smart-pharmacy-eligibility' ); ?></label></th>
+							<th scope="row"><label for="spe_checker_url"><?php esc_html_e( 'Weight-loss assessment URL', 'smart-pharmacy-eligibility' ); ?></label></th>
 							<td>
 								<input type="url"
 									id="spe_checker_url"
 									name="spe_checker_url"
 									value="<?php echo esc_attr( spe_option( 'checker_url', '' ) ); ?>"
 									class="regular-text"
+									placeholder="<?php echo esc_attr( home_url( '/weight-loss-assessment/' ) ); ?>" />
+								<p class="description"><?php esc_html_e( 'Page with the [smart_pharmacy_eligibility] shortcode.', 'smart-pharmacy-eligibility' ); ?></p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="spe_consultation_url"><?php esc_html_e( 'Consultation form URL', 'smart-pharmacy-eligibility' ); ?></label></th>
+							<td>
+								<input type="url"
+									id="spe_consultation_url"
+									name="spe_consultation_url"
+									value="<?php echo esc_attr( spe_option( 'consultation_url', '' ) ); ?>"
+									class="regular-text"
 									placeholder="<?php echo esc_attr( home_url( '/start-consultation/' ) ); ?>" />
+								<p class="description"><?php esc_html_e( 'Page with the [smart_pharmacy_consultation] shortcode.', 'smart-pharmacy-eligibility' ); ?></p>
 							</td>
 						</tr>
 					</tbody>
