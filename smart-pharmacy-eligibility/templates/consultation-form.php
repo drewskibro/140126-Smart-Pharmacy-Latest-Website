@@ -15,23 +15,7 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 <div class="spe-consult">
-	<header class="spe-consult__header">
-		<?php
-		if ( function_exists( 'has_custom_logo' ) && has_custom_logo() ) {
-			$sp_logo_id  = get_theme_mod( 'custom_logo' );
-			$sp_logo_src = wp_get_attachment_image_url( $sp_logo_id, 'medium' );
-			if ( $sp_logo_src ) {
-				echo '<a class="spe-consult__logo" href="' . esc_url( home_url( '/' ) ) . '" aria-label="' . esc_attr( get_bloginfo( 'name' ) ) . '"><img src="' . esc_url( $sp_logo_src ) . '" alt="' . esc_attr( get_bloginfo( 'name' ) ) . '" /></a>';
-			}
-		} else {
-			echo '<a class="spe-consult__title" href="' . esc_url( home_url( '/' ) ) . '">' . esc_html( get_bloginfo( 'name' ) ) . '</a>';
-		}
-		?>
-	</header>
-
 	<div class="spe-consult__body">
-		<h1 class="spe-consult__heading"><?php esc_html_e( 'Consultation', 'smart-pharmacy-eligibility' ); ?></h1>
-
 		<?php if ( '' !== trim( (string) $intro ) ) : ?>
 			<p class="spe-consult__intro"><?php echo esc_html( $intro ); ?></p>
 		<?php endif; ?>
