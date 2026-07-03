@@ -44,9 +44,7 @@
 }
 
 .spe-main {
-	min-height: 60vh;
-	background-color: #f4f9fa;
-	padding: 32px 0;
+	padding: 0;
 }
 .spe-container {
 	max-width: 672px;
