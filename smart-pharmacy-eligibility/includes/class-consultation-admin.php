@@ -78,21 +78,23 @@ class SPE_Consultation_Admin {
 			<table class="wp-list-table widefat fixed striped">
 				<thead><tr>
 					<th><?php esc_html_e( 'Submitted', 'smart-pharmacy-eligibility' ); ?></th>
-					<th><?php esc_html_e( 'For', 'smart-pharmacy-eligibility' ); ?></th>
-					<th><?php esc_html_e( 'Date of birth', 'smart-pharmacy-eligibility' ); ?></th>
+					<th><?php esc_html_e( 'Name', 'smart-pharmacy-eligibility' ); ?></th>
+					<th><?php esc_html_e( 'Email', 'smart-pharmacy-eligibility' ); ?></th>
+					<th><?php esc_html_e( 'Phone', 'smart-pharmacy-eligibility' ); ?></th>
 					<th><?php esc_html_e( 'Product', 'smart-pharmacy-eligibility' ); ?></th>
 					<th><?php esc_html_e( 'Order', 'smart-pharmacy-eligibility' ); ?></th>
 					<th></th>
 				</tr></thead>
 				<tbody>
 				<?php if ( empty( $rows ) ) : ?>
-					<tr><td colspan="6"><?php esc_html_e( 'No consultation submissions yet.', 'smart-pharmacy-eligibility' ); ?></td></tr>
+					<tr><td colspan="7"><?php esc_html_e( 'No consultation submissions yet.', 'smart-pharmacy-eligibility' ); ?></td></tr>
 				<?php else : ?>
 					<?php foreach ( $rows as $row ) : ?>
 						<tr>
 							<td><?php echo esc_html( mysql2date( 'Y-m-d H:i', $row->created_at ) ); ?></td>
-							<td><?php echo esc_html( $row->who_for ); ?></td>
-							<td><?php echo esc_html( $row->dob ); ?></td>
+							<td><?php echo esc_html( trim( $row->first_name . ' ' . $row->last_name ) ); ?></td>
+							<td><?php echo esc_html( $row->email ); ?></td>
+							<td><?php echo esc_html( $row->phone ); ?></td>
 							<td>
 								<?php
 								if ( $row->product_id ) {
@@ -146,6 +148,9 @@ class SPE_Consultation_Admin {
 				<table class="widefat striped" style="max-width:800px;">
 					<tbody>
 						<tr><th style="width:220px;"><?php esc_html_e( 'Submitted', 'smart-pharmacy-eligibility' ); ?></th><td><?php echo esc_html( mysql2date( 'Y-m-d H:i', $row->created_at ) ); ?></td></tr>
+						<tr><th><?php esc_html_e( 'Name', 'smart-pharmacy-eligibility' ); ?></th><td><?php echo esc_html( trim( $row->first_name . ' ' . $row->last_name ) ); ?></td></tr>
+						<tr><th><?php esc_html_e( 'Email', 'smart-pharmacy-eligibility' ); ?></th><td><?php echo $row->email ? '<a href="mailto:' . esc_attr( $row->email ) . '">' . esc_html( $row->email ) . '</a>' : ''; ?></td></tr>
+						<tr><th><?php esc_html_e( 'Phone', 'smart-pharmacy-eligibility' ); ?></th><td><?php echo $row->phone ? '<a href="tel:' . esc_attr( $row->phone ) . '">' . esc_html( $row->phone ) . '</a>' : ''; ?></td></tr>
 						<?php if ( $row->product_id ) : ?><tr><th><?php esc_html_e( 'Product', 'smart-pharmacy-eligibility' ); ?></th><td><?php echo esc_html( get_the_title( (int) $row->product_id ) ); ?></td></tr><?php endif; ?>
 						<?php foreach ( $answers as $key => $value ) : ?>
 							<tr>

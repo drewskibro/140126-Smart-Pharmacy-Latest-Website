@@ -86,17 +86,30 @@
 	function submit( root, form ) {
 		var fields = Array.prototype.slice.call( form.querySelectorAll( '.spe-consult__field' ) );
 		var answers = {};
+		var contact = {};
 		var firstInvalid = null;
 
 		fields.forEach( function ( field ) {
 			setError( field, '' );
 			var key = field.getAttribute( 'data-key' );
+			var contactKey = field.getAttribute( 'data-contact' );
 			var required = field.getAttribute( 'data-required' ) === '1';
 			var value = readField( field );
-			answers[ key ] = value;
 
+			if ( contactKey ) {
+				contact[ contactKey ] = value;
+			} else if ( key ) {
+				answers[ key ] = value;
+			}
+
+			var msg = '';
 			if ( required && isEmpty( value ) ) {
-				setError( field, 'This question is required.' );
+				msg = 'This is required.';
+			} else if ( contactKey === 'email' && !isEmpty( value ) && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test( value ) ) {
+				msg = 'Please enter a valid email address.';
+			}
+			if ( msg ) {
+				setError( field, msg );
 				if ( ! firstInvalid ) {
 					firstInvalid = field;
 				}
@@ -116,6 +129,7 @@
 		var productEl = form.querySelector( '.spe-consult__product' );
 		var payload = {
 			answers: answers,
+			contact: contact,
 			product_id: productEl ? parseInt( productEl.value, 10 ) || 0 : 0
 		};
 
@@ -159,8 +173,8 @@
 		if ( data.fields ) {
 			var firstInvalid = null;
 			fields.forEach( function ( field ) {
-				var key = field.getAttribute( 'data-key' );
-				if ( data.fields[ key ] ) {
+				var key = field.getAttribute( 'data-key' ) || field.getAttribute( 'data-contact' );
+				if ( key && data.fields[ key ] ) {
 					setError( field, data.fields[ key ] );
 					if ( ! firstInvalid ) {
 						firstInvalid = field;

@@ -118,6 +118,10 @@ class SPE_Activator {
 			consultation_id CHAR(36) NOT NULL,
 			status VARCHAR(20) NOT NULL DEFAULT 'submitted',
 			product_id BIGINT(20) UNSIGNED NULL,
+			first_name VARCHAR(100) NULL,
+			last_name VARCHAR(100) NULL,
+			email VARCHAR(190) NULL,
+			phone VARCHAR(40) NULL,
 			dob DATE NULL,
 			who_for VARCHAR(60) NULL,
 			answers LONGTEXT NULL,
@@ -131,6 +135,7 @@ class SPE_Activator {
 			KEY status (status),
 			KEY product_id (product_id),
 			KEY order_id (order_id),
+			KEY email (email),
 			KEY created_at (created_at)
 		) {$charset};";
 		dbDelta( $sql );

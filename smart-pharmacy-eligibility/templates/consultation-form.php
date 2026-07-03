@@ -25,6 +25,33 @@ defined( 'ABSPATH' ) || exit;
 		<?php else : ?>
 
 		<form class="spe-consult__form" novalidate>
+
+			<div class="spe-consult__contact">
+				<h2 class="spe-consult__section"><?php esc_html_e( 'Your details', 'smart-pharmacy-eligibility' ); ?></h2>
+				<div class="spe-consult__grid2">
+					<div class="spe-consult__field" data-contact="first_name" data-required="1">
+						<label class="spe-consult__label" for="spe-c-first"><?php esc_html_e( 'First name', 'smart-pharmacy-eligibility' ); ?> <span class="spe-consult__req" aria-hidden="true">*</span></label>
+						<input type="text" id="spe-c-first" class="spe-consult__input" autocomplete="given-name" aria-required="true" />
+						<p class="spe-consult__error" hidden aria-live="polite"></p>
+					</div>
+					<div class="spe-consult__field" data-contact="last_name" data-required="1">
+						<label class="spe-consult__label" for="spe-c-last"><?php esc_html_e( 'Last name', 'smart-pharmacy-eligibility' ); ?> <span class="spe-consult__req" aria-hidden="true">*</span></label>
+						<input type="text" id="spe-c-last" class="spe-consult__input" autocomplete="family-name" aria-required="true" />
+						<p class="spe-consult__error" hidden aria-live="polite"></p>
+					</div>
+				</div>
+				<div class="spe-consult__field" data-contact="email" data-required="1">
+					<label class="spe-consult__label" for="spe-c-email"><?php esc_html_e( 'Email', 'smart-pharmacy-eligibility' ); ?> <span class="spe-consult__req" aria-hidden="true">*</span></label>
+					<input type="email" id="spe-c-email" class="spe-consult__input" autocomplete="email" aria-required="true" />
+					<p class="spe-consult__error" hidden aria-live="polite"></p>
+				</div>
+				<div class="spe-consult__field" data-contact="phone" data-required="1">
+					<label class="spe-consult__label" for="spe-c-phone"><?php esc_html_e( 'Phone', 'smart-pharmacy-eligibility' ); ?> <span class="spe-consult__req" aria-hidden="true">*</span></label>
+					<input type="tel" id="spe-c-phone" class="spe-consult__input" autocomplete="tel" aria-required="true" />
+					<p class="spe-consult__error" hidden aria-live="polite"></p>
+				</div>
+			</div>
+
 			<?php foreach ( $questions as $q ) : ?>
 				<?php
 				$key      = $q['key'];

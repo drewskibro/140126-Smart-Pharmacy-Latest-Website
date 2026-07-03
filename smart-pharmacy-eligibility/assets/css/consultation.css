@@ -23,6 +23,29 @@
 	padding: 24px 20px 48px;
 }
 
+.spe-consult__section {
+	font-family: 'DM Serif Display', serif;
+	font-size: 20px;
+	color: #111827;
+	margin: 0 0 14px;
+}
+
+.spe-consult__contact {
+	margin-bottom: 28px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #e5e7eb;
+}
+
+.spe-consult__grid2 {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+}
+
+@media (max-width: 520px) {
+	.spe-consult__grid2 { grid-template-columns: 1fr; }
+}
+
 .spe-consult__intro {
 	color: #6b7280;
 	margin: 0 0 28px;
