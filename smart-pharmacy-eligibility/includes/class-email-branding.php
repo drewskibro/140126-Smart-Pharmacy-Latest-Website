@@ -37,6 +37,26 @@ class SPE_Email_Branding {
 	public static function register() {
 		add_action( 'admin_init', array( __CLASS__, 'maybe_seed' ) );
 		add_filter( 'woocommerce_email_header_image', array( __CLASS__, 'header_logo' ) );
+		add_filter( 'woocommerce_locate_template', array( __CLASS__, 'locate_email_template' ), 10, 2 );
+	}
+
+	/**
+	 * Use the plugin's branded email header/footer templates instead of
+	 * WooCommerce's defaults (the theme has no email overrides). Keeps
+	 * WC's structure so the body still styles correctly.
+	 *
+	 * @param string $template      Resolved template path.
+	 * @param string $template_name e.g. emails/email-header.php.
+	 * @return string
+	 */
+	public static function locate_email_template( $template, $template_name ) {
+		if ( in_array( $template_name, array( 'emails/email-header.php', 'emails/email-footer.php' ), true ) ) {
+			$plugin_file = SPE_PLUGIN_DIR . 'templates/woocommerce/' . $template_name;
+			if ( file_exists( $plugin_file ) ) {
+				return $plugin_file;
+			}
+		}
+		return $template;
 	}
 
 	/**
