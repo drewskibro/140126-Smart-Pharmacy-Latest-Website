@@ -57,7 +57,9 @@ class SPE_Email_Consultation_Received extends WC_Email {
 	 * @return string
 	 */
 	public function get_default_subject() {
-		return __( '[{site_title}] We have your consultation', 'smart-pharmacy-eligibility' );
+		return class_exists( 'SPE_Consultation_Emails_Admin' )
+			? SPE_Consultation_Emails_Admin::get_subject( 'received' )
+			: __( '[{site_title}] We have your consultation', 'smart-pharmacy-eligibility' );
 	}
 
 	/**
@@ -66,7 +68,9 @@ class SPE_Email_Consultation_Received extends WC_Email {
 	 * @return string
 	 */
 	public function get_default_heading() {
-		return __( "Thanks — we've received your consultation", 'smart-pharmacy-eligibility' );
+		return class_exists( 'SPE_Consultation_Emails_Admin' )
+			? SPE_Consultation_Emails_Admin::get_heading( 'received' )
+			: __( "Thanks — we've received your consultation", 'smart-pharmacy-eligibility' );
 	}
 
 	/**
@@ -101,7 +105,9 @@ class SPE_Email_Consultation_Received extends WC_Email {
 	 * @return string
 	 */
 	protected function body_text() {
-		return __( 'Thanks for completing your consultation. One of our pharmacists will review your answers and may contact you with a few further questions before anything is dispatched. You have not been charged yet — payment is only taken once a pharmacist approves your order.', 'smart-pharmacy-eligibility' );
+		return class_exists( 'SPE_Consultation_Emails_Admin' )
+			? SPE_Consultation_Emails_Admin::get_body( 'received' )
+			: __( 'Thanks for completing your consultation. One of our pharmacists will review your answers and may contact you with a few further questions before anything is dispatched. You have not been charged yet — payment is only taken once a pharmacist approves your order.', 'smart-pharmacy-eligibility' );
 	}
 
 	/**
