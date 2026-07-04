@@ -17,6 +17,9 @@ $sp_tagline         = sp_field( 'brand_footer_tagline', 'Your trusted online pha
 $sp_trading_address = sp_field( 'contact_trading_address', "Smart Pharmacy\nUnit A2 Ivinghoe Business Centre\nLU55BQ" );
 $sp_registered      = sp_field( 'contact_registered', 'Emwhy Pharma, 51 Arnald Way, Houghton Regis, LU55UN' );
 $sp_gphc            = sp_field( 'comp_gphc_number', '9012842' );
+$sp_mhra_logo       = sp_field( 'comp_mhra_logo' );
+$sp_mhra_url        = sp_field( 'comp_mhra_register_url' );
+$sp_mhra_logo_url   = is_array( $sp_mhra_logo ) && ! empty( $sp_mhra_logo['url'] ) ? $sp_mhra_logo['url'] : '';
 $sp_copyright       = sp_field( 'nav_copyright', '© ' . gmdate( 'Y' ) . ' Smart Pharmacy. All rights reserved.' );
 
 // Payment methods image (ACF array or fallback URL).
@@ -161,6 +164,22 @@ $sp_social = array(
 								<p class="text-neutral-600 text-sm box-border leading-5 break-words"><?php echo esc_html( $sp_gphc ); ?></p>
 							</div>
 						</div>
+
+						<?php if ( $sp_mhra_logo_url ) : ?>
+							<!-- MHRA registered pharmacy logo -->
+							<div class="items-start box-border gap-x-3 flex break-words gap-y-3 mt-4">
+								<div class="box-border break-words">
+									<p class="text-neutral-900 text-sm font-semibold box-border leading-5 break-words mb-2"><?php esc_html_e( 'Registered Pharmacy', 'smart-pharmacy' ); ?></p>
+									<?php if ( $sp_mhra_url ) : ?>
+										<a href="<?php echo esc_url( $sp_mhra_url ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Verify this pharmacy on the MHRA register', 'smart-pharmacy' ); ?>">
+											<img src="<?php echo esc_url( $sp_mhra_logo_url ); ?>" alt="<?php esc_attr_e( 'MHRA registered pharmacy', 'smart-pharmacy' ); ?>" class="h-14 w-auto" />
+										</a>
+									<?php else : ?>
+										<img src="<?php echo esc_url( $sp_mhra_logo_url ); ?>" alt="<?php esc_attr_e( 'MHRA registered pharmacy', 'smart-pharmacy' ); ?>" class="h-14 w-auto" />
+									<?php endif; ?>
+								</div>
+							</div>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div><!-- /.grid -->
