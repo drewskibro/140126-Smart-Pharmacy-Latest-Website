@@ -172,20 +172,26 @@ class SPE_Consultation_Review_Actions {
 			return;
 		}
 
-		$heading = __( 'About your recent consultation', 'smart-pharmacy-eligibility' );
-		$message = __( 'Thank you for completing your consultation. After review, our pharmacist was unable to approve this treatment for you on this occasion, so your order has been cancelled and you have not been charged.', 'smart-pharmacy-eligibility' );
+		$site = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
+
+		// Editable copy (Eligibility → Consultation Emails), with the
+		// hardcoded strings as the fallback.
+		if ( class_exists( 'SPE_Consultation_Emails_Admin' ) ) {
+			$heading = str_replace( '{site_title}', $site, SPE_Consultation_Emails_Admin::get_heading( 'rejected' ) );
+			$message = str_replace( '{site_title}', $site, SPE_Consultation_Emails_Admin::get_body( 'rejected' ) );
+			$subject = str_replace( '{site_title}', $site, SPE_Consultation_Emails_Admin::get_subject( 'rejected' ) );
+		} else {
+			$heading = __( 'About your recent consultation', 'smart-pharmacy-eligibility' );
+			$message = __( 'Thank you for completing your consultation. After review, our pharmacist was unable to approve this treatment for you on this occasion, so your order has been cancelled and you have not been charged. If you have any questions, please reply to this email or contact us.', 'smart-pharmacy-eligibility' );
+			$subject = sprintf( /* translators: %s: site title. */ __( '[%s] An update on your consultation', 'smart-pharmacy-eligibility' ), $site );
+		}
+
 		if ( $reason ) {
 			$message .= "\n\n" . __( 'Note from the pharmacist:', 'smart-pharmacy-eligibility' ) . ' ' . $reason;
 		}
-		$message .= "\n\n" . __( 'If you have any questions, please reply to this email or contact us.', 'smart-pharmacy-eligibility' );
 
 		$mailer  = WC()->mailer();
 		$wrapped = $mailer->wrap_message( $heading, wpautop( wptexturize( $message ) ) );
-		$subject = sprintf(
-			/* translators: %s: site title. */
-			__( '[%s] An update on your consultation', 'smart-pharmacy-eligibility' ),
-			wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES )
-		);
 
 		$mailer->send( $to, $subject, $wrapped, "Content-Type: text/html\r\n" );
 	}

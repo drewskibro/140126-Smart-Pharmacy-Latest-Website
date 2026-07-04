@@ -3,7 +3,7 @@
  * Plugin Name:       Smart Pharmacy Eligibility Checker
  * Plugin URI:        https://github.com/drewskibro/140126-Smart-Pharmacy-Latest-Website
  * Description:       Multi-step medical eligibility checker for GLP-1 weight loss treatments (Wegovy / Mounjaro). Captures patient assessment, applies UK clinical eligibility rules, and hands the chosen treatment off to WooCommerce checkout.
- * Version:           0.7.1
+ * Version:           0.7.2
  * Requires at least: 6.2
  * Requires PHP:      7.4
  * Author:            Smart Pharmacy
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SPE_VERSION', '0.7.1' );
+define( 'SPE_VERSION', '0.7.2' );
 define( 'SPE_PLUGIN_FILE', __FILE__ );
 define( 'SPE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SPE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -50,6 +50,7 @@ require_once SPE_PLUGIN_DIR . 'includes/class-consultation-email.php';
 require_once SPE_PLUGIN_DIR . 'includes/class-consultation-my-account.php';
 require_once SPE_PLUGIN_DIR . 'includes/class-id-upload.php';
 require_once SPE_PLUGIN_DIR . 'includes/class-email-branding.php';
+require_once SPE_PLUGIN_DIR . 'includes/class-consultation-emails-admin.php';
 
 // Activation / deactivation.
 register_activation_hook( __FILE__, array( 'SPE_Activator', 'activate' ) );
@@ -80,6 +81,7 @@ function spe_bootstrap() {
 	if ( is_admin() ) {
 		SPE_Admin::register();
 		SPE_Consultation_Admin::register();
+		SPE_Consultation_Emails_Admin::register();
 	}
 }
 add_action( 'plugins_loaded', 'spe_bootstrap' );
