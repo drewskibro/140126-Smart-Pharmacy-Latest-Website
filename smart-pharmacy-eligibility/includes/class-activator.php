@@ -96,6 +96,8 @@ class SPE_Activator {
 			selected_treatment VARCHAR(40) NULL,
 			selected_dose VARCHAR(20) NULL,
 			raw_payload LONGTEXT NULL,
+			review_status VARCHAR(20) NULL,
+			notes LONGTEXT NULL,
 			order_id BIGINT(20) UNSIGNED NULL,
 			ip_address VARCHAR(45) NULL,
 			user_agent TEXT NULL,

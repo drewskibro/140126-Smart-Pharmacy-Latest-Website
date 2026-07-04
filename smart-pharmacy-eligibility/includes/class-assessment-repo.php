@@ -174,6 +174,77 @@ class SPE_Assessment_Repo {
 	}
 
 	/**
+	 * Count completed assessments a pharmacist hasn't reviewed yet
+	 * (for the menu badge).
+	 *
+	 * @return int
+	 */
+	public static function count_needs_review() {
+		global $wpdb;
+		$table = self::table();
+		return (int) $wpdb->get_var( // phpcs:ignore WordPress.DB
+			"SELECT COUNT(*) FROM {$table} WHERE status = 'complete' AND ( review_status IS NULL OR review_status = '' OR review_status = 'new' )"
+		);
+	}
+
+	/**
+	 * Set the pharmacist review status (new/in_review/approved/rejected).
+	 *
+	 * @param string $assessment_id UUID.
+	 * @param string $status
+	 * @return void
+	 */
+	public static function set_review_status( $assessment_id, $status ) {
+		global $wpdb;
+		$wpdb->update( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			self::table(),
+			array( 'review_status' => $status, 'updated_at' => current_time( 'mysql' ) ),
+			array( 'assessment_id' => $assessment_id ),
+			array( '%s', '%s' ),
+			array( '%s' )
+		);
+	}
+
+	/**
+	 * Append a staff note to the assessment's note log.
+	 *
+	 * @param string $assessment_id UUID.
+	 * @param string $text
+	 * @param int    $user_id
+	 * @return void
+	 */
+	public static function add_note( $assessment_id, $text, $user_id ) {
+		$row = self::find_by_assessment_id( $assessment_id );
+		if ( ! $row ) {
+			return;
+		}
+		$log   = self::notes_log( $row );
+		$log[] = array( 'time' => current_time( 'mysql' ), 'user' => (int) $user_id, 'text' => $text );
+		global $wpdb;
+		$wpdb->update( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			self::table(),
+			array( 'notes' => wp_json_encode( $log ), 'updated_at' => current_time( 'mysql' ) ),
+			array( 'assessment_id' => $assessment_id ),
+			array( '%s', '%s' ),
+			array( '%s' )
+		);
+	}
+
+	/**
+	 * Decode the note log for a row.
+	 *
+	 * @param object $row
+	 * @return array[]
+	 */
+	public static function notes_log( $row ) {
+		if ( ! $row || empty( $row->notes ) ) {
+			return array();
+		}
+		$decoded = json_decode( $row->notes, true );
+		return is_array( $decoded ) ? $decoded : array();
+	}
+
+	/**
 	 * Find a row by its public UUID.
 	 *
 	 * @param string $assessment_id UUID.

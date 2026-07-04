@@ -24,21 +24,33 @@ class SPE_Admin {
 
 	const CAPABILITY = 'manage_woocommerce';
 
+	/** Pharmacist review statuses: slug => label. */
+	const REVIEW_STATUSES = array(
+		'new'       => 'New',
+		'in_review' => 'In review',
+		'approved'  => 'Approved',
+		'rejected'  => 'Denied',
+	);
+
 	/**
 	 * Wire admin hooks.
 	 */
 	public static function register() {
 		add_action( 'admin_menu', array( __CLASS__, 'register_menu' ) );
 		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
+		add_action( 'admin_init', array( __CLASS__, 'maybe_handle_detail_post' ) );
 	}
 
 	/**
 	 * Top-level menu + Settings submenu.
 	 */
 	public static function register_menu() {
+		$needs  = class_exists( 'SPE_Assessment_Repo' ) ? SPE_Assessment_Repo::count_needs_review() : 0;
+		$bubble = $needs > 0 ? ' <span class="awaiting-mod"><span class="pending-count">' . (int) $needs . '</span></span>' : '';
+
 		add_menu_page(
 			__( 'Eligibility', 'smart-pharmacy-eligibility' ),
-			__( 'Eligibility', 'smart-pharmacy-eligibility' ),
+			__( 'Eligibility', 'smart-pharmacy-eligibility' ) . $bubble,
 			self::CAPABILITY,
 			'spe-assessments',
 			array( __CLASS__, 'render_list' ),
@@ -49,7 +61,7 @@ class SPE_Admin {
 		add_submenu_page(
 			'spe-assessments',
 			__( 'Assessments', 'smart-pharmacy-eligibility' ),
-			__( 'Assessments', 'smart-pharmacy-eligibility' ),
+			__( 'Assessments', 'smart-pharmacy-eligibility' ) . $bubble,
 			self::CAPABILITY,
 			'spe-assessments',
 			array( __CLASS__, 'render_list' )
@@ -159,6 +171,12 @@ class SPE_Admin {
 			wp_die( esc_html__( 'You do not have permission to view this page.', 'smart-pharmacy-eligibility' ) );
 		}
 
+		$view = isset( $_GET['assessment'] ) ? sanitize_text_field( wp_unslash( $_GET['assessment'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( $view ) {
+			self::render_detail( $view );
+			return;
+		}
+
 		$status = isset( $_GET['status'] ) ? sanitize_text_field( wp_unslash( $_GET['status'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$search = isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
@@ -194,13 +212,15 @@ class SPE_Admin {
 						<th><?php esc_html_e( 'BMI', 'smart-pharmacy-eligibility' ); ?></th>
 						<th><?php esc_html_e( 'Treatment', 'smart-pharmacy-eligibility' ); ?></th>
 						<th><?php esc_html_e( 'Status', 'smart-pharmacy-eligibility' ); ?></th>
+						<th><?php esc_html_e( 'Review', 'smart-pharmacy-eligibility' ); ?></th>
 						<th><?php esc_html_e( 'Order', 'smart-pharmacy-eligibility' ); ?></th>
 						<th><?php esc_html_e( 'Reason', 'smart-pharmacy-eligibility' ); ?></th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 				<?php if ( empty( $rows ) ) : ?>
-					<tr><td colspan="8"><?php esc_html_e( 'No assessments yet.', 'smart-pharmacy-eligibility' ); ?></td></tr>
+					<tr><td colspan="10"><?php esc_html_e( 'No assessments yet.', 'smart-pharmacy-eligibility' ); ?></td></tr>
 				<?php else : ?>
 					<?php foreach ( $rows as $row ) : ?>
 						<tr>
@@ -224,6 +244,17 @@ class SPE_Admin {
 								</span>
 							</td>
 							<td>
+								<?php
+								$rev = $row->review_status ? $row->review_status : ( 'complete' === $row->status ? 'new' : '' );
+								if ( isset( self::REVIEW_STATUSES[ $rev ] ) ) {
+									$rc = array( 'new' => '#fef3c7;color:#92400e', 'in_review' => '#dbeafe;color:#1e40af', 'approved' => '#dcfce7;color:#166534', 'rejected' => '#fee2e2;color:#991b1b' );
+									echo '<span style="display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;background:' . esc_attr( $rc[ $rev ] ) . ';">' . esc_html( self::REVIEW_STATUSES[ $rev ] ) . '</span>';
+								} else {
+									echo '&mdash;';
+								}
+								?>
+							</td>
+							<td>
 								<?php if ( $row->order_id ) : ?>
 									<a href="<?php echo esc_url( admin_url( 'post.php?post=' . $row->order_id . '&action=edit' ) ); ?>">#<?php echo (int) $row->order_id; ?></a>
 								<?php else : ?>
@@ -231,6 +262,7 @@ class SPE_Admin {
 								<?php endif; ?>
 							</td>
 							<td><?php echo esc_html( $row->ineligible_reason ); ?></td>
+							<td><a href="<?php echo esc_url( add_query_arg( array( 'page' => 'spe-assessments', 'assessment' => $row->assessment_id ), admin_url( 'admin.php' ) ) ); ?>"><?php esc_html_e( 'View', 'smart-pharmacy-eligibility' ); ?></a></td>
 						</tr>
 					<?php endforeach; ?>
 				<?php endif; ?>
@@ -248,6 +280,163 @@ class SPE_Admin {
 			.spe-status--complete   { background: #dcfce7; color: #166534; }
 			.spe-status--ineligible { background: #fee2e2; color: #991b1b; }
 		</style>
+		<?php
+	}
+
+	/**
+	 * Handle review-status / note / order-link actions from an
+	 * assessment detail page (admin_init, so we can redirect-after-POST).
+	 */
+	public static function maybe_handle_detail_post() {
+		if ( empty( $_POST['spe_action'] ) || empty( $_POST['spe_assessment_uuid'] ) ) {
+			return;
+		}
+		$uuid = sanitize_text_field( wp_unslash( $_POST['spe_assessment_uuid'] ) );
+		check_admin_referer( 'spe_assessment_detail_' . $uuid );
+		if ( ! current_user_can( self::CAPABILITY ) || ! class_exists( 'SPE_Assessment_Repo' ) ) {
+			return;
+		}
+
+		$action = sanitize_key( wp_unslash( $_POST['spe_action'] ) );
+
+		if ( 'review_status' === $action ) {
+			$status = isset( $_POST['review_status'] ) ? sanitize_key( wp_unslash( $_POST['review_status'] ) ) : '';
+			if ( isset( self::REVIEW_STATUSES[ $status ] ) ) {
+				SPE_Assessment_Repo::set_review_status( $uuid, $status );
+			}
+		} elseif ( 'note' === $action ) {
+			$note = isset( $_POST['note'] ) ? sanitize_textarea_field( wp_unslash( $_POST['note'] ) ) : '';
+			if ( '' !== trim( $note ) ) {
+				SPE_Assessment_Repo::add_note( $uuid, $note, get_current_user_id() );
+			}
+		} elseif ( 'order' === $action ) {
+			$order_id = isset( $_POST['order_id'] ) ? absint( $_POST['order_id'] ) : 0;
+			if ( $order_id && function_exists( 'wc_get_order' ) && wc_get_order( $order_id ) ) {
+				SPE_Assessment_Repo::set_order_id( $uuid, $order_id );
+			}
+		}
+
+		wp_safe_redirect( add_query_arg( array( 'page' => 'spe-assessments', 'assessment' => $uuid, 'spe_done' => $action ), admin_url( 'admin.php' ) ) );
+		exit;
+	}
+
+	/**
+	 * Single-assessment detail: data + pharmacist review workflow
+	 * (status, notes, order link).
+	 *
+	 * @param string $uuid
+	 */
+	protected static function render_detail( $uuid ) {
+		$row  = SPE_Assessment_Repo::find_by_assessment_id( $uuid );
+		$back = add_query_arg( array( 'page' => 'spe-assessments' ), admin_url( 'admin.php' ) );
+		?>
+		<div class="wrap">
+			<h1><?php esc_html_e( 'Assessment', 'smart-pharmacy-eligibility' ); ?></h1>
+			<p><a href="<?php echo esc_url( $back ); ?>">&larr; <?php esc_html_e( 'Back to all assessments', 'smart-pharmacy-eligibility' ); ?></a></p>
+			<?php if ( isset( $_GET['spe_done'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
+				<div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'Saved.', 'smart-pharmacy-eligibility' ); ?></p></div>
+			<?php endif; ?>
+			<?php if ( ! $row ) : ?>
+				<p><?php esc_html_e( 'Assessment not found.', 'smart-pharmacy-eligibility' ); ?></p>
+			<?php else : ?>
+				<?php
+				$nonce_action = 'spe_assessment_detail_' . $row->assessment_id;
+				$fields = array(
+					__( 'Submitted', 'smart-pharmacy-eligibility' )     => mysql2date( 'Y-m-d H:i', $row->created_at ),
+					__( 'Name', 'smart-pharmacy-eligibility' )          => trim( $row->first_name . ' ' . $row->last_name ),
+					__( 'Email', 'smart-pharmacy-eligibility' )         => $row->email,
+					__( 'Phone', 'smart-pharmacy-eligibility' )         => $row->phone,
+					__( 'Date of birth', 'smart-pharmacy-eligibility' ) => $row->dob,
+					__( 'Sex', 'smart-pharmacy-eligibility' )           => $row->sex,
+					__( 'Ethnicity', 'smart-pharmacy-eligibility' )     => $row->ethnicity,
+					__( 'Height (cm)', 'smart-pharmacy-eligibility' )   => $row->height_cm,
+					__( 'Weight (kg)', 'smart-pharmacy-eligibility' )   => $row->weight_kg,
+					__( 'BMI', 'smart-pharmacy-eligibility' )           => $row->bmi,
+					__( 'Diabetes', 'smart-pharmacy-eligibility' )      => $row->diabetes,
+					__( 'Treatment', 'smart-pharmacy-eligibility' )     => trim( ucfirst( (string) $row->selected_treatment ) . ' ' . $row->selected_dose ),
+					__( 'GP', 'smart-pharmacy-eligibility' )            => trim( $row->gp_name . ' ' . $row->gp_postcode ),
+					__( 'Eligibility', 'smart-pharmacy-eligibility' )   => ucfirst( (string) $row->status ),
+				);
+				if ( $row->ineligible_reason ) {
+					$fields[ __( 'Ineligible reason', 'smart-pharmacy-eligibility' ) ] = $row->ineligible_reason;
+				}
+				?>
+				<table class="widefat striped" style="max-width:800px;">
+					<tbody>
+						<?php foreach ( $fields as $label => $val ) : ?>
+							<?php if ( '' === trim( (string) $val ) ) { continue; } ?>
+							<tr><th style="width:200px;text-align:left;"><?php echo esc_html( $label ); ?></th><td><?php echo esc_html( $val ); ?></td></tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+
+				<?php $decoded = ! empty( $row->raw_payload ) ? json_decode( $row->raw_payload ) : null; ?>
+				<?php if ( $decoded ) : ?>
+					<details style="margin-top:12px;max-width:800px;">
+						<summary style="cursor:pointer;"><?php esc_html_e( 'Full submitted data', 'smart-pharmacy-eligibility' ); ?></summary>
+						<pre style="white-space:pre-wrap;background:#fff;border:1px solid #dcdcde;padding:12px;border-radius:6px;overflow:auto;"><?php echo esc_html( wp_json_encode( $decoded, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) ); ?></pre>
+					</details>
+				<?php endif; ?>
+
+				<div style="display:flex;gap:32px;flex-wrap:wrap;margin-top:24px;max-width:800px;">
+					<div>
+						<h2><?php esc_html_e( 'Review status', 'smart-pharmacy-eligibility' ); ?></h2>
+						<form method="post">
+							<?php wp_nonce_field( $nonce_action ); ?>
+							<input type="hidden" name="spe_assessment_uuid" value="<?php echo esc_attr( $row->assessment_id ); ?>" />
+							<input type="hidden" name="spe_action" value="review_status" />
+							<?php $current_rev = $row->review_status ? $row->review_status : 'new'; ?>
+							<select name="review_status">
+								<?php foreach ( self::REVIEW_STATUSES as $slug => $label ) : ?>
+									<option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $current_rev, $slug ); ?>><?php echo esc_html( $label ); ?></option>
+								<?php endforeach; ?>
+							</select>
+							<button class="button button-primary"><?php esc_html_e( 'Update', 'smart-pharmacy-eligibility' ); ?></button>
+						</form>
+					</div>
+					<div>
+						<h2><?php esc_html_e( 'Linked order', 'smart-pharmacy-eligibility' ); ?></h2>
+						<?php if ( $row->order_id ) : ?>
+							<p><?php printf( /* translators: %d: order id. */ esc_html__( 'Linked to order #%d.', 'smart-pharmacy-eligibility' ), (int) $row->order_id ); ?>
+								<a href="<?php echo esc_url( admin_url( 'post.php?post=' . (int) $row->order_id . '&action=edit' ) ); ?>"><?php esc_html_e( 'View', 'smart-pharmacy-eligibility' ); ?></a></p>
+						<?php endif; ?>
+						<form method="post">
+							<?php wp_nonce_field( $nonce_action ); ?>
+							<input type="hidden" name="spe_assessment_uuid" value="<?php echo esc_attr( $row->assessment_id ); ?>" />
+							<input type="hidden" name="spe_action" value="order" />
+							<input type="number" name="order_id" min="1" placeholder="<?php esc_attr_e( 'Order ID', 'smart-pharmacy-eligibility' ); ?>" class="small-text" />
+							<button class="button"><?php esc_html_e( 'Link order', 'smart-pharmacy-eligibility' ); ?></button>
+						</form>
+					</div>
+				</div>
+
+				<h2 style="margin-top:24px;"><?php esc_html_e( 'Notes', 'smart-pharmacy-eligibility' ); ?></h2>
+				<div style="max-width:800px;">
+					<?php $log = SPE_Assessment_Repo::notes_log( $row ); ?>
+					<?php if ( empty( $log ) ) : ?>
+						<p style="color:#6b7280;"><?php esc_html_e( 'No notes yet.', 'smart-pharmacy-eligibility' ); ?></p>
+					<?php else : ?>
+						<?php foreach ( array_reverse( $log ) as $note ) : ?>
+							<?php $author = ! empty( $note['user'] ) ? get_userdata( (int) $note['user'] ) : null; ?>
+							<div style="background:#fff;border:1px solid #dcdcde;border-radius:6px;padding:10px 12px;margin-bottom:8px;">
+								<p style="margin:0 0 4px;color:#646970;font-size:12px;">
+									<?php echo esc_html( isset( $note['time'] ) ? mysql2date( 'Y-m-d H:i', $note['time'] ) : '' ); ?>
+									<?php echo $author ? ' &middot; ' . esc_html( $author->display_name ) : ''; ?>
+								</p>
+								<p style="margin:0;white-space:pre-wrap;"><?php echo esc_html( isset( $note['text'] ) ? $note['text'] : '' ); ?></p>
+							</div>
+						<?php endforeach; ?>
+					<?php endif; ?>
+					<form method="post" style="margin-top:8px;">
+						<?php wp_nonce_field( $nonce_action ); ?>
+						<input type="hidden" name="spe_assessment_uuid" value="<?php echo esc_attr( $row->assessment_id ); ?>" />
+						<input type="hidden" name="spe_action" value="note" />
+						<textarea name="note" rows="2" class="large-text" placeholder="<?php esc_attr_e( 'Add a note…', 'smart-pharmacy-eligibility' ); ?>"></textarea>
+						<p><button class="button"><?php esc_html_e( 'Add note', 'smart-pharmacy-eligibility' ); ?></button></p>
+					</form>
+				</div>
+			<?php endif; ?>
+		</div>
 		<?php
 	}
 
