@@ -1619,6 +1619,23 @@ function sp_register_acf_field_groups() {
 					'type'         => 'text',
 					'default_value' => '9012842',
 				),
+				array(
+					'key'           => 'field_sp_comp_mhra_logo',
+					'label'         => 'MHRA registered pharmacy logo',
+					'name'          => 'comp_mhra_logo',
+					'type'          => 'image',
+					'return_format' => 'array',
+					'preview_size'  => 'medium',
+					'library'       => 'all',
+					'instructions'  => 'The official MHRA "registered pharmacy" distance-selling logo (obtained from the MHRA once registered). Shown in the footer.',
+				),
+				array(
+					'key'          => 'field_sp_comp_mhra_url',
+					'label'        => 'MHRA register link',
+					'name'         => 'comp_mhra_register_url',
+					'type'         => 'url',
+					'instructions' => 'Link to this pharmacy\'s entry on the MHRA register (the logo must link here).',
+				),
 			),
 		)
 	);
