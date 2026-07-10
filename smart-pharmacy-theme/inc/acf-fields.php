@@ -1588,7 +1588,7 @@ function sp_register_acf_field_groups() {
 					'name'         => 'contact_registered',
 					'type'         => 'textarea',
 					'rows'         => 3,
-					'default_value' => 'Emwhy Pharma, 51 Arnald Way, Houghton Regis, LU55UN',
+					'default_value' => 'Emwhy Pharma Ltd (Company No. 14563648), 51 Arnald Way, Houghton Regis, LU5 5UN',
 					'instructions' => 'Displayed in the footer registration badge. No line breaks required.',
 				),
 			),
@@ -1618,6 +1618,14 @@ function sp_register_acf_field_groups() {
 					'name'         => 'comp_gphc_number',
 					'type'         => 'text',
 					'default_value' => '9012842',
+				),
+				array(
+					'key'           => 'field_sp_comp_superintendent',
+					'label'         => 'Superintendent pharmacist',
+					'name'          => 'comp_superintendent',
+					'type'          => 'text',
+					'default_value' => 'Murtaza Yusufali (GPhC 2086087)',
+					'instructions'  => 'Name and GPhC number of the superintendent pharmacist. A registered pharmacy website must display this.',
 				),
 				array(
 					'key'           => 'field_sp_comp_mhra_logo',
