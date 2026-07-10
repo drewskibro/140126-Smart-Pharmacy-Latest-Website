@@ -15,8 +15,9 @@ $sp_logo_alt = sp_field( 'brand_logo_alt', 'Smart Pharmacy' );
 // Content
 $sp_tagline         = sp_field( 'brand_footer_tagline', 'Your trusted online pharmacy providing expert healthcare on your terms. NHS-approved, prescription-perfect, delivered tomorrow.' );
 $sp_trading_address = sp_field( 'contact_trading_address', "Smart Pharmacy\nUnit A2 Ivinghoe Business Centre\nLU55BQ" );
-$sp_registered      = sp_field( 'contact_registered', 'Emwhy Pharma, 51 Arnald Way, Houghton Regis, LU55UN' );
+$sp_registered      = sp_field( 'contact_registered', 'Emwhy Pharma Ltd (Company No. 14563648), 51 Arnald Way, Houghton Regis, LU5 5UN' );
 $sp_gphc            = sp_field( 'comp_gphc_number', '9012842' );
+$sp_superintendent  = sp_field( 'comp_superintendent', 'Murtaza Yusufali (GPhC 2086087)' );
 $sp_mhra_logo       = sp_field( 'comp_mhra_logo' );
 $sp_mhra_url        = sp_field( 'comp_mhra_register_url' );
 $sp_mhra_logo_url   = is_array( $sp_mhra_logo ) && ! empty( $sp_mhra_logo['url'] ) ? $sp_mhra_logo['url'] : '';
@@ -164,6 +165,22 @@ $sp_social = array(
 								<p class="text-neutral-600 text-sm box-border leading-5 break-words"><?php echo esc_html( $sp_gphc ); ?></p>
 							</div>
 						</div>
+
+						<?php if ( $sp_superintendent ) : ?>
+							<!-- Superintendent pharmacist (required on a registered pharmacy website) -->
+							<div class="items-start box-border gap-x-3 flex break-words gap-y-3 mt-4">
+								<div class="items-center bg-[linear-gradient(to_right_bottom,rgba(59,155,159,0.1),rgba(44,122,126,0.1))] box-border flex shrink-0 h-10 justify-center break-words w-10 rounded-lg">
+									<svg class="w-5 h-5 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+										<circle cx="12" cy="8" r="4" stroke-linecap="round" stroke-linejoin="round"/>
+										<path d="M6 21v-2a6 6 0 0112 0v2" stroke-linecap="round" stroke-linejoin="round"/>
+									</svg>
+								</div>
+								<div class="box-border break-words">
+									<p class="text-neutral-900 text-sm font-semibold box-border leading-5 break-words mb-1"><?php esc_html_e( 'Superintendent Pharmacist', 'smart-pharmacy' ); ?></p>
+									<p class="text-neutral-600 text-sm box-border leading-5 break-words"><?php echo esc_html( $sp_superintendent ); ?></p>
+								</div>
+							</div>
+						<?php endif; ?>
 
 						<?php if ( $sp_mhra_logo_url ) : ?>
 							<!-- MHRA registered pharmacy logo -->

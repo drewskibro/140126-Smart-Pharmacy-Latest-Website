@@ -2185,3 +2185,133 @@ input:focus {
   align-items: center;
   gap: 0.5rem;
 }
+
+/* ---------------------------------------------------------------------------
+ * .sp-prose — editor content styling for standard pages (page.php)
+ *
+ * The theme does not ship @tailwindcss/typography (tailwind.config.js has
+ * `plugins: []`), and Tailwind's preflight resets heading sizes, list markers
+ * and margins to nothing. Raw HTML from the classic editor therefore needs
+ * explicit rules or it renders as an undifferentiated wall of text.
+ * ------------------------------------------------------------------------ */
+.sp-prose {
+  color: #404040;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+.sp-prose > *:first-child { margin-top: 0; }
+.sp-prose > *:last-child { margin-bottom: 0; }
+
+.sp-prose h2 {
+  color: #171717;
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 2.5rem 0 1rem;
+}
+.sp-prose h3 {
+  color: #171717;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 2rem 0 0.75rem;
+}
+.sp-prose h4 {
+  color: #171717;
+  font-size: 1.075rem;
+  font-weight: 700;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.sp-prose p { margin: 0 0 1.15rem; }
+
+.sp-prose a {
+  color: #0da592;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.sp-prose a:hover { color: #10c0a9; }
+
+.sp-prose strong { color: #171717; font-weight: 700; }
+
+.sp-prose ul,
+.sp-prose ol {
+  margin: 0 0 1.25rem;
+  padding-left: 1.5rem;
+}
+.sp-prose ul { list-style: disc; }
+.sp-prose ol { list-style: decimal; }
+.sp-prose li { margin: 0.4rem 0; padding-left: 0.25rem; }
+.sp-prose li::marker { color: #10c0a9; }
+.sp-prose ul ul,
+.sp-prose ol ol { margin: 0.4rem 0; }
+
+.sp-prose hr {
+  border: 0;
+  border-top: 1px solid #e5e7eb;
+  margin: 2.5rem 0;
+}
+
+.sp-prose blockquote {
+  border-left: 3px solid #10c0a9;
+  background: rgba(16, 192, 169, 0.05);
+  border-radius: 0 0.5rem 0.5rem 0;
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  color: #404040;
+}
+.sp-prose blockquote p:last-child { margin-bottom: 0; }
+
+.sp-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.925rem;
+  display: block;
+  overflow-x: auto;
+}
+.sp-prose th,
+.sp-prose td {
+  border: 1px solid #e5e7eb;
+  padding: 0.65rem 0.85rem;
+  text-align: left;
+  vertical-align: top;
+}
+.sp-prose th {
+  background: #f8fafa;
+  color: #171717;
+  font-weight: 700;
+}
+
+.sp-prose code {
+  background: #f3f4f6;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  padding: 0.15rem 0.35rem;
+}
+
+/* Callout box for safety / urgent-care notices on pharmacy pages. */
+.sp-prose .sp-notice {
+  background: #fef3c7;
+  border-left: 3px solid #f59e0b;
+  border-radius: 0 0.5rem 0.5rem 0;
+  color: #78350f;
+  margin: 1.75rem 0;
+  padding: 1rem 1.25rem;
+}
+.sp-prose .sp-notice p:last-child { margin-bottom: 0; }
+
+/* Placeholder marker: legal facts the client must supply before launch. */
+.sp-prose .sp-todo {
+  background: #fee2e2;
+  border-radius: 0.25rem;
+  color: #991b1b;
+  font-weight: 700;
+  padding: 0.1rem 0.35rem;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .sp-prose { font-size: 1.05rem; }
+  .sp-prose h2 { font-size: 2rem; }
+}
