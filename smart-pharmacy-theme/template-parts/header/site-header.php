@@ -46,12 +46,14 @@ if ( function_exists( 'WC' ) && WC()->cart ) {
 ?>
 <header class="sticky bg-white/95 backdrop-blur-xl shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.08)_0px_2px_8px_0px] box-border break-words z-50 top-0 border-b border-gray-100/50">
 	<div class="box-border max-w-[1600px] break-words mx-auto px-6 lg:px-12">
-		<div class="items-center box-border gap-x-8 flex justify-between break-words gap-y-6 py-4">
+		<div class="items-center box-border gap-x-8 flex justify-between break-words gap-y-6 py-3">
 
-			<!-- Logo -->
-			<div class="items-center box-border flex break-words">
+			<!-- Logo. shrink-0 + w-auto are load-bearing: without them the
+			     flex row squeezes the image's width against its fixed
+			     height and the logo renders horizontally squashed. -->
+			<div class="items-center box-border flex shrink-0 break-words">
 				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php echo esc_attr( $sp_logo_alt ); ?>" class="box-border block break-words transition-transform duration-300 hover:scale-105">
-					<img src="<?php echo esc_url( $sp_logo_url ); ?>" alt="<?php echo esc_attr( $sp_logo_alt ); ?>" class="box-border h-14 max-w-full break-words md:h-16" />
+					<img src="<?php echo esc_url( $sp_logo_url ); ?>" alt="<?php echo esc_attr( $sp_logo_alt ); ?>" class="box-border h-16 w-auto object-contain break-words md:h-20" />
 				</a>
 			</div>
 
