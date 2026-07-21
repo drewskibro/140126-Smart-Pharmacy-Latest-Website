@@ -180,61 +180,25 @@ if ( empty( $sp_info_cards ) || ! is_array( $sp_info_cards ) ) {
 			</div>
 
 			<?php if ( $sp_visual_url ) : ?>
-				<!-- RIGHT COLUMN: hero photo + floating benefit chips -->
+				<!-- RIGHT COLUMN: hero photo, deliberately clean.
+				     Benefits render as an editorial strip BELOW the hero grid
+				     (see sp-hero-benefit-strip), never as overlays on the
+				     photo — the photo carries the human/trust signal on its
+				     own, with at most one small credential caption. -->
 				<div class="box-border break-words pt-0 md:pt-8">
-					<div class="relative md:mx-8">
-
-						<div class="relative overflow-hidden rounded-[2rem] shadow-[rgba(0,0,0,0.18)_0px_30px_60px_-15px]">
-							<img
-								src="<?php echo esc_url( $sp_visual_url ); ?>"
-								alt="<?php echo esc_attr( $sp_visual_alt ? $sp_visual_alt : ( $sp_visual_caption ? $sp_visual_caption : __( 'Smart Pharmacy', 'smart-pharmacy' ) ) ); ?>"
-								class="w-full aspect-[4/5] object-cover"
-							/>
-							<!-- Soft grounding gradient so chips + caption stay legible -->
-							<div class="absolute inset-0 bg-gradient-to-t from-neutral-900/25 via-transparent to-transparent pointer-events-none" aria-hidden="true"></div>
-
-							<?php if ( $sp_visual_caption ) : ?>
-								<div class="absolute bottom-4 right-4 bg-neutral-900/60 backdrop-blur-md text-white text-xs font-medium px-3.5 py-1.5 rounded-full">
-									<?php echo esc_html( $sp_visual_caption ); ?>
-								</div>
-							<?php endif; ?>
-						</div>
-
-						<?php
-						// Benefit chips: same content as the classic cards, rendered
-						// as compact glass chips floating over the photo edges on
-						// desktop; stacked in normal flow beneath it on mobile.
-						$sp_chip_positions = array(
-							'md:absolute md:-left-10 md:top-10 sp-chip-float-a',
-							'md:absolute md:-right-8 md:top-[44%] sp-chip-float-b',
-							'md:absolute md:-left-8 md:bottom-12 sp-chip-float-c',
-						);
-						foreach ( $sp_info_cards as $sp_i => $sp_card ) :
-							$sp_title = isset( $sp_card['title'] ) ? (string) $sp_card['title'] : '';
-							$sp_body  = isset( $sp_card['body'] ) ? (string) $sp_card['body'] : '';
-							$sp_icon  = isset( $sp_card['icon'] ) ? (string) $sp_card['icon'] : '';
-							$sp_image = isset( $sp_card['image'] ) ? $sp_card['image'] : null;
-							$sp_has_image = is_array( $sp_image ) && ! empty( $sp_image['url'] );
-							if ( '' === $sp_title ) { continue; }
-							$sp_pos = isset( $sp_chip_positions[ $sp_i ] ) ? $sp_chip_positions[ $sp_i ] : '';
-							?>
-							<div class="sp-hero-chip items-center bg-white/90 backdrop-blur-md gap-x-3 flex gap-y-3 border border-white/70 shadow-[rgba(0,0,0,0.12)_0px_12px_28px_-8px] mt-3 md:mt-0 md:max-w-[250px] px-4 py-3 rounded-2xl border-solid <?php echo esc_attr( $sp_pos ); ?>">
-								<div class="items-center bg-teal-50 text-teal-600 box-border flex h-10 justify-center w-10 shrink-0 rounded-full">
-									<?php if ( $sp_has_image ) : ?>
-										<img src="<?php echo esc_url( $sp_image['url'] ); ?>" alt="" class="h-5 w-5" />
-									<?php elseif ( $sp_icon ) : ?>
-										<?php echo sp_icon( $sp_icon, 'h-5 w-5' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-									<?php endif; ?>
-								</div>
-								<div class="min-w-0">
-									<h3 class="text-neutral-900 text-sm font-bold leading-5 break-words"><?php echo esc_html( $sp_title ); ?></h3>
-									<?php if ( $sp_body ) : ?>
-										<p class="text-neutral-600 text-xs leading-[1.5] break-words"><?php echo esc_html( $sp_body ); ?></p>
-									<?php endif; ?>
-								</div>
+					<div class="relative overflow-hidden rounded-[2rem] shadow-[rgba(0,0,0,0.16)_0px_26px_50px_-18px]">
+						<img
+							src="<?php echo esc_url( $sp_visual_url ); ?>"
+							alt="<?php echo esc_attr( $sp_visual_alt ? $sp_visual_alt : ( $sp_visual_caption ? $sp_visual_caption : __( 'Smart Pharmacy', 'smart-pharmacy' ) ) ); ?>"
+							class="w-full aspect-[4/5] object-cover"
+						/>
+						<?php if ( $sp_visual_caption ) : ?>
+							<!-- Grounding gradient only when a caption needs legibility. -->
+							<div class="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-neutral-900/40 to-transparent pointer-events-none" aria-hidden="true"></div>
+							<div class="absolute bottom-4 left-4 text-white/95 text-xs font-medium tracking-wide">
+								<?php echo esc_html( $sp_visual_caption ); ?>
 							</div>
-						<?php endforeach; ?>
-
+						<?php endif; ?>
 					</div>
 				</div>
 			<?php else : ?>
@@ -267,5 +231,35 @@ if ( empty( $sp_info_cards ) || ! is_array( $sp_info_cards ) ) {
 			<?php endif; ?>
 
 		</div>
+
+		<?php if ( $sp_visual_url && ! empty( $sp_info_cards ) ) : ?>
+			<!-- Editorial benefit strip (photo layout only) — the pattern the
+			     strongest healthcare DTC sites use: benefits as quiet
+			     typography with hairline dividers, never boxed cards or
+			     overlays. Reuses the same hero_info_cards data. -->
+			<div class="sp-hero-benefit-strip max-w-[1600px] mx-auto -mt-8 mb-2 border-t border-neutral-900/10">
+				<div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-neutral-900/10">
+					<?php foreach ( $sp_info_cards as $sp_i => $sp_card ) :
+						$sp_title = isset( $sp_card['title'] ) ? (string) $sp_card['title'] : '';
+						$sp_body  = isset( $sp_card['body'] ) ? (string) $sp_card['body'] : '';
+						$sp_icon  = isset( $sp_card['icon'] ) ? (string) $sp_card['icon'] : '';
+						if ( '' === $sp_title ) { continue; }
+						?>
+						<div class="flex items-start gap-x-3 py-5 md:px-10 <?php echo 0 === $sp_i ? 'md:pl-0' : ''; ?>">
+							<?php if ( $sp_icon ) : ?>
+								<?php echo sp_icon( $sp_icon, 'w-5 h-5 text-teal-600 shrink-0 mt-0.5' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							<?php endif; ?>
+							<div class="min-w-0">
+								<h3 class="text-neutral-900 text-sm font-semibold tracking-tight leading-5"><?php echo esc_html( $sp_title ); ?></h3>
+								<?php if ( $sp_body ) : ?>
+									<p class="text-neutral-500 text-sm leading-snug mt-0.5"><?php echo esc_html( $sp_body ); ?></p>
+								<?php endif; ?>
+							</div>
+						</div>
+					<?php endforeach; ?>
+				</div>
+			</div>
+		<?php endif; ?>
+
 	</div>
 </section>
