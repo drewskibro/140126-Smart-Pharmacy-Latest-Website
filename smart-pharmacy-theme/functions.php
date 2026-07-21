@@ -28,6 +28,10 @@ require_once SMART_PHARMACY_DIR . '/inc/acf-fields.php';
 require_once SMART_PHARMACY_DIR . '/inc/woocommerce.php';
 require_once SMART_PHARMACY_DIR . '/inc/seeders/mens-health.php';
 require_once SMART_PHARMACY_DIR . '/inc/seeders/womens-health.php';
+require_once SMART_PHARMACY_DIR . '/inc/seeders/hair-loss.php';
+require_once SMART_PHARMACY_DIR . '/inc/seeders/erectile-dysfunction.php';
+require_once SMART_PHARMACY_DIR . '/inc/seeders/popular-treatments.php';
+require_once SMART_PHARMACY_DIR . '/inc/seeders/core-pages.php';
 
 /**
  * Theme setup: supports, menus, textdomain.
