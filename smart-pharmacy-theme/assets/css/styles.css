@@ -2185,3 +2185,28 @@ input:focus {
   align-items: center;
   gap: 0.5rem;
 }
+
+/* =====================================================================
+ * HERO PHOTO + FLOATING BENEFIT CHIPS (homepage hero, photo layout)
+ * ---------------------------------------------------------------------
+ * Active only when an editor uploads a "Hero photo" in A1 — Homepage
+ * Hero. Chips float over the photo edges on md+ with a very gentle
+ * drift (±5px, slower + subtler than the prototype's image floats,
+ * which read as too playful for benefit copy). Static on mobile.
+ * prefers-reduced-motion is already handled globally in this file.
+ * ===================================================================== */
+@keyframes spChipDrift {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-5px); }
+}
+@media (min-width: 768px) {
+  .sp-chip-float-a { animation: spChipDrift 7s ease-in-out infinite; }
+  .sp-chip-float-b { animation: spChipDrift 8s ease-in-out infinite; animation-delay: 1.2s; }
+  .sp-chip-float-c { animation: spChipDrift 7.5s ease-in-out infinite; animation-delay: 2.1s; }
+}
+.sp-hero-chip {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.sp-hero-chip:hover {
+  box-shadow: 0 18px 36px -10px rgba(0, 0, 0, 0.18);
+}

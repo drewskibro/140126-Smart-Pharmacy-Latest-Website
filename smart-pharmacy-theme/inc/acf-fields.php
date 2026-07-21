@@ -113,6 +113,27 @@ function sp_register_acf_field_groups() {
 					'type'          => 'text',
 					'default_value' => 'reviews',
 				),
+				array(
+					'key'          => 'field_sp_hero_rating_avatars',
+					'label'        => 'Reviewer avatars (optional, max 4)',
+					'name'         => 'hero_rating_avatars',
+					'type'         => 'repeater',
+					'button_label' => 'Add avatar',
+					'layout'       => 'table',
+					'min'          => 0,
+					'max'          => 4,
+					'instructions' => 'REAL customer or team photos only — renders a premium overlapping avatar row inside the reviews badge. Leave empty to hide entirely (no stock/cartoon fallback ever renders). Square crops work best.',
+					'sub_fields'   => array(
+						array(
+							'key'           => 'field_sp_hero_rating_avatar_img',
+							'label'         => 'Photo',
+							'name'          => 'image',
+							'type'          => 'image',
+							'return_format' => 'array',
+							'preview_size'  => 'thumbnail',
+						),
+					),
+				),
 
 				array(
 					'key'   => 'field_sp_hero_tab_headline',
@@ -225,6 +246,22 @@ function sp_register_acf_field_groups() {
 					'key'   => 'field_sp_hero_tab_info',
 					'label' => 'Right-column info cards',
 					'type'  => 'tab',
+				),
+				array(
+					'key'           => 'field_sp_hero_visual_image',
+					'label'         => 'Hero photo (switches right column to photo layout)',
+					'name'          => 'hero_visual_image',
+					'type'          => 'image',
+					'return_format' => 'array',
+					'preview_size'  => 'medium',
+					'instructions'  => 'Upload a photo to switch the right column from stacked cards to a single photo with the benefit cards floating over it as compact chips. Portrait 4:5 crop, at least 1000px wide — a real person (pharmacist or customer) works best. Leave EMPTY to keep the classic three-card layout.',
+				),
+				array(
+					'key'          => 'field_sp_hero_visual_caption',
+					'label'        => 'Photo caption (optional)',
+					'name'         => 'hero_visual_caption',
+					'type'         => 'text',
+					'instructions' => 'Small credential pill shown on the photo, e.g. "Sarah — GPhC-registered prescriber". Leave empty to hide.',
 				),
 				array(
 					'key'          => 'field_sp_hero_info_cards',
