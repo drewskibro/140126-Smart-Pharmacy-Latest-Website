@@ -78,7 +78,16 @@ if ( empty( $sp_info_cards ) || ! is_array( $sp_info_cards ) ) {
 ?>
 <section class="relative bg-[linear-gradient(to_right_bottom,rgb(253,252,250),rgb(248,246,243),rgb(245,243,240))] box-border break-words w-full overflow-hidden">
 	<div class="relative box-border break-words w-full px-6 py-12 md:px-16 md:py-16">
-		<div class="items-start box-border gap-x-8 grid grid-cols-[repeat(1,minmax(0px,1fr))] max-w-[1600px] break-words gap-y-8 mb-16 mx-auto md:gap-x-16 md:grid-cols-[1fr_0.6fr] md:gap-y-16">
+		<?php
+		// Photo mode: centre the (shorter) left column against the tall
+		// portrait photo so leftover height splits above/below instead of
+		// pooling under the treatment pills, and tighten the run-in to the
+		// benefit strip. Classic card mode keeps the original alignment.
+		$sp_grid_classes = $sp_visual_url
+			? 'items-center mb-6 md:mb-8'
+			: 'items-start mb-16 md:gap-y-16';
+		?>
+		<div class="<?php echo esc_attr( $sp_grid_classes ); ?> box-border gap-x-8 grid grid-cols-[repeat(1,minmax(0px,1fr))] max-w-[1600px] break-words gap-y-8 mx-auto md:gap-x-16 md:grid-cols-[1fr_0.6fr]">
 
 			<!-- LEFT COLUMN -->
 			<div class="box-border break-words">
@@ -185,7 +194,7 @@ if ( empty( $sp_info_cards ) || ! is_array( $sp_info_cards ) ) {
 				     (see sp-hero-benefit-strip), never as overlays on the
 				     photo — the photo carries the human/trust signal on its
 				     own, with at most one small credential caption. -->
-				<div class="box-border break-words pt-0 md:pt-8">
+				<div class="box-border break-words">
 					<div class="relative overflow-hidden rounded-[2rem] shadow-[rgba(0,0,0,0.16)_0px_26px_50px_-18px]">
 						<img
 							src="<?php echo esc_url( $sp_visual_url ); ?>"
@@ -237,7 +246,7 @@ if ( empty( $sp_info_cards ) || ! is_array( $sp_info_cards ) ) {
 			     strongest healthcare DTC sites use: benefits as quiet
 			     typography with hairline dividers, never boxed cards or
 			     overlays. Reuses the same hero_info_cards data. -->
-			<div class="sp-hero-benefit-strip max-w-[1600px] mx-auto -mt-8 mb-2 border-t border-neutral-900/10">
+			<div class="sp-hero-benefit-strip max-w-[1600px] mx-auto mb-2 border-t border-neutral-900/10">
 				<div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-neutral-900/10">
 					<?php foreach ( $sp_info_cards as $sp_i => $sp_card ) :
 						$sp_title = isset( $sp_card['title'] ) ? (string) $sp_card['title'] : '';
