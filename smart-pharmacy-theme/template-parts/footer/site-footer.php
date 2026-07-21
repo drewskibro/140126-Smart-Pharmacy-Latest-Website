@@ -75,7 +75,7 @@ $sp_social = array(
 				<!-- Column 1: Logo + tagline + social -->
 				<div class="box-border break-words md:col-end-[span_1] md:col-start-[span_1]">
 					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="box-border inline-block break-words mb-6">
-						<img src="<?php echo esc_url( $sp_logo_url ); ?>" alt="<?php echo esc_attr( $sp_logo_alt ); ?>" class="box-border h-16 max-w-full break-words" />
+						<img src="<?php echo esc_url( $sp_logo_url ); ?>" alt="<?php echo esc_attr( $sp_logo_alt ); ?>" class="box-border h-20 w-auto object-contain break-words" />
 					</a>
 					<p class="text-neutral-600 box-border leading-[24.375px] break-words mb-6"><?php echo esc_html( $sp_tagline ); ?></p>
 					<div class="items-center box-border gap-x-3 flex break-words gap-y-3">
