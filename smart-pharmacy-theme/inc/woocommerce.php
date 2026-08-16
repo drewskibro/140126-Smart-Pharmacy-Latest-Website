@@ -730,6 +730,17 @@ function sp_wc_apply_shop_filters( $q ) {
 		);
 	}
 
+	// Catalogue image gate (section 13): while pack shots backfill,
+	// products without a featured image are kept out of every archive
+	// so the grid never renders placeholder cards. The result count
+	// above the grid reflects the gated total automatically.
+	if ( sp_wc_catalogue_requires_image() ) {
+		$meta_query[] = array(
+			'key'     => '_thumbnail_id',
+			'compare' => 'EXISTS',
+		);
+	}
+
 	$q->set( 'tax_query', $tax_query );
 	$q->set( 'meta_query', $meta_query );
 }
@@ -924,3 +935,72 @@ function sp_wc_branded_empty_cart( $content ) {
 	return $branded . $content;
 }
 add_filter( 'the_content', 'sp_wc_branded_empty_cart', 5 );
+
+/* ===============================================================
+ * 12. REMOVE THE PDP LEGACY SIDEBAR (catalogue QA fix)
+ *
+ * WC core's single-product.php fires do_action( 'woocommerce_sidebar' )
+ * after the product content, which calls get_sidebar( 'shop' ). This
+ * theme ships no sidebar.php / sidebar-shop.php, so locate_template()
+ * falls through to WP's legacy wp-includes/theme-compat/sidebar.php --
+ * an unstyled dump of Search / Pages / Archives / Categories under
+ * every single product page.
+ *
+ * The PDP is designed without a sidebar (two-column summary + tabs +
+ * related grid), so the correct fix is to unhook the action rather
+ * than register an empty sidebar file.
+ * =============================================================== */
+remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
+
+/* ===============================================================
+ * 13. CATALOGUE IMAGE GATE (product-pictures rollout)
+ *
+ * The full 13.9k-SKU catalogue import shipped without images; pack
+ * shots are being attached in bulk from the Barcode Lookup fetcher
+ * (docs/catalogue/fetch_images_barcodelookup.py) with coverage well
+ * short of 100% -- a retail barcode database simply has no photos
+ * for part of the range (notably prescription-only lines).
+ *
+ * Until coverage is dealt with, a product without a featured image
+ * must not surface anywhere a card renders: the card would show a
+ * grey WC placeholder and the shop reads as broken. Gate the three
+ * card surfaces on _thumbnail_id:
+ *
+ *   - main catalogue query (shop / category / tag / WC search) via
+ *     the meta_query added in sp_wc_apply_shop_filters()
+ *   - Best Sellers carousel (template-parts/shop/bestsellers.php)
+ *   - Related Products on the PDP (woocommerce_related_products)
+ *
+ * The gate is intentionally query-level, not a bulk status change:
+ * each product becomes visible automatically the moment its image
+ * lands, with no second import pass or un-hiding step.
+ *
+ * Direct product URLs stay reachable on purpose -- consultation
+ * deep-links and indexed URLs must not 404 while images backfill.
+ *
+ * Kill switch (e.g. once coverage is accepted as complete):
+ *   add_filter( 'sp_wc_require_product_image', '__return_false' );
+ * =============================================================== */
+
+/**
+ * Should catalogue surfaces hide products that have no featured image?
+ *
+ * @return bool
+ */
+function sp_wc_catalogue_requires_image() {
+	return (bool) apply_filters( 'sp_wc_require_product_image', true );
+}
+
+/**
+ * Drop image-less products from the PDP Related Products block.
+ *
+ * @param int[] $related_ids Candidate related product IDs.
+ * @return int[]
+ */
+function sp_wc_related_products_require_image( $related_ids ) {
+	if ( ! sp_wc_catalogue_requires_image() ) {
+		return $related_ids;
+	}
+	return array_values( array_filter( array_map( 'intval', (array) $related_ids ), 'has_post_thumbnail' ) );
+}
+add_filter( 'woocommerce_related_products', 'sp_wc_related_products_require_image' );
