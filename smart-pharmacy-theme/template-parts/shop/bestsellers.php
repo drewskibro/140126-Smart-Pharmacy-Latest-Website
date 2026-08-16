@@ -20,10 +20,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
-// Query the 8 top-selling published products.
+// Query the top-selling published products. Over-fetch 3x so the
+// catalogue image gate (section 13, inc/woocommerce.php) can drop
+// image-less products and still fill all 8 carousel slots.
 $sp_bs_args = array(
 	'status'   => 'publish',
-	'limit'    => 8,
+	'limit'    => 24,
 	'orderby'  => array(
 		'meta_value_num' => 'DESC',
 		'date'           => 'DESC',
@@ -33,6 +35,11 @@ $sp_bs_args = array(
 );
 
 $sp_bs_ids = wc_get_products( $sp_bs_args );
+
+if ( sp_wc_catalogue_requires_image() ) {
+	$sp_bs_ids = array_values( array_filter( $sp_bs_ids, 'has_post_thumbnail' ) );
+}
+$sp_bs_ids = array_slice( $sp_bs_ids, 0, 8 );
 
 if ( empty( $sp_bs_ids ) ) {
 	return;
