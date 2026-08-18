@@ -27,24 +27,46 @@ $sp_f_stock   = isset( $_GET['sp_stock'] ) ? sanitize_key( wp_unslash( $_GET['sp
 $sp_f_max_shop = sp_wc_shop_max_price();
 $sp_f_has_any  = ! empty( $sp_f_cats ) || $sp_f_min > 0 || $sp_f_max > 0 || ! empty( $sp_f_ratings ) || $sp_f_stock;
 
-// Top-level product categories (hide empty so the panel only shows
-// categories with purchasable stock -- saves editors tidying up).
-$sp_f_cat_terms = get_terms(
-	array(
-		'taxonomy'   => 'product_cat',
-		'hide_empty' => true,
-		'parent'     => 0,
-	)
-);
+// Context-aware category filter:
+//   - On a category archive, show THAT category's subsections (children)
+//     and submit back to the category, so filtering refines within it
+//     instead of widening to the whole shop.
+//   - On the shop root, show top-level categories, ordered by size and
+//     capped so the panel never becomes a 24-row wall.
+$sp_f_queried = ( function_exists( 'is_product_category' ) && is_product_category() ) ? get_queried_object() : null;
+$sp_f_in_cat  = ( $sp_f_queried && ! is_wp_error( $sp_f_queried ) && isset( $sp_f_queried->term_id ) );
+
+if ( $sp_f_in_cat ) {
+	$sp_f_cat_legend = sprintf( /* translators: %s: category name. */ __( 'Refine in %s', 'smart-pharmacy' ), $sp_f_queried->name );
+	$sp_f_cat_terms  = get_terms(
+		array(
+			'taxonomy'   => 'product_cat',
+			'hide_empty' => true,
+			'parent'     => (int) $sp_f_queried->term_id,
+			'orderby'    => 'count',
+			'order'      => 'DESC',
+		)
+	);
+	$sp_f_action = get_term_link( $sp_f_queried );
+} else {
+	$sp_f_cat_legend = __( 'Category', 'smart-pharmacy' );
+	$sp_f_cat_terms  = get_terms(
+		array(
+			'taxonomy'   => 'product_cat',
+			'hide_empty' => true,
+			'parent'     => 0,
+			'orderby'    => 'count',
+			'order'      => 'DESC',
+			'number'     => 15, // keep the panel short; the big categories surface first.
+		)
+	);
+	$sp_f_action = get_permalink( wc_get_page_id( 'shop' ) );
+}
+
 if ( is_wp_error( $sp_f_cat_terms ) ) {
 	$sp_f_cat_terms = array();
 }
-
-// Action URL: always the shop base so a filtered category archive
-// widens to "the whole shop" on submit. If the client later prefers
-// in-category filtering, swap to get_permalink( get_queried_object() ).
-$sp_f_action = get_permalink( wc_get_page_id( 'shop' ) );
-if ( ! $sp_f_action ) {
+if ( ! $sp_f_action || is_wp_error( $sp_f_action ) ) {
 	$sp_f_action = home_url( '/shop/' );
 }
 ?>
@@ -61,7 +83,7 @@ if ( ! $sp_f_action ) {
 
 	<?php if ( ! empty( $sp_f_cat_terms ) ) : ?>
 		<fieldset class="sp-filters__block">
-			<legend class="sp-filters__legend"><?php esc_html_e( 'Category', 'smart-pharmacy' ); ?></legend>
+			<legend class="sp-filters__legend"><?php echo esc_html( $sp_f_cat_legend ); ?></legend>
 			<ul class="sp-filters__list">
 				<?php foreach ( $sp_f_cat_terms as $sp_f_term ) : ?>
 					<li>
@@ -93,6 +115,7 @@ if ( ! $sp_f_action ) {
 		</div>
 	</fieldset>
 
+	<?php if ( function_exists( 'sp_wc_shop_has_reviews' ) && sp_wc_shop_has_reviews() ) : ?>
 	<fieldset class="sp-filters__block">
 		<legend class="sp-filters__legend"><?php esc_html_e( 'Rating', 'smart-pharmacy' ); ?></legend>
 		<ul class="sp-filters__list">
@@ -111,6 +134,9 @@ if ( ! $sp_f_action ) {
 			<?php endforeach; ?>
 		</ul>
 	</fieldset>
+
+	<?php endif; // sp_wc_shop_has_reviews ?>
+
 
 	<fieldset class="sp-filters__block sp-filters__block--last">
 		<legend class="sp-filters__legend"><?php esc_html_e( 'Availability', 'smart-pharmacy' ); ?></legend>

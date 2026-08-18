@@ -768,6 +768,34 @@ function sp_wc_shop_max_price() {
 	return $max;
 }
 
+/**
+ * Whether any product on the store has an approved review.
+ *
+ * Drives the shop filter panel: the star-rating filter is pointless (and
+ * looks unfinished) while nothing has been reviewed, so it stays hidden
+ * until the first review lands. Cached for an hour.
+ *
+ * @return bool
+ */
+function sp_wc_shop_has_reviews() {
+	$cached = get_transient( 'sp_wc_has_reviews' );
+	if ( false !== $cached ) {
+		return 'yes' === $cached;
+	}
+
+	global $wpdb;
+	$has = (int) $wpdb->get_var(
+		"SELECT COUNT(*) FROM {$wpdb->comments} c
+		 JOIN {$wpdb->posts} p ON p.ID = c.comment_post_ID
+		 WHERE p.post_type = 'product'
+		 AND c.comment_type = 'review'
+		 AND c.comment_approved = '1'
+		 LIMIT 1"
+	);
+	set_transient( 'sp_wc_has_reviews', $has ? 'yes' : 'no', HOUR_IN_SECONDS );
+	return (bool) $has;
+}
+
 /* ===============================================================
  * 10. CATEGORY COLOUR MAPPING (Stage 4d)
  *

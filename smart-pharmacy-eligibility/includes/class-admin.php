@@ -116,7 +116,45 @@ class SPE_Admin {
 	 * @return string
 	 */
 	public static function get_consultation_url() {
-		return (string) spe_option( 'consultation_url', '' );
+		$url = (string) spe_option( 'consultation_url', '' );
+		if ( $url ) {
+			return $url;
+		}
+		// Self-heal: if the admin never set the page, find the published page
+		// that hosts the consultation shortcode so the CTA can't dead-end.
+		return self::discover_page_url( 'smart_pharmacy_consultation' );
+	}
+
+	/**
+	 * Find the published page hosting a given plugin shortcode.
+	 *
+	 * Used as a fallback when the admin has not selected the consultation /
+	 * checker page in settings, so a "Start Consultation" CTA never lands on
+	 * a blank "Nothing found" page. Result is cached for an hour.
+	 *
+	 * @param string $shortcode Shortcode tag, without brackets.
+	 * @return string Permalink, or '' if no such page exists.
+	 */
+	protected static function discover_page_url( $shortcode ) {
+		$cache_key = 'spe_page_url_' . $shortcode;
+		$cached    = get_transient( $cache_key );
+		if ( false !== $cached ) {
+			return (string) $cached;
+		}
+
+		global $wpdb;
+		$page_id = (int) $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT ID FROM {$wpdb->posts}
+				 WHERE post_type = 'page' AND post_status = 'publish'
+				 AND post_content LIKE %s
+				 ORDER BY ID ASC LIMIT 1",
+				'%[' . $wpdb->esc_like( $shortcode ) . '%'
+			)
+		);
+		$url = $page_id ? (string) get_permalink( $page_id ) : '';
+		set_transient( $cache_key, $url, HOUR_IN_SECONDS );
+		return $url;
 	}
 
 	/**
@@ -136,7 +174,9 @@ class SPE_Admin {
 		if ( $url ) {
 			return $url;
 		}
-		return home_url( '/' );
+		// Self-heal via the checker shortcode page before falling back home.
+		$discovered = self::discover_page_url( 'smart_pharmacy_eligibility' );
+		return $discovered ? $discovered : home_url( '/' );
 	}
 
 	/**
