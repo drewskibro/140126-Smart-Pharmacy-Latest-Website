@@ -483,11 +483,13 @@ function sp_product_consultation_url( $product_id ) {
 
 	// All other prescription products go to the lighter consultation
 	// form, carrying the product id so it can show any per-product
-	// questions and link the submission to the right product.
+	// questions and link the submission to the right product. Uses
+	// `spe_product`, NOT `product` -- `product` is a reserved WooCommerce
+	// query var and would hijack the consultation page ("Nothing found").
 	if ( class_exists( 'SPE_Admin' ) && method_exists( 'SPE_Admin', 'get_consultation_url' ) ) {
 		$consult_url = SPE_Admin::get_consultation_url();
 		if ( $consult_url ) {
-			return add_query_arg( 'product', $product_id, $consult_url );
+			return add_query_arg( 'spe_product', $product_id, $consult_url );
 		}
 	}
 

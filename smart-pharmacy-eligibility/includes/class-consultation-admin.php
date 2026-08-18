@@ -450,7 +450,7 @@ class SPE_Consultation_Admin {
 			<h2 style="margin-top:40px;"><?php esc_html_e( 'How to embed the form', 'smart-pharmacy-eligibility' ); ?></h2>
 			<p><?php esc_html_e( 'Create a page (suggested slug /start-consultation/) and add this shortcode:', 'smart-pharmacy-eligibility' ); ?></p>
 			<pre style="background:#f3f4f6;padding:12px;border-radius:6px;">[smart_pharmacy_consultation]</pre>
-			<p><?php esc_html_e( 'The "Start Consultation" button on a P-medicine product can pass its product id with ?product=123 so the consultation is linked to that product.', 'smart-pharmacy-eligibility' ); ?></p>
+			<p><?php esc_html_e( 'The "Start Consultation" button on a P-medicine product passes its product id with ?spe_product=123 so the consultation is linked to that product.', 'smart-pharmacy-eligibility' ); ?></p>
 		</div>
 		<?php
 	}
