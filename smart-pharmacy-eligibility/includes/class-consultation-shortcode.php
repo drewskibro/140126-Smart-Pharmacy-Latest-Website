@@ -42,6 +42,13 @@ class SPE_Consultation_Shortcode {
 		$atts = shortcode_atts( array( 'product' => 0 ), $atts, self::TAG );
 
 		$product_id = (int) $atts['product'];
+		// Read the product id from the query string. Use `spe_product`, NOT
+		// `product` -- `product` is a reserved WooCommerce query var and
+		// hijacks the page ("Nothing found"). `product` kept only as a
+		// legacy fallback for any old links.
+		if ( ! $product_id && isset( $_GET['spe_product'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$product_id = absint( wp_unslash( $_GET['spe_product'] ) );
+		}
 		if ( ! $product_id && isset( $_GET['product'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$product_id = absint( wp_unslash( $_GET['product'] ) );
 		}
