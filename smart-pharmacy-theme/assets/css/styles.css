@@ -493,6 +493,39 @@ input:focus {
   border-radius: 1rem;
 }
 
+/* --- Hide the default zoom magnifier trigger (the ugly 🔍) ------------ */
+.woocommerce-product-gallery__trigger {
+  display: none !important;
+}
+
+/* --- Breadcrumb: clean, subtle, branded ------------------------------ */
+.woocommerce-breadcrumb {
+  max-width: 1180px;
+  margin: 0.5rem auto 1.75rem;
+  padding: 0 1.5rem;
+  font-size: 0.8125rem;          /* 13px */
+  line-height: 1.4;
+  font-weight: 500;
+  color: #9ca3af;                /* muted neutral for the current page */
+  letter-spacing: 0.01em;
+}
+.woocommerce-breadcrumb a {
+  color: #6b7280;                /* neutral-500 */
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.woocommerce-breadcrumb a:hover {
+  color: #0da592;                /* brand teal */
+}
+.woocommerce-breadcrumb .sp-crumb-sep {
+  color: #d1d5db;                /* light separator */
+  margin: 0 0.15rem;
+  font-weight: 400;
+}
+@media (min-width: 990px) {
+  .woocommerce-breadcrumb { padding: 0 4rem; }
+}
+
 /* --- Title ----------------------------------------------------------- */
 .sp-product-summary .product_title {
   font-size: 1.875rem; /* 30px */

@@ -254,6 +254,22 @@ function sp_wc_page_header() {
 }
 add_action( 'woocommerce_before_main_content', 'sp_wc_page_header', 15 );
 
+/**
+ * Clean up the WooCommerce breadcrumb: a lighter "›" separator instead of
+ * "/", and no wrapping so styling stays in styles.css.
+ *
+ * @param array $defaults WC breadcrumb args.
+ * @return array
+ */
+function sp_wc_breadcrumb_defaults( $defaults ) {
+	$defaults['delimiter']   = ' <span class="sp-crumb-sep" aria-hidden="true">›</span> ';
+	$defaults['wrap_before'] = '<nav class="woocommerce-breadcrumb" aria-label="' . esc_attr__( 'Breadcrumb', 'smart-pharmacy' ) . '">';
+	$defaults['wrap_after']  = '</nav>';
+	$defaults['home']        = _x( 'Home', 'breadcrumb', 'smart-pharmacy' );
+	return $defaults;
+}
+add_filter( 'woocommerce_breadcrumb_defaults', 'sp_wc_breadcrumb_defaults' );
+
 /* ===============================================================
  * 6. SHOP SIDEBAR (Stage 4b → revisited Stage 4b-r)
  *
