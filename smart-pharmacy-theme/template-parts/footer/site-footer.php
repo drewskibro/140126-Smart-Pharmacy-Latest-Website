@@ -20,7 +20,16 @@ $sp_gphc            = sp_field( 'comp_gphc_number', '9012842' );
 $sp_superintendent  = sp_field( 'comp_superintendent', 'Murtaza Yusufali (GPhC 2086087)' );
 $sp_mhra_logo       = sp_field( 'comp_mhra_logo' );
 $sp_mhra_url        = sp_field( 'comp_mhra_register_url' );
-$sp_mhra_logo_url   = is_array( $sp_mhra_logo ) && ! empty( $sp_mhra_logo['url'] ) ? $sp_mhra_logo['url'] : '';
+// Accept an ACF image array, a bare attachment ID, or a URL string.
+if ( is_array( $sp_mhra_logo ) && ! empty( $sp_mhra_logo['url'] ) ) {
+	$sp_mhra_logo_url = $sp_mhra_logo['url'];
+} elseif ( is_numeric( $sp_mhra_logo ) && (int) $sp_mhra_logo > 0 ) {
+	$sp_mhra_logo_url = (string) wp_get_attachment_url( (int) $sp_mhra_logo );
+} elseif ( is_string( $sp_mhra_logo ) && '' !== $sp_mhra_logo ) {
+	$sp_mhra_logo_url = $sp_mhra_logo;
+} else {
+	$sp_mhra_logo_url = '';
+}
 $sp_copyright       = sp_field( 'nav_copyright', '© ' . gmdate( 'Y' ) . ' Smart Pharmacy. All rights reserved.' );
 
 // Payment methods image (ACF array or fallback URL).
