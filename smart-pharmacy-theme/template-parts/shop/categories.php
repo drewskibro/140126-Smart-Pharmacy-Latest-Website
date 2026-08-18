@@ -13,14 +13,41 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$sp_cat_terms = get_terms(
+/*
+ * Curated "Shop by Category" tiles — a COMMERCIAL order, not alphabetical:
+ * money-makers first (private treatments), then the big browse categories,
+ * then everyday health. Editable without touching this file via the
+ * `sp_shop_category_tiles` filter (pass an array of product_cat slugs).
+ */
+$sp_cat_slugs = apply_filters(
+	'sp_shop_category_tiles',
 	array(
-		'taxonomy'   => 'product_cat',
-		'hide_empty' => true,
-		'parent'     => 0,
-		'number'     => 12,
+		'weight-management', 'mens-health', 'sexual-wellness',
+		'skincare', 'vitamins-2', 'hair-care', 'beauty',
+		'pain-relief', 'cold-flu', 'oral-care', 'womens-health', 'baby-child',
 	)
 );
+
+$sp_cat_terms = array();
+foreach ( $sp_cat_slugs as $sp_slug ) {
+	$sp_t = get_term_by( 'slug', $sp_slug, 'product_cat' );
+	if ( $sp_t && ! is_wp_error( $sp_t ) ) {
+		$sp_cat_terms[] = $sp_t;
+	}
+}
+
+// Fallback: if the curated slugs resolve to nothing, show the first 12
+// top-level categories so the section never disappears.
+if ( empty( $sp_cat_terms ) ) {
+	$sp_cat_terms = get_terms(
+		array(
+			'taxonomy'   => 'product_cat',
+			'hide_empty' => true,
+			'parent'     => 0,
+			'number'     => 12,
+		)
+	);
+}
 
 if ( is_wp_error( $sp_cat_terms ) || empty( $sp_cat_terms ) ) {
 	return;
