@@ -16,7 +16,23 @@ $tx_h_hi     = sp_field( 'tx_hero_heading_highlight', '' );
 $tx_h_post   = sp_field( 'tx_hero_heading_post', '' );
 $tx_sub      = sp_field( 'tx_hero_subheading', '' );
 $tx_cta1_l   = sp_field( 'tx_hero_primary_cta_label', 'Start Consultation' );
-$tx_cta1_u   = sp_field( 'tx_hero_primary_cta_url', '#consultation' );
+/*
+ * Smart default for the "Start Consultation" CTA so a treatment page never
+ * dead-ends when its CTA field is left blank: weight-loss treatments go to
+ * the BMI assessment, everything else to the consultation form. An explicit
+ * ACF value still wins.
+ */
+$sp_tx_cta_default = '#consultation';
+if ( class_exists( 'SPE_Admin' ) ) {
+	$sp_tx_is_weight = ( 'weight-loss' === get_post_field( 'post_name', get_the_ID() ) )
+		|| ( false !== stripos( (string) get_the_title(), 'weight' ) );
+	if ( $sp_tx_is_weight && method_exists( 'SPE_Admin', 'get_checker_url' ) ) {
+		$sp_tx_cta_default = SPE_Admin::get_checker_url();
+	} elseif ( method_exists( 'SPE_Admin', 'get_consultation_url' ) ) {
+		$sp_tx_cta_default = SPE_Admin::get_consultation_url();
+	}
+}
+$tx_cta1_u   = sp_field( 'tx_hero_primary_cta_url', $sp_tx_cta_default );
 $tx_cta2_l   = sp_field( 'tx_hero_secondary_cta_label', 'Learn More' );
 $tx_cta2_u   = sp_field( 'tx_hero_secondary_cta_url', '#how-it-works' );
 
