@@ -814,6 +814,90 @@ function sp_wc_shop_has_reviews() {
 	return (bool) $has;
 }
 
+/**
+ * Auto-populate cart cross-sells ("people also bought") from the categories
+ * of what's already in the basket.
+ *
+ * WooCommerce only shows manually-set cross-sells by default, so with a 14k
+ * catalogue the cart cross-sell area is always empty. This fills it from the
+ * sub/parent categories of the cart items -- in-stock, image-bearing,
+ * non-prescription products only (a cross-sell must be add-to-basket-able,
+ * so POM items are excluded). Manual cross-sells, if any, are respected.
+ *
+ * @param array   $cross_sells Cross-sell product IDs WooCommerce resolved.
+ * @param WC_Cart $cart        The cart.
+ * @return array
+ */
+function sp_wc_auto_cross_sells( $cross_sells, $cart = null ) {
+	if ( ! empty( $cross_sells ) ) {
+		return $cross_sells; // a product has manual cross-sells -- respect them.
+	}
+	if ( ! $cart && function_exists( 'WC' ) ) {
+		$cart = WC()->cart;
+	}
+	if ( ! $cart || $cart->is_empty() ) {
+		return $cross_sells;
+	}
+
+	$in_cart  = array();
+	$term_ids = array();
+	foreach ( $cart->get_cart() as $item ) {
+		$pid        = (int) $item['product_id'];
+		$in_cart[]  = $pid;
+		$item_terms = wp_get_post_terms( $pid, 'product_cat', array( 'fields' => 'ids' ) );
+		if ( ! is_wp_error( $item_terms ) ) {
+			$term_ids = array_merge( $term_ids, $item_terms );
+		}
+	}
+	$term_ids = array_unique( array_filter( $term_ids ) );
+	if ( empty( $term_ids ) ) {
+		return $cross_sells;
+	}
+
+	$candidates = get_posts(
+		array(
+			'post_type'      => 'product',
+			'post_status'    => 'publish',
+			'posts_per_page' => 24,
+			'orderby'        => 'rand',
+			'post__not_in'   => $in_cart,
+			'fields'         => 'ids',
+			'tax_query'      => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+				array(
+					'taxonomy' => 'product_cat',
+					'field'    => 'term_id',
+					'terms'    => $term_ids,
+				),
+			),
+			'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+				array(
+					'key'   => '_stock_status',
+					'value' => 'instock',
+				),
+				array(
+					'key'     => '_thumbnail_id',
+					'compare' => 'EXISTS',
+				),
+			),
+		)
+	);
+
+	$out = array();
+	foreach ( $candidates as $cid ) {
+		// A cross-sell has to be directly buyable, so skip P-med / POM items.
+		if ( function_exists( 'sp_product_is_pom' ) && sp_product_is_pom( $cid ) ) {
+			continue;
+		}
+		$out[] = (int) $cid;
+		if ( count( $out ) >= 4 ) {
+			break;
+		}
+	}
+
+	return ! empty( $out ) ? $out : $cross_sells;
+}
+add_filter( 'woocommerce_cart_crosssell_ids', 'sp_wc_auto_cross_sells', 10, 2 );
+
 /* ===============================================================
  * 10. CATEGORY COLOUR MAPPING (Stage 4d)
  *
