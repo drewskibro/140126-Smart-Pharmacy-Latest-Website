@@ -117,12 +117,15 @@ class SPE_Admin {
 	 */
 	public static function get_consultation_url() {
 		$url = (string) spe_option( 'consultation_url', '' );
-		if ( $url ) {
+		// Trust the configured URL only if it points at a real page. If it's
+		// blank OR set to a URL that 404s (e.g. a stale slug), self-heal by
+		// discovering the page that actually hosts the consultation shortcode
+		// so the CTA can't dead-end on a wrong setting.
+		if ( $url && url_to_postid( $url ) ) {
 			return $url;
 		}
-		// Self-heal: if the admin never set the page, find the published page
-		// that hosts the consultation shortcode so the CTA can't dead-end.
-		return self::discover_page_url( 'smart_pharmacy_consultation' );
+		$discovered = self::discover_page_url( 'smart_pharmacy_consultation' );
+		return $discovered ? $discovered : $url;
 	}
 
 	/**
@@ -171,12 +174,15 @@ class SPE_Admin {
 	 */
 	public static function get_checker_url() {
 		$url = (string) spe_option( 'checker_url', '' );
-		if ( $url ) {
+		if ( $url && url_to_postid( $url ) ) {
 			return $url;
 		}
 		// Self-heal via the checker shortcode page before falling back home.
 		$discovered = self::discover_page_url( 'smart_pharmacy_eligibility' );
-		return $discovered ? $discovered : home_url( '/' );
+		if ( $discovered ) {
+			return $discovered;
+		}
+		return $url ? $url : home_url( '/' );
 	}
 
 	/**
