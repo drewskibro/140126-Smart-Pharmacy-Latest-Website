@@ -18,6 +18,7 @@ $sp_trading_address = sp_field( 'contact_trading_address', "Smart Pharmacy\nUnit
 $sp_registered      = sp_field( 'contact_registered', 'Emwhy Pharma Ltd (Company No. 14563648), 51 Arnald Way, Houghton Regis, LU5 5UN' );
 $sp_gphc            = sp_field( 'comp_gphc_number', '9012842' );
 $sp_superintendent  = sp_field( 'comp_superintendent', 'Murtaza Yusufali (GPhC 2086087)' );
+$sp_registered_pharmacy = sp_field( 'comp_registered_pharmacy', 'MHRA registered pharmacy' );
 $sp_mhra_logo       = sp_field( 'comp_mhra_logo' );
 $sp_mhra_url        = sp_field( 'comp_mhra_register_url' );
 // Accept an ACF image array, a bare attachment ID, or a URL string.
@@ -191,17 +192,27 @@ $sp_social = array(
 							</div>
 						<?php endif; ?>
 
-						<?php if ( $sp_mhra_logo_url ) : ?>
-							<!-- MHRA registered pharmacy logo -->
+						<?php if ( $sp_mhra_logo_url || $sp_registered_pharmacy ) : ?>
+							<!-- Registered pharmacy (MHRA) -->
 							<div class="items-start box-border gap-x-3 flex break-words gap-y-3 mt-4">
+								<div class="items-center bg-[linear-gradient(to_right_bottom,rgba(59,155,159,0.1),rgba(44,122,126,0.1))] box-border flex shrink-0 h-10 justify-center break-words w-10 rounded-lg">
+									<svg class="w-5 h-5 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+										<path d="M12 2 4 5v6c0 5 3.5 8 8 11 4.5-3 8-6 8-11V5Z" stroke-linecap="round" stroke-linejoin="round"/>
+										<path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+									</svg>
+								</div>
 								<div class="box-border break-words">
-									<p class="text-neutral-900 text-sm font-semibold box-border leading-5 break-words mb-2"><?php esc_html_e( 'Registered Pharmacy', 'smart-pharmacy' ); ?></p>
-									<?php if ( $sp_mhra_url ) : ?>
-										<a href="<?php echo esc_url( $sp_mhra_url ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Verify this pharmacy on the MHRA register', 'smart-pharmacy' ); ?>">
-											<img src="<?php echo esc_url( $sp_mhra_logo_url ); ?>" alt="<?php esc_attr_e( 'MHRA registered pharmacy', 'smart-pharmacy' ); ?>" class="h-14 w-auto" />
-										</a>
+									<p class="text-neutral-900 text-sm font-semibold box-border leading-5 break-words mb-1"><?php esc_html_e( 'Registered Pharmacy', 'smart-pharmacy' ); ?></p>
+									<?php if ( $sp_mhra_logo_url ) : ?>
+										<?php if ( $sp_mhra_url ) : ?>
+											<a href="<?php echo esc_url( $sp_mhra_url ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Verify this pharmacy on the MHRA register', 'smart-pharmacy' ); ?>">
+												<img src="<?php echo esc_url( $sp_mhra_logo_url ); ?>" alt="<?php esc_attr_e( 'MHRA registered pharmacy', 'smart-pharmacy' ); ?>" class="h-14 w-auto mt-1" />
+											</a>
+										<?php else : ?>
+											<img src="<?php echo esc_url( $sp_mhra_logo_url ); ?>" alt="<?php esc_attr_e( 'MHRA registered pharmacy', 'smart-pharmacy' ); ?>" class="h-14 w-auto mt-1" />
+										<?php endif; ?>
 									<?php else : ?>
-										<img src="<?php echo esc_url( $sp_mhra_logo_url ); ?>" alt="<?php esc_attr_e( 'MHRA registered pharmacy', 'smart-pharmacy' ); ?>" class="h-14 w-auto" />
+										<p class="text-neutral-600 text-sm box-border leading-5 break-words"><?php echo esc_html( $sp_registered_pharmacy ); ?></p>
 									<?php endif; ?>
 								</div>
 							</div>

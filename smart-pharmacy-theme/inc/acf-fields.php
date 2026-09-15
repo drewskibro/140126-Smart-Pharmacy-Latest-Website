@@ -1665,6 +1665,14 @@ function sp_register_acf_field_groups() {
 					'instructions'  => 'Name and GPhC number of the superintendent pharmacist. A registered pharmacy website must display this.',
 				),
 				array(
+					'key'           => 'field_sp_comp_registered_pharmacy',
+					'label'         => 'Registered pharmacy',
+					'name'          => 'comp_registered_pharmacy',
+					'type'          => 'text',
+					'default_value' => 'MHRA registered pharmacy',
+					'instructions'  => 'Shown under "Registered Pharmacy" in the footer. Used when no MHRA logo is set.',
+				),
+				array(
 					'key'           => 'field_sp_comp_mhra_logo',
 					'label'         => 'MHRA registered pharmacy logo',
 					'name'          => 'comp_mhra_logo',
